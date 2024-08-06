@@ -1,0 +1,3231 @@
+[
+    {
+        "region_id": 1,
+        "lat": 12.3686,
+        "lng": -1.5275,
+        "name": "Ouagadougou"
+    },
+    {
+        "region_id": 2,
+        "lat": 11.1833,
+        "lng": -4.2833,
+        "name": "Bobo-Dioulasso"
+    },
+    {
+        "region_id": 3,
+        "lat": 12.25,
+        "lng": -2.3667,
+        "name": "Koudougou"
+    },
+    {
+        "region_id": 4,
+        "lat": 13.5833,
+        "lng": -2.4167,
+        "name": "Ouahigouya"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.0833,
+        "lng": -1.0833,
+        "name": "Kaya"
+    },
+    {
+        "region_id": 6,
+        "lat": 10.6308,
+        "lng": -4.7589,
+        "name": "Banfora"
+    },
+    {
+        "region_id": 7,
+        "lat": 12.25,
+        "lng": -0.4333,
+        "name": "Pouytenga"
+    },
+    {
+        "region_id": 2,
+        "lat": 11.5,
+        "lng": -3.5167,
+        "name": "Houndé"
+    },
+    {
+        "region_id": 9,
+        "lat": 12.05,
+        "lng": 0.3667,
+        "name": "Fada Ngourma"
+    },
+    {
+        "region_id": 10,
+        "lat": 12.4667,
+        "lng": -3.4667,
+        "name": "Dédougou"
+    },
+    {
+        "region_id": 11,
+        "lat": 14.1011,
+        "lng": -1.6306,
+        "name": "Djibo"
+    },
+    {
+        "region_id": 7,
+        "lat": 11.7833,
+        "lng": -0.3667,
+        "name": "Tenkodogo"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.3333,
+        "lng": -1.5333,
+        "name": "Kongoussi"
+    },
+    {
+        "region_id": 11,
+        "lat": 14.03,
+        "lng": -0.03,
+        "name": "Dori"
+    },
+    {
+        "region_id": 7,
+        "lat": 12.1794,
+        "lng": -0.3517,
+        "name": "Koupéla"
+    },
+    {
+        "region_id": 8,
+        "lat": 10.3167,
+        "lng": -3.1667,
+        "name": "Gaoua"
+    },
+    {
+        "region_id": 7,
+        "lat": 11.8,
+        "lng": -0.55,
+        "name": "Garango"
+    },
+    {
+        "region_id": 1,
+        "lat": 12.2667,
+        "lng": -1.7167,
+        "name": "Tanghin-Dassouri"
+    },
+    {
+        "region_id": 4,
+        "lat": 13.2167,
+        "lng": -2.35,
+        "name": "Gourcy"
+    },
+    {
+        "region_id": 4,
+        "lat": 12.9667,
+        "lng": -2.2667,
+        "name": "Yako"
+    },
+    {
+        "region_id": 13,
+        "lat": 11.75,
+        "lng": -1.1,
+        "name": "Bindé"
+    },
+    {
+        "region_id": 12,
+        "lat": 12.25,
+        "lng": -0.6167,
+        "name": "Zorgo"
+    },
+    {
+        "region_id": 3,
+        "lat": 12.3167,
+        "lng": -2.4667,
+        "name": "Réo"
+    },
+    {
+        "region_id": 3,
+        "lat": 11.1,
+        "lng": -2.1,
+        "name": "Léo"
+    },
+    {
+        "region_id": 2,
+        "lat": 10.98,
+        "lng": -4.91,
+        "name": "Orodara"
+    },
+    {
+        "region_id": 12,
+        "lat": 12.5833,
+        "lng": -1.3,
+        "name": "Ziniaré"
+    },
+    {
+        "region_id": 7,
+        "lat": 11.2575,
+        "lng": -0.3039,
+        "name": "Bittou"
+    },
+    {
+        "region_id": 13,
+        "lat": 12.0667,
+        "lng": -1.3333,
+        "name": "Kombissiri"
+    },
+    {
+        "region_id": 13,
+        "lat": 11.6667,
+        "lng": -1.0667,
+        "name": "Manga"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.6781,
+        "lng": -1.5461,
+        "name": "Bourzanga"
+    },
+    {
+        "region_id": 8,
+        "lat": 11.1436,
+        "lng": -3.0628,
+        "name": "Dano"
+    },
+    {
+        "region_id": 12,
+        "lat": 12.2833,
+        "lng": -0.8333,
+        "name": "Mogtédo"
+    },
+    {
+        "region_id": 8,
+        "lat": 10.9667,
+        "lng": -3.25,
+        "name": "Diébougou"
+    },
+    {
+        "region_id": 12,
+        "lat": 12.6667,
+        "lng": -1.8975,
+        "name": "Boussé"
+    },
+    {
+        "region_id": 5,
+        "lat": 12.6667,
+        "lng": -0.5833,
+        "name": "Boulsa"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.1667,
+        "lng": -0.8167,
+        "name": "Pissila"
+    },
+    {
+        "region_id": 7,
+        "lat": 11.7833,
+        "lng": -0.7333,
+        "name": "Béguédo"
+    },
+    {
+        "region_id": 9,
+        "lat": 12.9667,
+        "lng": -0.15,
+        "name": "Bogandé"
+    },
+    {
+        "region_id": 3,
+        "lat": 12.2833,
+        "lng": -2.2167,
+        "name": "Vili"
+    },
+    {
+        "region_id": 10,
+        "lat": 11.5333,
+        "lng": -2.7667,
+        "name": "Fara"
+    },
+    {
+        "region_id": 5,
+        "lat": 12.825,
+        "lng": -1.0672,
+        "name": "Korsimoro"
+    },
+    {
+        "region_id": 10,
+        "lat": 11.9,
+        "lng": -4.3333,
+        "name": "Kouka"
+    },
+    {
+        "region_id": 13,
+        "lat": 11.4333,
+        "lng": -0.7667,
+        "name": "Gomboussougou"
+    },
+    {
+        "region_id": 10,
+        "lat": 11.55,
+        "lng": -3.26,
+        "name": "Pâ"
+    },
+    {
+        "region_id": 9,
+        "lat": 13.26,
+        "lng": -0.2094,
+        "name": "Mani"
+    },
+    {
+        "region_id": 7,
+        "lat": 11.5,
+        "lng": 0.05,
+        "name": "Ouargaye"
+    },
+    {
+        "region_id": 10,
+        "lat": 12.0804,
+        "lng": -4.189,
+        "name": "Béna"
+    },
+    {
+        "region_id": 10,
+        "lat": 12.1833,
+        "lng": -4.0833,
+        "name": "Salanso"
+    },
+    {
+        "region_id": 10,
+        "lat": 12.2264,
+        "lng": -3.9294,
+        "name": "Daboura"
+    },
+    {
+        "region_id": 10,
+        "lat": 11.6167,
+        "lng": -2.75,
+        "name": "Poura"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.2167,
+        "lng": -1.6333,
+        "name": "Rouko"
+    },
+    {
+        "region_id": 10,
+        "lat": 12.0667,
+        "lng": -4.0833,
+        "name": "Bayé"
+    },
+    {
+        "region_id": 9,
+        "lat": 12.7833,
+        "lng": 0.2,
+        "name": "Dipianga"
+    },
+    {
+        "region_id": 2,
+        "lat": 11.4167,
+        "lng": -3.2167,
+        "name": "Bouzan"
+    },
+    {
+        "region_id": 7,
+        "lat": 11.8281,
+        "lng": -0.6577,
+        "name": "Komtoéga"
+    },
+    {
+        "region_id": null,
+        "lat": 12.165,
+        "lng": -1.0997,
+        "name": "Nafbanka"
+    },
+    {
+        "region_id": 6,
+        "lat": 10.6333,
+        "lng": -4.55,
+        "name": "Tiéfora"
+    },
+    {
+        "region_id": 10,
+        "lat": 11.7667,
+        "lng": -4.45,
+        "name": "Diontala"
+    },
+    {
+        "region_id": 12,
+        "lat": 12.3833,
+        "lng": -1.0833,
+        "name": "Kougri"
+    },
+    {
+        "region_id": 9,
+        "lat": 12.9405,
+        "lng": 0.0683,
+        "name": "Babéré"
+    },
+    {
+        "region_id": 3,
+        "lat": 12.3167,
+        "lng": -2.2833,
+        "name": "Doulou"
+    },
+    {
+        "region_id": 12,
+        "lat": 12.6525,
+        "lng": -0.6686,
+        "name": "Kogo"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.6833,
+        "lng": -1.7167,
+        "name": "Gondékoubé"
+    },
+    {
+        "region_id": 7,
+        "lat": 11.2333,
+        "lng": -0.4333,
+        "name": "Loaba"
+    },
+    {
+        "region_id": 9,
+        "lat": 12.5478,
+        "lng": -0.0028,
+        "name": "Bilanga"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.1333,
+        "lng": -1.6667,
+        "name": "Niangouéla"
+    },
+    {
+        "region_id": 12,
+        "lat": 12.4436,
+        "lng": -0.6167,
+        "name": "Salogo"
+    },
+    {
+        "region_id": 10,
+        "lat": 11.8833,
+        "lng": -4.2667,
+        "name": "Bankouma"
+    },
+    {
+        "region_id": null,
+        "lat": 12.1833,
+        "lng": -0.4333,
+        "name": "Sapaga"
+    },
+    {
+        "region_id": 10,
+        "lat": 12.2833,
+        "lng": -4.1333,
+        "name": "Moussakongo"
+    },
+    {
+        "region_id": 3,
+        "lat": 12.3,
+        "lng": -2.3667,
+        "name": "Latou"
+    },
+    {
+        "region_id": 6,
+        "lat": 10.6333,
+        "lng": -4.9,
+        "name": "Toumousséni"
+    },
+    {
+        "region_id": 10,
+        "lat": 12.35,
+        "lng": -3.9833,
+        "name": "Dira"
+    },
+    {
+        "region_id": 10,
+        "lat": 11.9667,
+        "lng": -3.4333,
+        "name": "Ouona"
+    },
+    {
+        "region_id": 10,
+        "lat": 11.8167,
+        "lng": -4.3833,
+        "name": "Fini"
+    },
+    {
+        "region_id": 7,
+        "lat": 11.6335,
+        "lng": -0.7198,
+        "name": "Lenga"
+    },
+    {
+        "region_id": 10,
+        "lat": 11.75,
+        "lng": -3.3,
+        "name": "Bagassi"
+    },
+    {
+        "region_id": 3,
+        "lat": 12.2667,
+        "lng": -2.15,
+        "name": "Sarya"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.1,
+        "lng": -1.6833,
+        "name": "Koundla"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.1,
+        "lng": -1.6,
+        "name": "Guibaré"
+    },
+    {
+        "region_id": 9,
+        "lat": 12.9333,
+        "lng": 0.1167,
+        "name": "Léoura"
+    },
+    {
+        "region_id": 10,
+        "lat": 12.2,
+        "lng": -4.0333,
+        "name": "Dissankui"
+    },
+    {
+        "region_id": 13,
+        "lat": 11.85,
+        "lng": -1.6167,
+        "name": "Saraptinga Yarsé"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.6,
+        "lng": -1.85,
+        "name": "Kagaré"
+    },
+    {
+        "region_id": 10,
+        "lat": 11.8667,
+        "lng": -3.2333,
+        "name": "Pompoï"
+    },
+    {
+        "region_id": 7,
+        "lat": 12.1833,
+        "lng": -0.2333,
+        "name": "Baskouré"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.1833,
+        "lng": -1.5167,
+        "name": "Sabsé"
+    },
+    {
+        "region_id": 7,
+        "lat": 11.2667,
+        "lng": -0.1333,
+        "name": "Fottigué"
+    },
+    {
+        "region_id": 10,
+        "lat": 11.4167,
+        "lng": -2.75,
+        "name": "Kabourou"
+    },
+    {
+        "region_id": 5,
+        "lat": 12.7167,
+        "lng": -0.4,
+        "name": "Boko"
+    },
+    {
+        "region_id": 9,
+        "lat": 12.7833,
+        "lng": -0.1333,
+        "name": "Kangaye"
+    },
+    {
+        "region_id": 10,
+        "lat": 11.6,
+        "lng": -3.3833,
+        "name": "Kopoï"
+    },
+    {
+        "region_id": 3,
+        "lat": 12.3667,
+        "lng": -2.2333,
+        "name": "Gnenga"
+    },
+    {
+        "region_id": 10,
+        "lat": 12.25,
+        "lng": -4.1,
+        "name": "Dankouro"
+    },
+    {
+        "region_id": 10,
+        "lat": 12.3167,
+        "lng": -4.0167,
+        "name": "Masso"
+    },
+    {
+        "region_id": 7,
+        "lat": 11.7,
+        "lng": -0.75,
+        "name": "Dierma"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.2833,
+        "lng": -1.6833,
+        "name": "Horé"
+    },
+    {
+        "region_id": 6,
+        "lat": 10.5667,
+        "lng": -4.8667,
+        "name": "Diongolo"
+    },
+    {
+        "region_id": 10,
+        "lat": 12.0833,
+        "lng": -4.3833,
+        "name": "Mawé"
+    },
+    {
+        "region_id": 9,
+        "lat": 12.7281,
+        "lng": 0.1097,
+        "name": "Kogoudou"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.6,
+        "lng": -1.5667,
+        "name": "Boulounga"
+    },
+    {
+        "region_id": 6,
+        "lat": 10.6333,
+        "lng": -4.75,
+        "name": "Tangoura"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.2156,
+        "lng": -1.0264,
+        "name": "Salro"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.7167,
+        "lng": -1.65,
+        "name": "Bassé"
+    },
+    {
+        "region_id": 8,
+        "lat": 10.7167,
+        "lng": -3.7167,
+        "name": "Gbingué"
+    },
+    {
+        "region_id": 7,
+        "lat": 12.25,
+        "lng": -0.4333,
+        "name": "Andemtenga"
+    },
+    {
+        "region_id": 7,
+        "lat": 11.8174,
+        "lng": -0.7572,
+        "name": "Finguila"
+    },
+    {
+        "region_id": 12,
+        "lat": 12.3167,
+        "lng": -0.65,
+        "name": "Koulwéogo"
+    },
+    {
+        "region_id": 12,
+        "lat": 12.2,
+        "lng": -0.4833,
+        "name": "Torodo"
+    },
+    {
+        "region_id": 8,
+        "lat": 10.6833,
+        "lng": -3.5667,
+        "name": "Diasara"
+    },
+    {
+        "region_id": 13,
+        "lat": 11.96,
+        "lng": -1.545,
+        "name": "Ipelsé"
+    },
+    {
+        "region_id": 9,
+        "lat": 12.4637,
+        "lng": -0.0958,
+        "name": "Bilanga Yanga"
+    },
+    {
+        "region_id": 12,
+        "lat": 12.2333,
+        "lng": -0.8333,
+        "name": "Gouingo"
+    },
+    {
+        "region_id": 12,
+        "lat": 12.15,
+        "lng": -0.7,
+        "name": "Nédogo"
+    },
+    {
+        "region_id": 1,
+        "lat": 12.3167,
+        "lng": -1.7,
+        "name": "Nobsin"
+    },
+    {
+        "region_id": 12,
+        "lat": 12.2167,
+        "lng": -0.5,
+        "name": "Touiré"
+    },
+    {
+        "region_id": 12,
+        "lat": 12.4833,
+        "lng": -0.95,
+        "name": "Koratenga"
+    },
+    {
+        "region_id": 7,
+        "lat": 11.6333,
+        "lng": -0.4333,
+        "name": "Koma"
+    },
+    {
+        "region_id": 10,
+        "lat": 11.8667,
+        "lng": -3.3667,
+        "name": "Mana"
+    },
+    {
+        "region_id": 10,
+        "lat": 11.9667,
+        "lng": -3.3333,
+        "name": "Konkouliko"
+    },
+    {
+        "region_id": 8,
+        "lat": 10.8667,
+        "lng": -3.2667,
+        "name": "Bapla"
+    },
+    {
+        "region_id": 6,
+        "lat": 10.4667,
+        "lng": -4.7833,
+        "name": "Diarabakoko"
+    },
+    {
+        "region_id": 12,
+        "lat": 12.3,
+        "lng": -0.9333,
+        "name": "Rapadama"
+    },
+    {
+        "region_id": 10,
+        "lat": 11.5333,
+        "lng": -2.7333,
+        "name": "Nanano"
+    },
+    {
+        "region_id": 6,
+        "lat": 10.6,
+        "lng": -4.8,
+        "name": "Sitiéna"
+    },
+    {
+        "region_id": 3,
+        "lat": 12.3667,
+        "lng": -2.4,
+        "name": "Boulsen"
+    },
+    {
+        "region_id": 3,
+        "lat": 12.3167,
+        "lng": -2.3167,
+        "name": "Nayalgay"
+    },
+    {
+        "region_id": 13,
+        "lat": 12.0506,
+        "lng": -1.2733,
+        "name": "Konioudou"
+    },
+    {
+        "region_id": null,
+        "lat": 12.4167,
+        "lng": -0.1667,
+        "name": "Diankoudougou"
+    },
+    {
+        "region_id": 9,
+        "lat": 12.9667,
+        "lng": -0.2333,
+        "name": "Kossougoudou"
+    },
+    {
+        "region_id": 12,
+        "lat": 12.4333,
+        "lng": -0.7667,
+        "name": "Boulwando"
+    },
+    {
+        "region_id": 10,
+        "lat": 12.2,
+        "lng": -4.2167,
+        "name": "Lékoro"
+    },
+    {
+        "region_id": 6,
+        "lat": 10.55,
+        "lng": -4.6833,
+        "name": "Naniagara"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.8,
+        "lng": -1.5333,
+        "name": "Semnoré"
+    },
+    {
+        "region_id": 9,
+        "lat": 13.2,
+        "lng": -0.2667,
+        "name": "Bombanyenga"
+    },
+    {
+        "region_id": 9,
+        "lat": 13.0,
+        "lng": -0.0833,
+        "name": "Komonga"
+    },
+    {
+        "region_id": 2,
+        "lat": 11.3,
+        "lng": -4.4333,
+        "name": "Diaradougou"
+    },
+    {
+        "region_id": 7,
+        "lat": 11.15,
+        "lng": -0.5667,
+        "name": "Dou"
+    },
+    {
+        "region_id": 6,
+        "lat": 10.55,
+        "lng": -4.8,
+        "name": "Niankar"
+    },
+    {
+        "region_id": 6,
+        "lat": 10.4833,
+        "lng": -4.6167,
+        "name": "Kangounadéni"
+    },
+    {
+        "region_id": 9,
+        "lat": 13.3167,
+        "lng": -0.2833,
+        "name": "Lipaka"
+    },
+    {
+        "region_id": 12,
+        "lat": 12.3667,
+        "lng": -0.7167,
+        "name": "Kabouda"
+    },
+    {
+        "region_id": 12,
+        "lat": 12.2,
+        "lng": -0.8,
+        "name": "Yaika"
+    },
+    {
+        "region_id": 7,
+        "lat": 12.0,
+        "lng": -0.2667,
+        "name": "Tensobtenga"
+    },
+    {
+        "region_id": 7,
+        "lat": 12.3,
+        "lng": -0.4167,
+        "name": "Finougou"
+    },
+    {
+        "region_id": 10,
+        "lat": 11.7167,
+        "lng": -3.2333,
+        "name": "Pahin"
+    },
+    {
+        "region_id": 12,
+        "lat": 12.2833,
+        "lng": -0.5667,
+        "name": "Digré"
+    },
+    {
+        "region_id": 13,
+        "lat": 11.95,
+        "lng": -1.2667,
+        "name": "Kossala"
+    },
+    {
+        "region_id": 13,
+        "lat": 12.0092,
+        "lng": -1.3367,
+        "name": "Koassa"
+    },
+    {
+        "region_id": 13,
+        "lat": 12.0667,
+        "lng": -1.3333,
+        "name": "Bassiyam"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.35,
+        "lng": -1.65,
+        "name": "Sakou"
+    },
+    {
+        "region_id": 12,
+        "lat": 12.25,
+        "lng": -0.9167,
+        "name": "Toyoko"
+    },
+    {
+        "region_id": 9,
+        "lat": 12.95,
+        "lng": -0.0167,
+        "name": "Kottia"
+    },
+    {
+        "region_id": 12,
+        "lat": 12.4833,
+        "lng": -0.9,
+        "name": "Koulwéogo"
+    },
+    {
+        "region_id": 12,
+        "lat": 12.4833,
+        "lng": -0.7667,
+        "name": "Kougoudouguen"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.2667,
+        "lng": -1.5667,
+        "name": "Kougsabla"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.45,
+        "lng": -1.55,
+        "name": "Koupellé"
+    },
+    {
+        "region_id": 10,
+        "lat": 11.9167,
+        "lng": -3.3667,
+        "name": "Dano"
+    },
+    {
+        "region_id": 9,
+        "lat": 12.4833,
+        "lng": -0.2333,
+        "name": "Dyamdiara"
+    },
+    {
+        "region_id": 13,
+        "lat": 12.0203,
+        "lng": -1.25,
+        "name": "Kierma"
+    },
+    {
+        "region_id": 12,
+        "lat": 12.3425,
+        "lng": -1.0014,
+        "name": "Wayen"
+    },
+    {
+        "region_id": 13,
+        "lat": 11.9833,
+        "lng": -1.2667,
+        "name": "Sabraogo"
+    },
+    {
+        "region_id": 13,
+        "lat": 12.0997,
+        "lng": -1.2469,
+        "name": "Lilligomdé"
+    },
+    {
+        "region_id": 10,
+        "lat": 11.8,
+        "lng": -3.35,
+        "name": "Kahin"
+    },
+    {
+        "region_id": 9,
+        "lat": 13.3,
+        "lng": -0.3,
+        "name": "Liougou"
+    },
+    {
+        "region_id": 9,
+        "lat": 13.3,
+        "lng": -0.25,
+        "name": "Dakiri"
+    },
+    {
+        "region_id": 12,
+        "lat": 12.1,
+        "lng": -0.5333,
+        "name": "Dakongo"
+    },
+    {
+        "region_id": 2,
+        "lat": 11.5833,
+        "lng": -3.3833,
+        "name": "Didié"
+    },
+    {
+        "region_id": 12,
+        "lat": 12.2,
+        "lng": -0.6833,
+        "name": "Lelkom"
+    },
+    {
+        "region_id": 6,
+        "lat": 10.8167,
+        "lng": -4.55,
+        "name": "Daramandougou"
+    },
+    {
+        "region_id": 2,
+        "lat": 11.9167,
+        "lng": -4.5667,
+        "name": "Kogoué"
+    },
+    {
+        "region_id": 12,
+        "lat": 12.25,
+        "lng": -0.7333,
+        "name": "Zèmpasgo"
+    },
+    {
+        "region_id": 10,
+        "lat": 11.8167,
+        "lng": -3.0167,
+        "name": "Bitiako"
+    },
+    {
+        "region_id": 1,
+        "lat": 12.65,
+        "lng": -1.6,
+        "name": "Dabaré"
+    },
+    {
+        "region_id": 10,
+        "lat": 11.6833,
+        "lng": -3.2667,
+        "name": "Bandio"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.1,
+        "lng": -1.6667,
+        "name": "Karengatenga"
+    },
+    {
+        "region_id": 10,
+        "lat": 11.8569,
+        "lng": -2.9517,
+        "name": "Balao"
+    },
+    {
+        "region_id": 4,
+        "lat": 13.6167,
+        "lng": -2.7667,
+        "name": "Douma"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.2833,
+        "lng": -1.55,
+        "name": "Mogodé"
+    },
+    {
+        "region_id": 12,
+        "lat": 12.65,
+        "lng": -0.75,
+        "name": "Bindogo"
+    },
+    {
+        "region_id": 12,
+        "lat": 12.15,
+        "lng": -0.75,
+        "name": "Tanwaka"
+    },
+    {
+        "region_id": 5,
+        "lat": 12.95,
+        "lng": -0.8667,
+        "name": "Boulyèndé"
+    },
+    {
+        "region_id": 10,
+        "lat": 11.6667,
+        "lng": -3.1333,
+        "name": "Assio"
+    },
+    {
+        "region_id": 7,
+        "lat": 11.5744,
+        "lng": -0.3324,
+        "name": "Bané"
+    },
+    {
+        "region_id": 12,
+        "lat": 12.45,
+        "lng": -0.65,
+        "name": "Naoubé"
+    },
+    {
+        "region_id": 12,
+        "lat": 12.2667,
+        "lng": -0.9333,
+        "name": "Damongto"
+    },
+    {
+        "region_id": 10,
+        "lat": 12.0333,
+        "lng": -4.4,
+        "name": "Bama"
+    },
+    {
+        "region_id": 12,
+        "lat": 12.3667,
+        "lng": -0.9333,
+        "name": "Wéotenga"
+    },
+    {
+        "region_id": 9,
+        "lat": 12.7,
+        "lng": -0.1667,
+        "name": "Dabèsma"
+    },
+    {
+        "region_id": 12,
+        "lat": 12.0667,
+        "lng": -0.4333,
+        "name": "Yamganguen"
+    },
+    {
+        "region_id": 8,
+        "lat": 10.9667,
+        "lng": -3.35,
+        "name": "Tanpé"
+    },
+    {
+        "region_id": 13,
+        "lat": 12.0,
+        "lng": -1.3,
+        "name": "Kamsando"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.0833,
+        "lng": -1.6667,
+        "name": "Sakoudi"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.3,
+        "lng": -1.5833,
+        "name": "Rissiam"
+    },
+    {
+        "region_id": 8,
+        "lat": 10.75,
+        "lng": -3.4,
+        "name": "Loukoura"
+    },
+    {
+        "region_id": 10,
+        "lat": 11.8333,
+        "lng": -3.3333,
+        "name": "Niakongo"
+    },
+    {
+        "region_id": 10,
+        "lat": 11.3833,
+        "lng": -2.6833,
+        "name": "Bouzourou"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.45,
+        "lng": -1.5667,
+        "name": "Koumbango"
+    },
+    {
+        "region_id": 13,
+        "lat": 11.9167,
+        "lng": -1.3333,
+        "name": "Bilbalogo"
+    },
+    {
+        "region_id": 10,
+        "lat": 11.9167,
+        "lng": -3.3333,
+        "name": "Bassana"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.3442,
+        "lng": -1.6986,
+        "name": "Zano"
+    },
+    {
+        "region_id": 10,
+        "lat": 11.7333,
+        "lng": -3.3167,
+        "name": "Doussi"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.3167,
+        "lng": -1.8,
+        "name": "Sarkounda"
+    },
+    {
+        "region_id": 12,
+        "lat": 12.15,
+        "lng": -0.8,
+        "name": "Tanlouka"
+    },
+    {
+        "region_id": 6,
+        "lat": 10.4167,
+        "lng": -4.8,
+        "name": "Tienpagora"
+    },
+    {
+        "region_id": 12,
+        "lat": 12.3167,
+        "lng": -0.55,
+        "name": "Imiga"
+    },
+    {
+        "region_id": 6,
+        "lat": 10.7022,
+        "lng": -4.82,
+        "name": "Karfiguéla"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.6333,
+        "lng": -1.7833,
+        "name": "Koulouéogo"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.4333,
+        "lng": -1.75,
+        "name": "Darbiti"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.1667,
+        "lng": -1.5667,
+        "name": "Goungla"
+    },
+    {
+        "region_id": 10,
+        "lat": 11.7,
+        "lng": -3.3,
+        "name": "Kaho"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.4,
+        "lng": -1.8333,
+        "name": "Dargouma"
+    },
+    {
+        "region_id": 10,
+        "lat": 11.8,
+        "lng": -2.95,
+        "name": "Wako"
+    },
+    {
+        "region_id": 13,
+        "lat": 12.0319,
+        "lng": -1.2892,
+        "name": "Gonsé"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.5667,
+        "lng": -1.5,
+        "name": "Dénéon"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.0667,
+        "lng": -0.9333,
+        "name": "Komsilga"
+    },
+    {
+        "region_id": 10,
+        "lat": 11.75,
+        "lng": -3.25,
+        "name": "Banou"
+    },
+    {
+        "region_id": 10,
+        "lat": 11.7667,
+        "lng": -3.25,
+        "name": "Koussaro"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.2,
+        "lng": -0.7167,
+        "name": "Doga"
+    },
+    {
+        "region_id": 10,
+        "lat": 11.8833,
+        "lng": -3.1833,
+        "name": "Pana"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.2667,
+        "lng": -1.6667,
+        "name": "Gassongo"
+    },
+    {
+        "region_id": 5,
+        "lat": 12.6333,
+        "lng": -0.6333,
+        "name": "Bassomkoukouri"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.4333,
+        "lng": -1.5333,
+        "name": "Badinogo"
+    },
+    {
+        "region_id": 1,
+        "lat": 12.2167,
+        "lng": -1.1667,
+        "name": "Tansablogo"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.4,
+        "lng": -1.5333,
+        "name": "Darigma"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.4667,
+        "lng": -1.5333,
+        "name": "Kondibito"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.4667,
+        "lng": -1.55,
+        "name": "Sadouré"
+    },
+    {
+        "region_id": 9,
+        "lat": 12.7258,
+        "lng": -0.2263,
+        "name": "Boussikomi"
+    },
+    {
+        "region_id": 12,
+        "lat": 12.3667,
+        "lng": -0.7333,
+        "name": "Dazanré"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.3667,
+        "lng": -1.6833,
+        "name": "Tanlallé"
+    },
+    {
+        "region_id": 2,
+        "lat": 11.3,
+        "lng": -4.0833,
+        "name": "Noumousso"
+    },
+    {
+        "region_id": 12,
+        "lat": 12.3,
+        "lng": -0.7167,
+        "name": "Yougoul Mandé"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.25,
+        "lng": -1.3667,
+        "name": "Léfourba"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.2167,
+        "lng": -1.3333,
+        "name": "Ouintini"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.1833,
+        "lng": -1.3833,
+        "name": "Sanoui"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.35,
+        "lng": -1.8333,
+        "name": "Kamtenga"
+    },
+    {
+        "region_id": 6,
+        "lat": 10.5167,
+        "lng": -4.8167,
+        "name": "Tionouna"
+    },
+    {
+        "region_id": 10,
+        "lat": 11.4833,
+        "lng": -2.7333,
+        "name": "Dakaye"
+    },
+    {
+        "region_id": 9,
+        "lat": 13.2333,
+        "lng": -0.25,
+        "name": "Kamissi"
+    },
+    {
+        "region_id": 13,
+        "lat": 12.1022,
+        "lng": -1.2339,
+        "name": "Koupeléga"
+    },
+    {
+        "region_id": 11,
+        "lat": 13.8667,
+        "lng": -1.5667,
+        "name": "Alamini"
+    },
+    {
+        "region_id": 10,
+        "lat": 11.8,
+        "lng": -3.2833,
+        "name": "Yaramoko"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.3,
+        "lng": -1.65,
+        "name": "Birou"
+    },
+    {
+        "region_id": 8,
+        "lat": 11.2,
+        "lng": -3.1667,
+        "name": "Badiéré"
+    },
+    {
+        "region_id": 12,
+        "lat": 12.8161,
+        "lng": -1.7264,
+        "name": "Toéghin"
+    },
+    {
+        "region_id": 10,
+        "lat": 12.0833,
+        "lng": -3.25,
+        "name": "Kira"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.3333,
+        "lng": -1.7167,
+        "name": "Baribsi"
+    },
+    {
+        "region_id": 10,
+        "lat": 13.3167,
+        "lng": -3.9,
+        "name": "Siékoro"
+    },
+    {
+        "region_id": 10,
+        "lat": 12.9833,
+        "lng": -3.4167,
+        "name": "Lanfiéra"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.65,
+        "lng": -1.8,
+        "name": "Kopsséré"
+    },
+    {
+        "region_id": 6,
+        "lat": 10.6,
+        "lng": -4.5667,
+        "name": "Bondorola"
+    },
+    {
+        "region_id": 13,
+        "lat": 11.9667,
+        "lng": -1.3167,
+        "name": "Toemiga"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.45,
+        "lng": -1.6833,
+        "name": "Nongsom"
+    },
+    {
+        "region_id": 13,
+        "lat": 11.9167,
+        "lng": -1.4333,
+        "name": "Boussougou"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.2167,
+        "lng": -1.3667,
+        "name": "Mafoulou"
+    },
+    {
+        "region_id": 13,
+        "lat": 11.85,
+        "lng": -1.4833,
+        "name": "Toébanaga"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.4,
+        "lng": -1.6833,
+        "name": "Lourgou"
+    },
+    {
+        "region_id": 12,
+        "lat": 12.2203,
+        "lng": -0.5431,
+        "name": "Bougouré"
+    },
+    {
+        "region_id": 10,
+        "lat": 11.95,
+        "lng": -4.4333,
+        "name": "Liaba"
+    },
+    {
+        "region_id": 12,
+        "lat": 12.1,
+        "lng": -0.7167,
+        "name": "Nanom"
+    },
+    {
+        "region_id": 10,
+        "lat": 11.7,
+        "lng": -3.15,
+        "name": "Niaga"
+    },
+    {
+        "region_id": 13,
+        "lat": 11.8167,
+        "lng": -1.4167,
+        "name": "Kalwiga"
+    },
+    {
+        "region_id": 13,
+        "lat": 11.8833,
+        "lng": -1.4,
+        "name": "Kougpela"
+    },
+    {
+        "region_id": 12,
+        "lat": 12.1333,
+        "lng": -0.7333,
+        "name": "Kostenga"
+    },
+    {
+        "region_id": 10,
+        "lat": 11.85,
+        "lng": -3.1667,
+        "name": "Batiti"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.3333,
+        "lng": -1.45,
+        "name": "Darbiti"
+    },
+    {
+        "region_id": 10,
+        "lat": 11.4667,
+        "lng": -2.6667,
+        "name": "Fitien"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.1833,
+        "lng": -1.5667,
+        "name": "Ouazeulé"
+    },
+    {
+        "region_id": 12,
+        "lat": 12.2,
+        "lng": -0.6167,
+        "name": "Bagbili"
+    },
+    {
+        "region_id": 8,
+        "lat": 10.7667,
+        "lng": -3.5167,
+        "name": "Toména"
+    },
+    {
+        "region_id": 8,
+        "lat": 10.7667,
+        "lng": -3.4667,
+        "name": "Sangolo"
+    },
+    {
+        "region_id": 12,
+        "lat": 12.2833,
+        "lng": -0.5833,
+        "name": "Dabéga"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.2,
+        "lng": -1.55,
+        "name": "Rounou"
+    },
+    {
+        "region_id": 7,
+        "lat": 11.8333,
+        "lng": -0.15,
+        "name": "Koutiana"
+    },
+    {
+        "region_id": 6,
+        "lat": 10.4333,
+        "lng": -5.2167,
+        "name": "Diérisso"
+    },
+    {
+        "region_id": 13,
+        "lat": 11.9,
+        "lng": -1.4,
+        "name": "Konlobéwandé"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.3167,
+        "lng": -1.6833,
+        "name": "Ouampéga"
+    },
+    {
+        "region_id": 13,
+        "lat": 12.0703,
+        "lng": -1.3,
+        "name": "Bissiga"
+    },
+    {
+        "region_id": 12,
+        "lat": 12.0167,
+        "lng": -0.7333,
+        "name": "Nadioutenga"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.4833,
+        "lng": -1.4167,
+        "name": "Kayon"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.6,
+        "lng": -1.7833,
+        "name": "Igondara"
+    },
+    {
+        "region_id": 6,
+        "lat": 10.5165,
+        "lng": -4.5654,
+        "name": "Boussara"
+    },
+    {
+        "region_id": 13,
+        "lat": 11.9,
+        "lng": -1.45,
+        "name": "Bâtinga"
+    },
+    {
+        "region_id": 3,
+        "lat": 12.3833,
+        "lng": -2.3667,
+        "name": "Kikigogo"
+    },
+    {
+        "region_id": 6,
+        "lat": 10.4167,
+        "lng": -4.7333,
+        "name": "Saterna"
+    },
+    {
+        "region_id": 12,
+        "lat": 12.3333,
+        "lng": -0.7667,
+        "name": "Kourgou"
+    },
+    {
+        "region_id": 6,
+        "lat": 10.7,
+        "lng": -5.4,
+        "name": "Faon"
+    },
+    {
+        "region_id": 9,
+        "lat": 13.2167,
+        "lng": -0.2333,
+        "name": "Malioma"
+    },
+    {
+        "region_id": 13,
+        "lat": 11.9,
+        "lng": -1.3667,
+        "name": "Bagadogo"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.4,
+        "lng": -1.7,
+        "name": "Dénguilga"
+    },
+    {
+        "region_id": 13,
+        "lat": 12.0833,
+        "lng": -1.2667,
+        "name": "Manégsombo"
+    },
+    {
+        "region_id": 12,
+        "lat": 12.65,
+        "lng": -0.7,
+        "name": "Ronsen"
+    },
+    {
+        "region_id": 10,
+        "lat": 11.9667,
+        "lng": -3.3,
+        "name": "Kietou"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.5833,
+        "lng": -1.7333,
+        "name": "Ouènné"
+    },
+    {
+        "region_id": 12,
+        "lat": 12.25,
+        "lng": -0.5667,
+        "name": "Gonken"
+    },
+    {
+        "region_id": 13,
+        "lat": 11.8333,
+        "lng": -1.4333,
+        "name": "Koudiougou"
+    },
+    {
+        "region_id": 10,
+        "lat": 11.7833,
+        "lng": -3.3167,
+        "name": "Haho"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.3167,
+        "lng": -1.7667,
+        "name": "Ansouri"
+    },
+    {
+        "region_id": 10,
+        "lat": 11.55,
+        "lng": -2.7,
+        "name": "Konzèna"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.55,
+        "lng": -1.3833,
+        "name": "Nordé"
+    },
+    {
+        "region_id": 8,
+        "lat": 10.35,
+        "lng": -3.2333,
+        "name": "Sidoumoukar"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.3333,
+        "lng": -1.6,
+        "name": "Badinogo"
+    },
+    {
+        "region_id": 13,
+        "lat": 11.9167,
+        "lng": -1.4,
+        "name": "Konkouissé"
+    },
+    {
+        "region_id": 8,
+        "lat": 10.75,
+        "lng": -3.6,
+        "name": "Binté"
+    },
+    {
+        "region_id": 8,
+        "lat": 10.3833,
+        "lng": -3.35,
+        "name": "Barkoura"
+    },
+    {
+        "region_id": 6,
+        "lat": 10.5,
+        "lng": -4.8167,
+        "name": "Marébama"
+    },
+    {
+        "region_id": 13,
+        "lat": 11.9,
+        "lng": -1.6167,
+        "name": "Kaktinga"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.3167,
+        "lng": -1.6,
+        "name": "Sankondé"
+    },
+    {
+        "region_id": 7,
+        "lat": 12.1667,
+        "lng": -0.25,
+        "name": "Lilgomdé"
+    },
+    {
+        "region_id": 9,
+        "lat": 13.2833,
+        "lng": -0.3167,
+        "name": "Komona"
+    },
+    {
+        "region_id": 5,
+        "lat": 13.7833,
+        "lng": -1.5167,
+        "name": "Namasa"
+    },
+    {
+        "region_id": 8,
+        "lat": 10.2992,
+        "lng": -3.2508,
+        "name": "Gaoua"
+    },
+    {
+        "region_id": 1,
+        "lat": 12.1864,
+        "lng": -1.6336,
+        "name": "Komsilga"
+    },
+    {
+        "region_id": 1,
+        "lat": 12.3714,
+        "lng": -1.4147,
+        "name": "Saaba"
+    },
+    {
+        "region_id": 12,
+        "lat": 12.5165,
+        "lng": -1.3761,
+        "name": "Loumbila"
+    },
+    {
+        "region_id": 3,
+        "lat": 12.1833,
+        "lng": -1.8833,
+        "name": "Kokologo"
+    },
+    {
+        "region_id": 5,
+        "lat": 12.9103,
+        "lng": -1.0804,
+        "name": "Boussouma"
+    },
+    {
+        "region_id": 12,
+        "lat": 12.7583,
+        "lng": -1.295,
+        "name": "Zitenga"
+    },
+    {
+        "region_id": 12,
+        "lat": 12.6417,
+        "lng": -1.0517,
+        "name": "Absouya"
+    },
+    {
+        "region_id": 12,
+        "lat": 12.5264,
+        "lng": -1.7725,
+        "name": "Laye"
+    },
+    {
+        "region_id": 3,
+        "lat": 12.55,
+        "lng": -1.8833,
+        "name": "Siglé"
+    },
+    {
+        "region_id": 1,
+        "lat": 12.1808,
+        "lng": -1.8044,
+        "name": "Komki-Ipala"
+    },
+    {
+        "region_id": 12,
+        "lat": 12.4146,
+        "lng": -1.8064,
+        "name": "Sourgoubila"
+    },
+    {
+        "region_id": 12,
+        "lat": 12.6717,
+        "lng": -1.5394,
+        "name": "Dapélogo"
+    },
+    {
+        "region_id": 12,
+        "lat": 12.7698,
+        "lng": -1.9338,
+        "name": "Niou"
+    },
+    {
+        "region_id": 1,
+        "lat": 12.5,
+        "lng": -1.567,
+        "name": "Pabré"
+    },
+    {
+        "region_id": 5,
+        "lat": 12.9884,
+        "lng": -1.3443,
+        "name": "Mané"
+    },
+    {
+        "region_id": 1,
+        "lat": 12.1978,
+        "lng": -1.4066,
+        "name": "Koubri"
+    },
+    {
+        "region_id": 10,
+        "lat": 12.7667,
+        "lng": -2.8833,
+        "name": "Toma"
+    },
+    {
+        "region_id": 3,
+        "lat": 12.3006,
+        "lng": -1.833,
+        "name": "Bingo"
+    },
+    
+
+
+    {
+        "region_id": 14,
+        "name": "Abidjan",
+        "lat": 5.3167,
+        "lng": -4.0333
+    },
+    {
+        "region_id": 14,
+        "name": "Yopougon",
+        "lat": 5.3167,
+        "lng": -4.0667
+    },
+    {
+        "region_id": 14,
+        "name": "Cocody",
+        "lat": 5.35,
+        "lng": -3.9667
+    },
+    {
+        "region_id": 15,
+        "name": "Bouaké",
+        "lat": 7.6833,
+        "lng": -5.0167
+    },
+    {
+        "region_id": 14,
+        "name": "Port-Bouët",
+        "lat": 5.2667,
+        "lng": -3.9
+    },
+    {
+        "region_id": 16,
+        "name": "Daloa",
+        "lat": 6.8833,
+        "lng": -6.45
+    },
+    {
+        "region_id": 14,
+        "name": "Koumassi",
+        "lat": 5.3,
+        "lng": -3.95
+    },
+    {
+        "region_id": 17,
+        "name": "San-Pédro",
+        "lat": 4.75,
+        "lng": -6.6333
+    },
+    {
+        "region_id": 14,
+        "name": "Attiecoubé",
+        "lat": 5.3333,
+        "lng": -4.0333
+    },
+    {
+        "region_id": 18,
+        "name": "Korhogo",
+        "lat": 9.4167,
+        "lng": -5.6167
+    },
+    {
+        "region_id": 19,
+        "name": "Gagnoa",
+        "lat": 6.1333,
+        "lng": -5.9333
+    },
+    {
+        "region_id": 17,
+        "name": "Soubré",
+        "lat": 5.7833,
+        "lng": -6.6
+    },
+    {
+        "region_id": 19,
+        "name": "Oumé",
+        "lat": 6.3833,
+        "lng": -5.4167
+    },
+    {
+        "region_id": 20,
+        "name": "Man",
+        "lat": 7.4,
+        "lng": -7.55
+    },
+    {
+        "region_id": 20,
+        "name": "Duekoué",
+        "lat": 6.7333,
+        "lng": -7.35
+    },
+    {
+        "region_id": 14,
+        "name": "Bingerville",
+        "lat": 5.35,
+        "lng": -3.9
+    },
+    {
+        "region_id": 19,
+        "name": "Divo",
+        "lat": 5.8333,
+        "lng": -5.3667
+    },
+    {
+        "region_id": 21,
+        "name": "Abengourou",
+        "lat": 6.7333,
+        "lng": -3.4833
+    },
+    {
+        "region_id": 18,
+        "name": "Ferkessédougou",
+        "lat": 9.5833,
+        "lng": -5.2
+    },
+    {
+        "region_id": 22,
+        "name": "Adzopé",
+        "lat": 6.1667,
+        "lng": -3.9833
+    },
+    {
+        "region_id": 23,
+        "name": "Bondoukou",
+        "lat": 8.0333,
+        "lng": -2.8
+    },
+    {
+        "region_id": 22,
+        "name": "Dabou",
+        "lat": 5.3167,
+        "lng": -4.3833
+    },
+    {
+        "region_id": 16,
+        "name": "Sinfra",
+        "lat": 6.85,
+        "lng": -5.9167
+    },
+    {
+        "region_id": 22,
+        "name": "Agboville",
+        "lat": 5.9333,
+        "lng": -4.2167
+    },
+    {
+        "region_id": 21,
+        "name": "Grand-Bassam",
+        "lat": 5.2,
+        "lng": -3.7333
+    },
+    {
+        "region_id": 24,
+        "name": "Daoukro",
+        "lat": 7.05,
+        "lng": -3.9667
+    },
+    {
+        "region_id": 21,
+        "name": "Aboisso",
+        "lat": 5.4667,
+        "lng": -3.2
+    },
+    {
+        "region_id": 25,
+        "name": "Odienné",
+        "lat": 9.5,
+        "lng": -7.5667
+    },
+    {
+        "region_id": 24,
+        "name": "Dimbokro",
+        "lat": 6.65,
+        "lng": -4.7
+    },
+    {
+        "region_id": 26,
+        "name": "Séguéla",
+        "lat": 7.9667,
+        "lng": -6.6667
+    },
+    {
+        "region_id": 27,
+        "name": "Yamoussoukro",
+        "lat": 6.8161,
+        "lng": -5.2742
+    },
+    {
+        "region_id": 20,
+        "name": "Bangolo",
+        "lat": 7.0123,
+        "lng": -7.4864
+    },
+    {
+        "region_id": 14,
+        "name": "Anyama",
+        "lat": 5.4946,
+        "lng": -4.0518
+    },
+    {
+        "region_id": 17,
+        "name": "Méagui",
+        "lat": 5.4048,
+        "lng": -6.5584
+    },
+
+
+    {
+        "region_id": 28,
+        "name": "Bamako",
+        "lat": 12.6392,
+        "lng": -8.0028
+    },
+    {
+        "region_id": 29,
+        "name": "Balandougou",
+        "lat": 13.3558,
+        "lng": -9.5517
+    },
+    {
+        "region_id": null,
+        "name": "Zégoua",
+        "lat": 10.4875,
+        "lng": -5.6536
+    },
+    {
+        "region_id": 30,
+        "name": "Sikasso",
+        "lat": 11.3167,
+        "lng": -5.6667
+    },
+    {
+        "region_id": 30,
+        "name": "Koutiala",
+        "lat": 12.3833,
+        "lng": -5.4667
+    },
+    {
+        "region_id": 31,
+        "name": "Ségou",
+        "lat": 13.45,
+        "lng": -6.2667
+    },
+    {
+        "region_id": 29,
+        "name": "Kayes",
+        "lat": 14.45,
+        "lng": -11.4333
+    },
+    {
+        "region_id": 32,
+        "name": "Mopti",
+        "lat": 14.49,
+        "lng": -4.18
+    },
+    {
+        "region_id": 31,
+        "name": "Niono",
+        "lat": 14.25,
+        "lng": -5.9861
+    },
+    {
+        "region_id": 31,
+        "name": "Somasso",
+        "lat": 12.8667,
+        "lng": -5.6
+    },
+    {
+        "region_id": 33,
+        "name": "Kati",
+        "lat": 12.7504,
+        "lng": -8.08
+    },
+    {
+        "region_id": 32,
+        "name": "Koro",
+        "lat": 14.0683,
+        "lng": -3.0814
+    },
+    {
+        "region_id": 29,
+        "name": "Nioro",
+        "lat": 15.1833,
+        "lng": -9.55
+    },
+    {
+        "region_id": 30,
+        "name": "Bougouni",
+        "lat": 11.4167,
+        "lng": -7.4833
+    },
+    {
+        "region_id": 33,
+        "name": "Baguinéda",
+        "lat": 12.6153,
+        "lng": -7.7767
+    },
+    {
+        "region_id": 30,
+        "name": "Kolondiéba",
+        "lat": 11.0833,
+        "lng": -6.9
+    },
+    {
+        "region_id": 31,
+        "name": "Pèlèngana",
+        "lat": 13.4278,
+        "lng": -6.2153
+    },
+    {
+        "region_id": 30,
+        "name": "Kouri",
+        "lat": 12.1833,
+        "lng": -4.8056
+    },
+    {
+        "region_id": 30,
+        "name": "Kadiolo",
+        "lat": 10.5556,
+        "lng": -5.7597
+    },
+    {
+        "region_id": 30,
+        "name": "Koumantou",
+        "lat": 11.4167,
+        "lng": -6.8333
+    },
+    {
+        "region_id": 33,
+        "name": "Wolossébougou",
+        "lat": 12.0,
+        "lng": -7.9111
+    },
+    {
+        "region_id": 34,
+        "name": "Gao",
+        "lat": 16.2667,
+        "lng": -0.05
+    },
+    {
+        "region_id": 31,
+        "name": "Dyero",
+        "lat": 13.6858,
+        "lng": -5.8342
+    },
+    {
+        "region_id": 29,
+        "name": "Kita",
+        "lat": 13.0504,
+        "lng": -9.4833
+    },
+    {
+        "region_id": 31,
+        "name": "Markala",
+        "lat": 13.6739,
+        "lng": -6.075
+    },
+    {
+        "region_id": 33,
+        "name": "Dialakorodji",
+        "lat": 12.7083,
+        "lng": -7.9689
+    },
+    {
+        "region_id": 33,
+        "name": "Sangarébougou",
+        "lat": 12.6842,
+        "lng": -7.9278
+    },
+    {
+        "region_id": null,
+        "name": "Misséni",
+        "lat": 10.3167,
+        "lng": -6.0769
+    },
+    {
+        "region_id": 33,
+        "name": "Massigui",
+        "lat": 11.8667,
+        "lng": -6.7667
+    },
+    {
+        "region_id": 32,
+        "name": "Mondoro",
+        "lat": 14.6761,
+        "lng": -1.9511
+    },
+    {
+        "region_id": 32,
+        "name": "Sokoura",
+        "lat": 14.5472,
+        "lng": -4.0894
+    },
+    {
+        "region_id": 30,
+        "name": "Dandéresso",
+        "lat": 11.4867,
+        "lng": -5.4819
+    },
+    {
+        "region_id": 31,
+        "name": "San",
+        "lat": 13.3004,
+        "lng": -4.9
+    },
+    {
+        "region_id": null,
+        "name": "Fourou",
+        "lat": 10.7472,
+        "lng": -6.1403
+    },
+    {
+        "region_id": 29,
+        "name": "Djidian Kéniéba",
+        "lat": 13.1,
+        "lng": -11.4
+    },
+    {
+        "region_id": 29,
+        "name": "Sadiola",
+        "lat": 13.8889,
+        "lng": -11.7028
+    },
+    {
+        "region_id": 29,
+        "name": "Sébékoro",
+        "lat": 12.9625,
+        "lng": -8.9875
+    },
+    {
+        "region_id": 30,
+        "name": "Garalo",
+        "lat": 10.99,
+        "lng": -7.437
+    },
+    {
+        "region_id": 31,
+        "name": "Kolongo-Bozo",
+        "lat": 13.8806,
+        "lng": -5.6861
+    },
+    {
+        "region_id": 33,
+        "name": "Sanankoroba",
+        "lat": 12.3986,
+        "lng": -7.9378
+    },
+    {
+        "region_id": 31,
+        "name": "Siribala",
+        "lat": 14.0419,
+        "lng": -6.0617
+    },
+    {
+        "region_id": 32,
+        "name": "Kona",
+        "lat": 14.9467,
+        "lng": -3.8933
+    },
+    {
+        "region_id": 31,
+        "name": "Zinzana",
+        "lat": 13.2528,
+        "lng": -5.9653
+    },
+    {
+        "region_id": 30,
+        "name": "Mpessoba",
+        "lat": 12.6639,
+        "lng": -5.7167
+    },
+    {
+        "region_id": 32,
+        "name": "Dinangorou",
+        "lat": 14.4519,
+        "lng": -2.2419
+    },
+    {
+        "region_id": 33,
+        "name": "Niamina",
+        "lat": 13.3167,
+        "lng": -6.9819
+    },
+    {
+        "region_id": 35,
+        "name": "Timbuktu",
+        "lat": 16.7758,
+        "lng": -3.0094
+    },
+    {
+        "region_id": 31,
+        "name": "Diabali",
+        "lat": 14.6833,
+        "lng": -6.0167
+    },
+    {
+        "region_id": 29,
+        "name": "Diakon",
+        "lat": 14.6264,
+        "lng": -10.7319
+    },
+    {
+        "region_id": 30,
+        "name": "Kignan",
+        "lat": 11.8511,
+        "lng": -6.0153
+    },
+    {
+        "region_id": 31,
+        "name": "Katiéna",
+        "lat": 13.3217,
+        "lng": -5.6414
+    },
+    {
+        "region_id": 32,
+        "name": "Djenné",
+        "lat": 13.9056,
+        "lng": -4.555
+    },
+    {
+        "region_id": 31,
+        "name": "Moninnpébougou",
+        "lat": 14.1475,
+        "lng": -5.5217
+    },
+    {
+        "region_id": 31,
+        "name": "Barouéli",
+        "lat": 13.0667,
+        "lng": -6.8333
+    },
+    {
+        "region_id": 34,
+        "name": "Ansongo",
+        "lat": 15.6594,
+        "lng": 0.5017
+    },
+    {
+        "region_id": 30,
+        "name": "Lobougoula",
+        "lat": 11.0431,
+        "lng": -5.9819
+    },
+    {
+        "region_id": 32,
+        "name": "Dioungani",
+        "lat": 14.3131,
+        "lng": -2.7394
+    },
+    {
+        "region_id": 33,
+        "name": "Massantola",
+        "lat": 13.4833,
+        "lng": -7.8
+    },
+    {
+        "region_id": 30,
+        "name": "Niéna",
+        "lat": 11.4258,
+        "lng": -6.35
+    },
+    {
+        "region_id": 33,
+        "name": "Boro",
+        "lat": 14.0075,
+        "lng": -7.5072
+    },
+    {
+        "region_id": 32,
+        "name": "Dialoubé",
+        "lat": 15.0172,
+        "lng": -4.2325
+    },
+    {
+        "region_id": 30,
+        "name": "Kléla",
+        "lat": 11.6875,
+        "lng": -5.6639
+    },
+    {
+        "region_id": 30,
+        "name": "Konséguéla",
+        "lat": 12.4033,
+        "lng": -5.8847
+    },
+    {
+        "region_id": 29,
+        "name": "Diéma",
+        "lat": 14.539,
+        "lng": -9.19
+    },
+    {
+        "region_id": 33,
+        "name": "Banamba",
+        "lat": 13.55,
+        "lng": -7.45
+    },
+    {
+        "region_id": 34,
+        "name": "Ouatagouna",
+        "lat": 15.1842,
+        "lng": 0.7217
+    },
+    {
+        "region_id": 29,
+        "name": "Ségala Mba",
+        "lat": 14.0625,
+        "lng": -10.9722
+    },
+    {
+        "region_id": 33,
+        "name": "Falou",
+        "lat": 14.5978,
+        "lng": -7.9319
+    },
+    {
+        "region_id": 32,
+        "name": "Bankass",
+        "lat": 14.0667,
+        "lng": -3.5167
+    },
+    {
+        "region_id": 34,
+        "name": "Bourèm Guindou",
+        "lat": 16.9004,
+        "lng": -0.35
+    },
+    {
+        "region_id": 33,
+        "name": "Didiéni",
+        "lat": 13.8833,
+        "lng": -8.1
+    },
+    {
+        "region_id": 31,
+        "name": "Dougabougou",
+        "lat": 13.8186,
+        "lng": -6.1189
+    },
+    {
+        "region_id": 33,
+        "name": "Moribabougou",
+        "lat": 12.6917,
+        "lng": -7.8644
+    },
+    {
+        "region_id": 34,
+        "name": "Bamba",
+        "lat": 17.0333,
+        "lng": -1.4
+    },
+    {
+        "region_id": 29,
+        "name": "Diangouté Kamara",
+        "lat": 14.545,
+        "lng": -9.513
+    },
+    {
+        "region_id": 32,
+        "name": "Douentza",
+        "lat": 15.0,
+        "lng": -2.95
+    },
+    {
+        "region_id": 33,
+        "name": "Sirakorola",
+        "lat": 13.2833,
+        "lng": -7.5667
+    },
+    {
+        "region_id": 29,
+        "name": "Sitakili",
+        "lat": 13.1075,
+        "lng": -11.2286
+    },
+    {
+        "region_id": 34,
+        "name": "Bourem",
+        "lat": 16.9533,
+        "lng": -0.3539
+    },
+    {
+        "region_id": 32,
+        "name": "Toguéré-Koumbé",
+        "lat": 14.9181,
+        "lng": -4.5933
+    },
+    {
+        "region_id": 29,
+        "name": "Mahina",
+        "lat": 13.7583,
+        "lng": -10.8486
+    },
+    {
+        "region_id": 33,
+        "name": "Sibi",
+        "lat": 12.3786,
+        "lng": -8.3333
+    },
+    {
+        "region_id": 32,
+        "name": "Sokoura",
+        "lat": 13.5,
+        "lng": -3.7667
+    },
+    {
+        "region_id": 30,
+        "name": "Kaboïla",
+        "lat": 11.2136,
+        "lng": -5.6347
+    },
+    {
+        "region_id": 35,
+        "name": "Gourma Rharous",
+        "lat": 16.88,
+        "lng": -1.9238
+    },
+    {
+        "region_id": 31,
+        "name": "Konobougou",
+        "lat": 12.9167,
+        "lng": -6.7667
+    },
+    {
+        "region_id": 29,
+        "name": "Béma",
+        "lat": 15.044,
+        "lng": -9.354
+    },
+    {
+        "region_id": 32,
+        "name": "Bandiagara",
+        "lat": 14.35,
+        "lng": -3.6111
+    },
+    {
+        "region_id": 31,
+        "name": "Fatimé",
+        "lat": 13.5761,
+        "lng": -5.3833
+    },
+    {
+        "region_id": 30,
+        "name": "Koumia",
+        "lat": 12.5958,
+        "lng": -4.6903
+    },
+    {
+        "region_id": null,
+        "name": "Gouna",
+        "lat": 10.9125,
+        "lng": -8.0
+    },
+    {
+        "region_id": 32,
+        "name": "Madougou",
+        "lat": 14.3992,
+        "lng": -3.0789
+    },
+    {
+        "region_id": 32,
+        "name": "Fatoma",
+        "lat": 14.6122,
+        "lng": -4.0614
+    },
+    {
+        "region_id": 35,
+        "name": "Ngorkou",
+        "lat": 15.6592,
+        "lng": -3.7156
+    },
+    {
+        "region_id": 32,
+        "name": "Kenndié",
+        "lat": 14.675,
+        "lng": -3.5111
+    },
+    {
+        "region_id": 31,
+        "name": "Sanando",
+        "lat": 12.9667,
+        "lng": -6.4
+    },
+    {
+        "region_id": 33,
+        "name": "Koulikoro",
+        "lat": 12.8833,
+        "lng": -7.55
+    },
+    {
+        "region_id": 30,
+        "name": "Ourikela",
+        "lat": 12.1106,
+        "lng": -5.0625
+    },
+    {
+        "region_id": 30,
+        "name": "Kébila",
+        "lat": 11.2833,
+        "lng": -7.0333
+    },
+    {
+        "region_id": 31,
+        "name": "Sokolo",
+        "lat": 14.7389,
+        "lng": -6.1211
+    },
+    {
+        "region_id": 30,
+        "name": "Kouoro",
+        "lat": 11.9681,
+        "lng": -5.6886
+    },
+    {
+        "region_id": 31,
+        "name": "Sansanding",
+        "lat": 13.7267,
+        "lng": -6.0058
+    },
+    {
+        "region_id": 32,
+        "name": "Hombori",
+        "lat": 15.28,
+        "lng": -1.7
+    },
+    {
+        "region_id": 29,
+        "name": "Koussané",
+        "lat": 14.8847,
+        "lng": -11.2333
+    },
+    {
+        "region_id": 32,
+        "name": "Youwarou",
+        "lat": 15.375,
+        "lng": -4.2625
+    },
+    {
+        "region_id": 33,
+        "name": "Kamabougou",
+        "lat": 12.4833,
+        "lng": -6.8
+    },
+    {
+        "region_id": 33,
+        "name": "Dialakoroba",
+        "lat": 12.2628,
+        "lng": -7.9269
+    },
+    {
+        "region_id": 30,
+        "name": "Yorosso",
+        "lat": 12.3556,
+        "lng": -4.7778
+    },
+    {
+        "region_id": 34,
+        "name": "Ménaka",
+        "lat": 15.9167,
+        "lng": 2.4
+    },
+    {
+        "region_id": 29,
+        "name": "Bafoulabé",
+        "lat": 13.8083,
+        "lng": -10.8306
+    },
+    {
+        "region_id": 33,
+        "name": "Nara",
+        "lat": 15.18,
+        "lng": -7.28
+    },
+    {
+        "region_id": 31,
+        "name": "Tominian",
+        "lat": 13.2833,
+        "lng": -4.5833
+    },
+    {
+        "region_id": 33,
+        "name": "Kangaba",
+        "lat": 11.9333,
+        "lng": -8.4167
+    },
+    {
+        "region_id": 35,
+        "name": "Goundam",
+        "lat": 16.4167,
+        "lng": -3.6667
+    },
+    {
+        "region_id": 36,
+        "name": "Kidal",
+        "lat": 18.4389,
+        "lng": 1.4083
+    },
+    {
+        "region_id": 35,
+        "name": "Diré",
+        "lat": 16.2561,
+        "lng": -3.41
+    },
+    {
+        "region_id": 32,
+        "name": "Ténenkou",
+        "lat": 14.4556,
+        "lng": -4.9181
+    },
+    {
+        "region_id": 36,
+        "name": "Abeïbara",
+        "lat": 19.35,
+        "lng": 1.845
+    },
+    {
+        "region_id": 36,
+        "name": "Tessalit",
+        "lat": 20.2011,
+        "lng": 1.0125
+    },
+    {
+        "region_id": 29,
+        "name": "Yélimané",
+        "lat": 15.118,
+        "lng": -10.572
+    },
+    {
+        "region_id": 31,
+        "name": "Bla",
+        "lat": 12.95,
+        "lng": -5.75
+    },
+    {
+        "region_id": 33,
+        "name": "Dioila",
+        "lat": 12.4833,
+        "lng": -6.8
+    },
+    {
+        "region_id": 31,
+        "name": "Ké-Macina",
+        "lat": 13.9641,
+        "lng": -5.3579
+    },
+    {
+        "region_id": 33,
+        "name": "Kolokani",
+        "lat": 13.5728,
+        "lng": -8.0339
+    },
+    {
+        "region_id": 30,
+        "name": "Yanfolila",
+        "lat": 11.1833,
+        "lng": -8.15
+    },
+    {
+        "region_id": 29,
+        "name": "Kéniéba",
+        "lat": 12.8396,
+        "lng": -11.2406
+    },
+    {
+        "region_id": 35,
+        "name": "Niafunké",
+        "lat": 15.9311,
+        "lng": -3.99
+    },
+    {
+        "region_id": 36,
+        "name": "Ti-n-Essako",
+        "lat": 18.4506,
+        "lng": 2.4879
+    },
+
+
+    {
+        "region_id": 37,
+        "name": "Niamey",
+        "lat": 13.515,
+        "lng": 2.1175
+    },
+    {
+        "region_id": 38,
+        "name": "Maradi",
+        "lat": 13.4833,
+        "lng": 7.1
+    },
+    {
+        "region_id": 39,
+        "name": "Zinder",
+        "lat": 13.8053,
+        "lng": 8.9883
+    },
+    {
+        "region_id": 40,
+        "name": "Tahoua",
+        "lat": 14.8903,
+        "lng": 5.2642
+    },
+    {
+        "region_id": 41,
+        "name": "Agadez",
+        "lat": 16.9959,
+        "lng": 7.9828
+    },
+    {
+        "region_id": 42,
+        "name": "Sabara Bangou",
+        "lat": 15.1177,
+        "lng": 1.996
+    },
+    {
+        "region_id": 41,
+        "name": "Arlit",
+        "lat": 18.7333,
+        "lng": 7.3833
+    },
+    {
+        "region_id": 40,
+        "name": "Birnin Konni",
+        "lat": 13.7904,
+        "lng": 5.2599
+    },
+    {
+        "region_id": 39,
+        "name": "Matamey",
+        "lat": 13.4,
+        "lng": 8.6
+    },
+    {
+        "region_id": 43,
+        "name": "Dosso",
+        "lat": 13.0444,
+        "lng": 3.1947
+    },
+    {
+        "region_id": 42,
+        "name": "Kouré",
+        "lat": 13.3106,
+        "lng": 2.576
+    },
+    {
+        "region_id": 43,
+        "name": "Gaya",
+        "lat": 11.8878,
+        "lng": 3.4467
+    },
+    {
+        "region_id": 42,
+        "name": "Ayorou",
+        "lat": 14.735,
+        "lng": 0.92
+    },
+    {
+        "region_id": 42,
+        "name": "Kollo",
+        "lat": 13.0167,
+        "lng": 1.8833
+    },
+    {
+        "region_id": 43,
+        "name": "Diffa",
+        "lat": 13.3171,
+        "lng": 12.6089
+    },
+    {
+        "region_id": 40,
+        "name": "Madaoua",
+        "lat": 14.0762,
+        "lng": 5.9586
+    },
+    {
+        "region_id": 42,
+        "name": "Tillabéri",
+        "lat": 14.212,
+        "lng": 1.4531
+    },
+    {
+        "region_id": 43,
+        "name": "Nguigmi",
+        "lat": 14.2532,
+        "lng": 13.1108
+    },
+    {
+        "region_id": 38,
+        "name": "Guidan Roumdji",
+        "lat": 13.6575,
+        "lng": 6.6958
+    },
+    {
+        "region_id": 39,
+        "name": "Gouré",
+        "lat": 13.9874,
+        "lng": 10.27
+    },
+    {
+        "region_id": 39,
+        "name": "Magaria",
+        "lat": 12.9983,
+        "lng": 8.9099
+    },
+    {
+        "region_id": 39,
+        "name": "Kantché",
+        "lat": 13.5393,
+        "lng": 8.4629
+    },
+    {
+        "region_id": 40,
+        "name": "Bouza",
+        "lat": 14.4229,
+        "lng": 6.0428
+    },
+    {
+        "region_id": 38,
+        "name": "Madarounfa",
+        "lat": 13.3087,
+        "lng": 7.156
+    },
+    {
+        "region_id": 38,
+        "name": "Aguié",
+        "lat": 13.506,
+        "lng": 7.7786
+    },
+    {
+        "region_id": 39,
+        "name": "Mirriah",
+        "lat": 13.7073,
+        "lng": 9.1501
+    },
+    {
+        "region_id": 38,
+        "name": "Tessaoua",
+        "lat": 13.7574,
+        "lng": 7.9874
+    },
+    {
+        "region_id": 40,
+        "name": "Keïta",
+        "lat": 14.7551,
+        "lng": 5.7749
+    },
+    {
+        "region_id": 40,
+        "name": "Illéla",
+        "lat": 14.4605,
+        "lng": 5.2437
+    },
+    {
+        "region_id": 43,
+        "name": "Birnin Gaouré",
+        "lat": 13.0817,
+        "lng": 2.911
+    },
+    {
+        "region_id": 38,
+        "name": "Mayahi",
+        "lat": 13.9553,
+        "lng": 7.6712
+    },
+    {
+        "region_id": 43,
+        "name": "Loga",
+        "lat": 13.6132,
+        "lng": 3.2358
+    },
+    {
+        "region_id": 38,
+        "name": "Dakoro",
+        "lat": 14.5106,
+        "lng": 6.765
+    },
+    {
+        "region_id": 42,
+        "name": "Téra",
+        "lat": 14.0078,
+        "lng": 0.7531
+    },
+    {
+        "region_id": 42,
+        "name": "Kollo",
+        "lat": 13.3043,
+        "lng": 2.339
+    },
+    {
+        "region_id": 43,
+        "name": "Dogondoutchi",
+        "lat": 13.6403,
+        "lng": 4.0265
+    },
+    {
+        "region_id": 40,
+        "name": "Abalak",
+        "lat": 15.4509,
+        "lng": 6.2793
+    },
+    {
+        "region_id": 42,
+        "name": "Filingué",
+        "lat": 14.3521,
+        "lng": 3.3168
+    },
+    {
+        "region_id": 42,
+        "name": "Say",
+        "lat": 13.1007,
+        "lng": 2.3689
+    },
+    {
+        "region_id": 40,
+        "name": "Tchintabaraden",
+        "lat": 15.8969,
+        "lng": 5.7985
+    },
+    {
+        "region_id": 42,
+        "name": "Ouallam",
+        "lat": 14.3164,
+        "lng": 2.086
+    },
+    {
+        "region_id": 39,
+        "name": "Tanout",
+        "lat": 14.9709,
+        "lng": 8.8879
+    },
+    {
+        "region_id": 43,
+        "name": "Maïné Soroa",
+        "lat": 13.2114,
+        "lng": 12.0241
+    },
+    {
+        "region_id": 41,
+        "name": "Tchirozérine",
+        "lat": 17.221,
+        "lng": 7.7614
+    },
+    {
+        "region_id": 41,
+        "name": "Bilma",
+        "lat": 18.6853,
+        "lng": 12.9164
+    }
+]

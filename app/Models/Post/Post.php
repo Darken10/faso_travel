@@ -1,0 +1,70 @@
+<?php
+
+namespace App\Models\Post;
+
+use App\Models\User;
+use App\Models\Post\Tag;
+use App\Models\Post\Like;
+use App\Models\Post\Comment;
+use App\Models\Post\Category;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+
+class Post extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'title',
+        'content',
+        'images_uri',
+        'nb_views',
+    ];
+    
+    protected function casts(): array
+    {
+        return [
+            'images_uri' => 'array',
+        ];
+    }
+
+
+
+
+    /**********Les Relations*************** */
+
+    function category():BelongsTo{
+        return $this->belongsTo(Category::class);
+    }
+
+    function user():BelongsTo{
+        return $this->belongsTo(User::class);
+    }
+
+    function tags():BelongsToMany{
+        return $this->belongsToMany(Tag::class);
+    }
+
+    function comments():HasMany{
+        return $this->hasMany(Comment::class);
+    }
+
+    function likes():HasMany{
+        return $this->hasMany(Like::class);
+    }
+
+    /*************Les Autres Fonctions***************** */
+
+    function count_likes():int{
+        $nb = count($this->likes);
+        return $nb;
+    }
+
+    function is_like():bool{
+        return count($this->likes()->where('user_id',auth()->user()->id)->get())>0;
+    }
+
+}

@@ -3,6 +3,9 @@
 namespace App\Filament\Compagnie\Resources\Compagnie;
 
 use Filament\Forms;
+use Filament\Infolists\Components\Section;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Infolist;
 use Filament\Tables;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
@@ -49,18 +52,18 @@ class GareResource extends Resource
                                 ->searchable()->native(False)->preload()->live()->label('Ville')
                                 ->columnSpanFull(),
                                 //->hiddenOn(VillesRelationManager::class),
-                            
+
                             Forms\Components\TextInput::make('lng')
                                 ->required()
                                 ->numeric(),
                             Forms\Components\TextInput::make('lat')
                                 ->required()
                                 ->numeric(),
-                        
+
                     ])->columns(2),
                     Step::make('Information de la Gare')->schema([
                         Forms\Components\TextInput::make('name')
-                            ->required(), 
+                            ->required(),
                         Forms\Components\Select::make('statut_id')
                             ->relationship('statut', 'name')
                             ->searchable()->native(False)->preload()->label('Statut')
@@ -83,24 +86,28 @@ class GareResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('lng')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('lat')
-                    ->numeric()
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('ville.name')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('statut.name')
                     ->numeric()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('lng')
+                    ->numeric()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('lat')
+                    ->numeric()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('user.name')
                     ->numeric()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('compagnie.name')
                     ->numeric()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -123,6 +130,23 @@ class GareResource extends Resource
                 ]),
             ]);
     }
+
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist->schema([
+            Section::make('Information de la Gare')
+                ->schema([
+                    TextEntry::make('name')->label('Nom'),
+                    TextEntry::make('ville.name')->label('Ville'),
+                    TextEntry::make('ville.region.name')->label('Region'),
+                    TextEntry::make('ville.region.pays.name')->label('Pays'),
+                    TextEntry::make('lat')->label('Latitude'),
+                    TextEntry::make('lng')->label('Longitude'),
+                ])->columns(2),
+
+        ]);
+    }
+
 
     public static function getRelations(): array
     {

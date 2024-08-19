@@ -2,11 +2,11 @@
 
 
 <div class="grid grid-cols-1 gap-6 my-6 px-4 md:px-6 lg:px-8">
-  <div class="w-md max-w-xl mx-auto px-4 py-4 bg-white shadow-md rounded-lg">
+  <div class=" w-full max-w-xl mx-auto px-4 py-4 bg-white shadow-md rounded-lg">
   <div class="py-2 flex flex-row items-center justify-between">
     <div class="flex flex-row items-center">
       <a href="#{{-- {{ $post->user->compagnie ? route('post.filterByCompagnie',$post->user->compagnie) : '#' }} --}}" class="flex flex-row items-center focus:outline-none focus:shadow-outline rounded-lg">
-        <img class="rounded-full h-8 w-8 object-cover" src="{{ asset($post->user->profile_photo_url ?? 'icon/user2.png') }}" alt="">
+        <img class="rounded-full h-8 w-8 object-cover" src="{{ $post->user->profile_photo_url !='' ? asset($post->user->profile_photo_url) : asset('icon/user2.png') }}" alt="">
         <p class="ml-2 text-base font-bold">{{ $post->user->name }}</p>
         <p class="ml-2 text-base text-gray-500" ">{{ $post->user->compagnie ? $post->user->compagnie?->sigle : '' }}</p>
       </a>
@@ -83,8 +83,8 @@
     @endif
     
     <div class="">
-      <a href="#{{-- {{ route($admin ? 'admin.likeListPost' : 'post.likeList',$post) }} --}}">avatar
-        {{-- <x-shared.avatars-list :post="$post" /> --}}
+      <a href="{{ route($admin ? 'admin.likeListPost' : 'post.likeList',$post) }} ">
+        <x-shared.avatars-list :post="$post" /> 
       </a>
     </div>
 

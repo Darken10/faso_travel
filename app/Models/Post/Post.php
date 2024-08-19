@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Facades\Auth;
 
 class Post extends Model
 {
@@ -23,7 +24,16 @@ class Post extends Model
         'images_uri',
         'nb_views',
     ];
-    
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(callback: function (Post $post) {
+            $post->user()->associate(Auth::user());
+        });
+    }
+
     protected function casts(): array
     {
         return [

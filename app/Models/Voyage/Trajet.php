@@ -23,6 +23,15 @@ class Trajet extends Model
         'etat',
     ];
 
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::creating(function ($model) {
+            $model->user_id = auth()->id();
+        });
+    }
+
     function user():BelongsTo{
         return $this->belongsTo(User::class);
     }

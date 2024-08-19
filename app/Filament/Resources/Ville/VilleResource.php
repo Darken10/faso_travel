@@ -28,7 +28,7 @@ class VilleResource extends Resource
     protected static ?string $model = Ville::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-building-office';
-    
+
     protected static ?string $navigationGroup = 'Gestion des Villes';
 
     public static function form(Form $form): Form
@@ -125,9 +125,9 @@ class VilleResource extends Resource
         return $infolist->schema([
             Section::make('Information de la ville')
                 ->schema([
-                    TextEntry::make('region.name')->label('region'),
-                    TextEntry::make('region.pays.name')->label('Pays'),
                     TextEntry::make('name')->label('Nom')->columnSpanFull(),
+                    TextEntry::make('region.name')->label('Region'),
+                    TextEntry::make('region.pays.name')->label('Pays'),
                     TextEntry::make('lat')->label('Latitude'),
                     TextEntry::make('lng')->label('Longitude'),
                 ])->columns(2),

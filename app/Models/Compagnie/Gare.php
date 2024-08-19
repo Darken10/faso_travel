@@ -2,13 +2,16 @@
 
 namespace App\Models\Compagnie;
 
+use App\Models\Compagnie\Compagnie;
 use App\Models\User;
 use App\Models\Statut;
 use App\Models\Ville\Ville;
-use App\Models\Compagnie\Compagnie;
+use App\Models\Voyage\Voyage;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Auth;
 
 class Gare extends Model
 {
@@ -22,7 +25,17 @@ class Gare extends Model
         'statut_id',
         'compagnie_id',
         'ville_id',
+
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(callback: function (Gare $gare) {
+            $gare->user()->associate(Auth::user());
+        });
+    }
 
     function user():BelongsTo{
         return $this->belongsTo(User::class);
@@ -38,5 +51,15 @@ class Gare extends Model
 
     function ville():BelongsTo{
         return $this->belongsTo(Ville::class);
+    }
+
+    function departs():HasMany
+    {
+        return $this->hasMany(Voyage::class, 'depart_id');
+    }
+
+    function arrives():HasMany
+    {
+        return $this->hasMany(Voyage::class, 'arrive_id');
     }
 }

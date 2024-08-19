@@ -1,5 +1,10 @@
-<x-layout>
+@extends('layout')
    
-    <x-like.list :$likes />
+@section('title','Liste des J\'aime')
+    
 
-</x-layout>
+@section('content')
+
+    <x-post.like.list :$likes />
+
+@endsection

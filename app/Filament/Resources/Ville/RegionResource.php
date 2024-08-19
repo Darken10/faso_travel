@@ -3,6 +3,9 @@
 namespace App\Filament\Resources\Ville;
 
 use Filament\Forms;
+use Filament\Infolists\Components\Section;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Infolist;
 use Filament\Tables;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
@@ -66,6 +69,19 @@ class RegionResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
+    }
+
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist->schema([
+            Section::make("Informations")
+                ->schema([
+                    TextEntry::make('name'),
+                    TextEntry::make('pays.name'),
+
+                ])->columns(2),
+
+        ]);
     }
 
     public static function getRelations(): array

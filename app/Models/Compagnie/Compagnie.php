@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Auth;
 
 class Compagnie extends Model
 {
@@ -27,6 +28,15 @@ class Compagnie extends Model
     protected $with = [
         'statut'
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(callback: function (Compagnie $compagnie) {
+            $compagnie->user()->associate(Auth::user());
+        });
+    }
 
     function user():BelongsTo{
         return $this->belongsTo(User::class);

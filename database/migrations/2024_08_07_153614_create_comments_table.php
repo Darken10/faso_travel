@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id();
             $table->text('message');
             $table->foreignIdFor(User::class)->nullable()->constrained()->nullOnDelete();
-            $table->foreignIdFor(Post::class)->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

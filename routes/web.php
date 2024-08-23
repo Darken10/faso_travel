@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\Ticket\VoyageController;
 
 /** Client */
 //Post
@@ -19,8 +20,9 @@ Route::prefix('/')->name('post.')->middleware('auth')->controller(PostController
     Route::get('/{post}/like/list','likeList')->name('likeList')->where([
         'post'=>'[0-9]+',
     ])->middleware('auth');
-/*
 
+    
+/*
     Route::post('/{post}','storeComment')->name('storeComment')->where([
         'post'=>'[0-9]+',
     ])->middleware('auth');
@@ -43,7 +45,15 @@ Route::prefix('/')->name('post.')->middleware('auth')->controller(PostController
 
     Route::get('/{compagnie}/compagnie','filterByCompagnie')->name('filterByCompagnie')->where([
         'compagnie'=>'[0-9]+',
-    ])->middleware('auth'); */
+    ])->middleware('auth'); 
+*/
+
+});
+
+
+
+Route::prefix('/voyage')->name('voyage.')->middleware('auth')->controller(VoyageController::class)->group(function (){
+    Route::get('/','index')->name('index'); 
 });
 
 

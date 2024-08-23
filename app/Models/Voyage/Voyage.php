@@ -67,4 +67,6 @@ class Voyage extends Model
         return $this->belongsToMany(Confort::class);
     }
 
+     
+
 }

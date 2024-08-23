@@ -5,6 +5,7 @@ namespace App\Models\Ville;
 use App\Models\Ville\Region;
 use App\Models\Compagnie\Gare;
 use App\Models\Voyage\Trajet;
+use App\Models\Voyage\Voyage;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -35,5 +36,13 @@ class Ville extends Model
 
     function arrivers():HasMany{
         return $this->hasMany(Trajet::class,'arrivers_id');
+    }
+
+    function voyage_depart(){
+        return $this->hasManyThrough(Voyage::class,Trajet::class,'depart_id','trajet_id','id','id');
+    }
+
+    function voyage_arriver(){
+        return $this->hasManyThrough(Voyage::class,Trajet::class,'arriver_id','trajet_id','id','id');
     }
 }

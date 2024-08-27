@@ -2,102 +2,69 @@
 
 namespace App\Livewire\Voyage;
 
+use App\Models\Compagnie\Compagnie;
 use Livewire\Component;
 use App\Models\Ville\Ville;
 use App\Models\Voyage\Trajet;
 use App\Models\Voyage\Voyage;
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 
 class Search extends Component
 {
 
-    public $departureCity = '';
-    public $arrivalCity = '';
-    public $departureTime = '';
-    public $company = '';
+    public string $compagnieQuery = '';
+    public string $departQuery = '';
+    public string $arriverQuery = '';
+    public  $heureQuery = '' ;
+    public $voyages = [];
 
-    public $departureSuggestions = [];
-    public $arrivalSuggestions = [];
-    public $companySuggestions = [];
-    
-    public $searchResults = [];
-
-    public function updatedDepartureCity()
+   
+    public function updated($property)
     {
-        $this->departureSuggestions = Ville::where('name', 'like', '%' . $this->departureCity . '%')
-            ->pluck('name')
-            ->take(5);
-    }
-
-    public function updatedArrivalCity()
-    {
-        $this->arrivalSuggestions = Ville::where('name', 'like', '%' . $this->arrivalCity . '%')
-            ->pluck('name')
-            ->take(5);
-    }
-
-    public function updatedCompany()
-    {
-        // Suppose that companies are stored in the `company_name` column in the `Voyage` model
-        $this->companySuggestions = Voyage::where('compagnie_id', 'like', '%' . $this->company . '%')
-            ->pluck('compagnie_id')
-            ->take(5);
-    }
-
-    public function selectDepartureCity($city)
-    {
-        $this->departureCity = $city;
-        $this->departureSuggestions = [];
-    }
-
-    public function selectArrivalCity($city)
-    {
-        $this->arrivalCity = $city;
-        $this->arrivalSuggestions = [];
-    }
-
-    public function selectCompany($company)
-    {
-        $this->company = $company;
-        $this->companySuggestions = [];
-    }
-
-    public function search()
-    {
-        $query = Ville::query();
-
-        if ($this->departureCity) {
-            $query->where('name', $this->departureCity)
-                  ->with(['voyagesDepart' => function ($q) {
-                      if ($this->arrivalCity) {
-                          $q->whereHas('trajet.villeArrivee', function ($query) {
-                              $query->where('name', $this->arrivalCity);
-                          });
-                      }
-
-                      if ($this->departureTime) {
-                          $q->whereDate('heure', $this->departureTime);
-                      }
-
-                      if ($this->company) {
-                          $q->where('compagnie_id', $this->company);
-                      }
-                  }]);
+        $query = Voyage::query();
+        if ( $property==="compagnieQuery"){
+            $compagnies = Compagnie::query()
+                                    ->where('name','like','%'.$this->compagnieQuery.'%')
+                                    ->orWhere('sigle','like','%'.$this->compagnieQuery.'%')
+                                     ->get()->pluck('id')->toArray();
+                                     
+            $query = $query->whereIn('compagnie_id',$compagnies) ;
         }
 
-        $results = $query->get();
+        if ( $property==="departQuery"  or $property==="arriverQuery"){
+            $departs = Ville::query()
+                            ->where('name','like','%'.$this->departQuery.'%')
+                            ->get()->pluck('id')->toArray();
+            $arrivers = Ville::query()
+                            ->where('name','like','%'.$this->arriverQuery.'%')
+                            ->get()->pluck('id')->toArray();
+           
 
-        $this->searchResults = new Collection();
-        foreach ($results as $ville) {
-            $this->searchResults = $this->searchResults->merge($ville->voyagesDepart);
+            $tragets = Trajet::query()->whereIn('depart_id',$departs)->WhereIn('arriver_id',$arrivers)
+                                ->get()->pluck('id')->toArray();
+
+            $query = $query->whereIn('trajet_id',$tragets) ;
         }
+
+        if ( $property==="heureQuery"){
+            
+            $query = $query->where('heure','>',$this->heureQuery) ;
+        }
+        
+        return $this->voyages = $query->get();
+    }
+
+
+    public function redirecteToShow(Voyage $voyage){
+        return to_route('voyage.show',$voyage);
     }
 
 
     public function render()
     {
         return view('livewire.voyage.search',[
-            'searchResults' => $this->searchResults,
+            'voyages' => $this->voyages,
         ]);
     }
 }

@@ -4,32 +4,30 @@ namespace App\Livewire\Voyage;
 
 use App\Models\Compagnie\Compagnie;
 use App\Models\Ville\Ville;
+use App\Models\Voyage\Trajet;
 use App\Models\Voyage\Voyage;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Livewire\Component;
 
+
 class Searchable extends Component
 {
 
-    /**
-     * @var Builder
-     */
-    public Builder $query  ;
-
     public string $compagnie = "";
-    public Compagnie $compagnieObjet;
+    public Compagnie|string $compagnieObjet = '';
     public int $selectedIndex = 0;
     public  $compagnies = [];
 
     public string $depart = "";
     public int $selectedIndexDepart = 0;
+    public Ville|string $dapartObjet ='';
     public $departs = [];
 
-    function mount()
-    {
-        $this->query = Voyage::query();
-    }
+    public string $Arriver = "";
+    public int $selectedIndexArriver = 0;
+    public Ville|string $ArriverObjet ='';
+    public $Arrivers = [];
 
     public function updatedCompagnie(): void
     {
@@ -112,6 +110,7 @@ class Searchable extends Component
     {
         if ($this->departs){
             $this->depart = $this->departs[$this->selectedIndexDepart]?->name;
+            $this->dapartObjet = $this->departs[$this->selectedIndexDepart];
             $this->search();
         }
     }
@@ -125,23 +124,32 @@ class Searchable extends Component
     {
         if ($this->departs){
             $this->depart = $this->departs[$index]?->name;
+            $this->dapartObjet =  $this->departs[$index];
             $this->search();
         }
     }
 
 
-    function search()
+    private function search()
     {
-
-        if ($this->compagnie != ''){
-            $this->query = $this->query->where('compagnie_id', $this->compagnie);
+        $query = Voyage::query();
+        
+        if ($this->compagnieObjet != ''){
+            $query->where('compagnie_id',$this->compagnieObjet->id);
+        }
+        if ($this->dapartObjet != '') {
+           $tagets = Trajet::query()->where('depart_id',$this->dapartObjet->id)->get()->pluck('id')->toArray();
+           $query->whereIn('trajet_id',$tagets);
         }
 
-        dd($this->query->get());
+        return $query->get();
     }
 
     public function render()
     {
-        return view('livewire.voyage.searchable');
+        $voyages = $this->search();
+        return view('livewire.voyage.searchable',[
+            'voyages' => $voyages,
+        ]);
     }
 }

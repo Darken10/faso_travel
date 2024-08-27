@@ -2,7 +2,8 @@
 
 @section('content')
     <div>
-        @livewire('voyage.searchable')
+        @livewire('voyage.search')
+        {{-- @livewire('voyage.searchable') --}}
 
     </div>
 @endsection

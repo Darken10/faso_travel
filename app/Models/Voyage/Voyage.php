@@ -29,6 +29,10 @@ class Voyage extends Model
         'arrive_id',
     ];
 
+    protected $casts = [
+        'heure'=>'datetime',
+    ];
+
     protected static function boot()
     {
         parent::boot();

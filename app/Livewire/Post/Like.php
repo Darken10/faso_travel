@@ -13,6 +13,7 @@ class Like extends Component
 
     function mount(Post $post){
         $this->post = $post;
+
     }
 
 
@@ -24,7 +25,7 @@ class Like extends Component
         $like =  PostLike::where('user_id', $data['user_id'])
             ->Where('post_id', $data['post_id'])
             ->get();
-        
+
         if (!$like->isEmpty()) {
             $like[0]->delete();
         } else {
@@ -40,7 +41,7 @@ class Like extends Component
     {
         return view('livewire.post.like',[
             'post'=>$this->post,
-            
+
         ]);
     }
 }

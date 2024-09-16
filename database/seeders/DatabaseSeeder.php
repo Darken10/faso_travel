@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\UserRole;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
@@ -26,23 +27,74 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);*/
 
-        /*$user = User::create([
-            'name' => 'Darken Root',
+        User::create([
+            'name' => 'Darken',
             'email' => 'darken@darken.com',
             'email_verified_at' => now(),
-            'password' =>  Hash::make('password'),
+            'password' => Hash::make('password'),
+            'two_factor_secret' => null,
+            'two_factor_recovery_codes' => null,
             'remember_token' => Str::random(10),
-        ]);*/
+            'profile_photo_path' => null,
+            'current_team_id' => null,
+            'role'=> UserRole::User
+       ]) ;
+        User::create([
+            'name' => 'Client',
+            'email' => 'client@client.com',
+            'email_verified_at' => now(),
+            'password' =>  Hash::make('password'),
+            'two_factor_secret' => null,
+            'two_factor_recovery_codes' => null,
+            'remember_token' => Str::random(10),
+            'profile_photo_path' => null,
+            'current_team_id' => null,
+            'role'=> UserRole::User
+        ]) ;
+        User::create([
+            'name' => 'Admin',
+            'email' => 'admin@admin.com',
+            'email_verified_at' => now(),
+            'password' => Hash::make('password'),
+            'two_factor_secret' => null,
+            'two_factor_recovery_codes' => null,
+            'remember_token' => Str::random(10),
+            'profile_photo_path' => null,
+            'current_team_id' => null,
+            'role'=> UserRole::Admin
+        ]) ;
+        User::create([
+            'name' => 'Root',
+            'email' => 'root@root.com',
+            'email_verified_at' => now(),
+            'password' =>  Hash::make('password'),
+            'two_factor_secret' => null,
+            'two_factor_recovery_codes' => null,
+            'remember_token' => Str::random(10),
+            'profile_photo_path' => null,
+            'current_team_id' => null,
+            'role'=> UserRole::Root
+        ]) ;
+        User::create([
+            'name' => 'Companie Bosse',
+            'email' => 'comapgnie@bosse.com',
+            'email_verified_at' => now(),
+            'password' =>  Hash::make('password'),
+            'two_factor_secret' => null,
+            'two_factor_recovery_codes' => null,
+            'remember_token' => Str::random(10),
+            'profile_photo_path' => null,
+            'current_team_id' => null,
+            'role'=> UserRole::CompagnieBosse
+        ]) ;
 
-        
+
         $this->call([
             StatutSeeder::class,
-            RoleSeeder::class,
             PaysSeeder::class,
             RegionSeeder::class,
             VilleSeeder::class,
             CompagnieSeeder::class,
         ]);
-        //$user->roles()->attach([1,2,3]);
     }
 }

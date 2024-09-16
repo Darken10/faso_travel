@@ -5,9 +5,8 @@
   </style>
 
 <nav class=" z-50 top-0 fixed w-full lg:px-16 px-6 bg-white shadow-md flex flex-wrap items-center lg:py-0 py-2 border-b-4 xl:py-0  border-blue-800">
-    
+
     <div class="flex-1 flex justify-between items-center">
-        
         <a href="/" class="flex text-lg font-semibold capitalize no-underline cente" style="vertical-align: center">
         <img
           src="{{ asset('images/favicon.png') }}"
@@ -32,7 +31,7 @@
       </svg>
     </label>
 
-    
+
     <!-- Profile dropdown -->
     <div class="relative ml-3 flex">
         <div class="mx-2">
@@ -49,12 +48,12 @@
           <button type="button" class="relative flex rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
             <span class="absolute -inset-1.5"></span>
             <span class="sr-only">Open user menu</span>
-            <img class="h-8 w-8 rounded-full" src="{{ asset(Auth::user()->profileUrl) }}" alt="">
+            <img class="h-8 w-8 rounded-full" src="{{ asset(Auth::user()->profileUrl ?Auth::user()->profileUrl: 'icon/user1.png') }}" alt="">
           </button>
-        </a> 
+        </a>
 
     </div>
-    
+
 
 
 
@@ -74,7 +73,7 @@
           <li class="py-2 lg:py-0 ">
             <a
               class="text-blue-600 font-bold no-underline hover:pb-2 hover:border-b-4 hover:border-blue-400"
-              href="#{{-- {{ route('voyage.index') }} --}}"
+              href="{{ route("voyage.index") }}"
             >
               Voyage
             </a>
@@ -125,14 +124,4 @@
         </ul>
       </nav>
     </div>
-    
-    
-    
-    
   </nav>
-
-  
-
-
-
-  

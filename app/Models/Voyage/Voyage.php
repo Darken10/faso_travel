@@ -2,17 +2,19 @@
 
 namespace App\Models\Voyage;
 
-use App\Models\Compagnie\Gare;
-use App\Models\Statut;
 use App\Models\User;
+use App\Models\Statut;
+use App\Models\Ticket\Ticket;
 use App\Models\Voyage\Trajet;
+use App\Models\Compagnie\Gare;
 use App\Models\Voyage\Confort;
 use App\Models\Compagnie\Compagnie;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Support\Facades\Auth;
 
 class Voyage extends Model
 {
@@ -71,6 +73,8 @@ class Voyage extends Model
         return $this->belongsToMany(Confort::class);
     }
 
-     
+     function tickets():HasMany{
+        return $this->hasMany(Ticket::class);
+     }
 
 }

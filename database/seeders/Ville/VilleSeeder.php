@@ -13,7 +13,7 @@ class VilleSeeder extends Seeder
      */
     public function run(): void
     {
-        $data = fopen('/home/darken/Desktop/Lab/laravel/faso-travel/storage/data/data.json', 'r');
+        $data = fopen('storage\data\data.json', 'r');
         $d = "";
         while (!feof($data)) {
             $d = $d . fgets($data);

@@ -52,7 +52,7 @@ class VoyageResource extends Resource
                     ->required(),
                 Forms\Components\Select::make('statut_id')
                     ->relationship('statut', 'name')
-                    ->label('Statut')
+                    ->label('StatutTicket')
                     ->native(False)->searchable()->preload()
                     ->required(),
                 Forms\Components\TimePicker::make('heure')
@@ -134,7 +134,7 @@ class VoyageResource extends Resource
                     TextEntry::make('heure')->label('Heure de Depart'),
                     TextEntry::make('trajet.distance')->label('Distance'),
                     TextEntry::make('prix')->label('Prix'),
-                    TextEntry::make('statut.name')->label('Statut'),
+                    TextEntry::make('statut.name')->label('StatutTicket'),
 
                 ])->columns(2),
 

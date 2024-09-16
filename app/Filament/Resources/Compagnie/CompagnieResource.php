@@ -93,7 +93,7 @@ class CompagnieResource extends Resource
                     TextEntry::make('name')->label('Nom'),
                     TextEntry::make('sigle')->label('Sigle'),
                     TextEntry::make('slogant')->label('Slogant'),
-                    TextEntry::make('statut.name')->label('Statut'),
+                    TextEntry::make('statut.name')->label('StatutTicket'),
                     ImageEntry::make('logo_uri')->label('Logo')->columnSpanFull(),
                     TextEntry::make('description')->label('Description')->columnSpanFull(),
                 ])->columns(2),

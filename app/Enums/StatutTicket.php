@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Ticket;
+namespace App\Enums;
 
 enum StatutTicket: string
 {

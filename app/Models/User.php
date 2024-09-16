@@ -5,17 +5,19 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use Carbon\Carbon;
+use App\Enums\UserRole;
 use App\Models\Post\Like;
 use App\Models\Post\Post;
 use App\Models\Post\Comment;
+use App\Models\Ticket\Ticket;
 use Laravel\Jetstream\HasTeams;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Jetstream\HasProfilePhoto;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
@@ -68,6 +70,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'role' => UserRole::class,
         ];
     }
 
@@ -88,5 +91,11 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Role::class);
     }
+
+
+    function tickets():HasMany{
+        return $this->hasMany(Ticket::class);
+    }
+
 
 }

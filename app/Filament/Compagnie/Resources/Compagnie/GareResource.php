@@ -68,7 +68,7 @@ class GareResource extends Resource
                             ->required(),
                         Forms\Components\Select::make('statut_id')
                             ->relationship('statut', 'name')
-                            ->searchable()->native(False)->preload()->label('Statut')
+                            ->searchable()->native(False)->preload()->label('StatutTicket')
                             ->required(),
                         Forms\Components\Select::make('user_id')
                             ->options([auth()->user()->id,auth()->user()->name])

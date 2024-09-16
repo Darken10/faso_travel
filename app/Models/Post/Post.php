@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class Post extends Model
 {
@@ -77,6 +78,11 @@ class Post extends Model
 
     function is_like():bool{
         return count($this->likes()->where('user_id',auth()->user()->id)->get())>0;
+    }
+
+    function getImageUrl():string
+    {
+        return Storage::url($this->images_uri);
     }
 
 }

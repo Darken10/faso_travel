@@ -10,9 +10,31 @@
             @csrf
 
             <div>
-                <x-label for="name" value="{{ __('Name') }}" />
-                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+                <x-label for="first_name" value="{{ __('Nom') }}" />
+                <x-input id="first_name" class="block mt-1 w-full" type="text" name="first_name" :value="old('first_name')" required autofocus autocomplete="name" />
             </div>
+
+            <div>
+                <x-label for="last_name" value="{{ __('Prenom') }}" />
+                <x-input id="last_name" class="block mt-1 w-full" type="text" name="last_name" :value="old('last_name')" required autofocus autocomplete="name" />
+            </div>
+
+
+            <div class=" mt-2">
+                <x-label for="numero" value="{{ __('Numero') }}"  />
+                <div class=" flex w-full ">
+                    <select name="numero_identifiant" class=" grid-cols-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" >
+                        <option  value="+226" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">+226</option>
+                        <option  value="+225"  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">+225</option>
+                        <option  value="+224"  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">+224</option>
+                        <option  value="+223"  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">+223</option>
+                    </select>
+                    <div class="relative w-full">
+                        <input type="tel" name="numero" placeholder="70707070" required id="numero" class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg rounded-s-gray-100 rounded-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"  />
+                    </div>
+                </div>
+            </div>
+
 
             <div class="mt-4">
                 <x-label for="email" value="{{ __('Email') }}" />

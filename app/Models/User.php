@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+//use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use Carbon\Carbon;
 use App\Enums\UserRole;
@@ -10,6 +10,8 @@ use App\Models\Post\Like;
 use App\Models\Post\Post;
 use App\Models\Post\Comment;
 use App\Models\Ticket\Ticket;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Jetstream\HasTeams;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Jetstream\HasProfilePhoto;
@@ -27,7 +29,6 @@ class User extends Authenticatable
     use HasTeams;
     use Notifiable;
     use TwoFactorAuthenticatable;
-
     /**
      * The attributes that are mass assignable.
      *
@@ -37,6 +38,11 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'first_name',
+        'last_name',
+        'sexe',
+        'numero_identifiant',
+        'role',
     ];
 
     /**
@@ -74,6 +80,15 @@ class User extends Authenticatable
         ];
     }
 
+    protected static function boot(): void
+    {
+        parent::boot();
+        static::creating(callback: function (User $user) {
+            $user->name = $user->first_name .' '. $user->last_name;
+        });
+    }
+
+
     function posts(): HasMany
     {
         return $this->hasMany(Post::class);
@@ -85,11 +100,6 @@ class User extends Authenticatable
 
     function likes():HasMany{
         return $this->hasMany(Like::class);
-    }
-
-    function roles()
-    {
-        return $this->belongsToMany(Role::class);
     }
 
 

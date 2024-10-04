@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Ticket\Payement;
 
+use App\Events\PayementEffectuerEvent;
+use App\Events\SendClientTicketByMailEvent;
 use Exception;
 use App\Enums\MoyenPayment;
 use App\Enums\StatutTicket;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Enums\StatutPayement;
@@ -15,9 +18,14 @@ use App\Helper\QrCode\QrCodeGeneratorHelper;
 use App\Helper\Payement\OrangePayementHelper;
 use App\Helper\Pdf\PdfGeneratorHelper;
 use App\Http\Requests\Ticket\Payement\OrangePayementRequest;
+use App\Mail\Ticket\TicketMail;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class OrangePayementController extends Controller
 {
+
+    public string $storage_public_dir = 'app/public/';
 
     function paymentPage (Ticket $ticket){
         return view('ticket.ticket.payement.orange',[
@@ -29,7 +37,7 @@ class OrangePayementController extends Controller
     function payer(OrangePayementRequest $request,Ticket $ticket){
         $data = $request->validated();
         $orangePayement = new OrangePayementHelper($data['numero'], $data['otp'], $ticket->voyage->prix);
-        
+
         if($orangePayement->payement()){
             $data = [
                 'ticket_id' => $ticket->id,
@@ -43,41 +51,34 @@ class OrangePayementController extends Controller
                 'code_ticket' => Str::random(12),
             ];
             try{
+                DB::beginTransaction();
                 $ticket->statut = StatutTicket::Payer;
                 $oldpayements = Payement::query()->whereBelongsTo($ticket)->where('statut',StatutPayement::complete)->get();
-                
+
                 if($oldpayements->count() > 0){
                     $payement = $oldpayements->last();
                 }
                 else{
                     $payement = Payement::create($data);
                 }
-                
-                if(!file_exists($ticket->code_qr)){
-                    $ticket->code_qr = QrCodeGeneratorHelper::generate('123456789');
-                }
 
-                if(!file_exists($ticket->ticket_pdf)){
-                    $ticket->ticket_pdf = PdfGeneratorHelper::generate($ticket->code_qr,$ticket);
-                }
+                PayementEffectuerEvent::dispatch($ticket);
+                SendClientTicketByMailEvent::dispatch($ticket);
 
-                if(!file_exists($ticket->ticket_image)){
-                    $ticket->ticket_image = '';
-                }
-                $ticket->save();
-
+                DB::commit();
+                return redirect()->route('ticket.show-ticket',['ticket'=>$ticket])->with('success',"Le paiement de votre ticket a été effectué avec succès");
             }
             catch(Exception $e){
-                throw new Exception($e->getMessage());
+                DB::rollback();
+                throw new Exception($e->getMessage()."   Desoler une erreur est survenu lors de l'achat de ticket");
             }
-
 
 
         }
         else{
             return back()->with('error',"L'OTP est incorect");
         }
-       
+
     }
 
 

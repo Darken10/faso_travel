@@ -18,6 +18,7 @@ use Filament\Forms\Components\Wizard;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\TextEntry;
+use Filament\Notifications\Actions\ActionGroup;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\Ville\VilleResource\Pages;
 use App\Filament\Resources\Ville\VilleResource\RelationManagers;
@@ -108,9 +109,12 @@ class VilleResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                ActionGroup::make([
+                    Tables\Actions\ViewAction::make(),
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),
+                ])
+                
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

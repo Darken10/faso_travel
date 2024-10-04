@@ -1,7 +1,5 @@
 <?php
 
-use App\Models\Voyage\Confort;
-use App\Models\Voyage\Voyage;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('confort_voyage', function (Blueprint $table) {
+        Schema::create('classes', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Confort::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(Voyage::class)->constrained()->cascadeOnDelete();
+            $table->string('name');
+            $table->string('description')->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('confort_voyage');
+        Schema::dropIfExists('classes');
     }
 };

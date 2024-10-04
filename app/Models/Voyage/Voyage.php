@@ -52,6 +52,16 @@ class Voyage extends Model
         return $this->belongsTo(Gare::class, 'arrive_id');
     }
 
+    function gareDepart():BelongsTo
+    {
+        return $this->belongsTo(Gare::class, 'depart_id');
+    }
+
+    function gareArriver():BelongsTo{
+        return $this->belongsTo(Gare::class, 'arrive_id');
+    }
+
+
     function statut():BelongsTo
     {
         return $this->belongsTo(Statut::class, 'statut_id');

@@ -10,13 +10,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Confort extends Model
 {
     use HasFactory;
-    
+
     protected $fillable = [
         'title',
         'description',
     ];
 
-    function voyages():BelongsToMany{
-        return $this->belongsToMany(Voyage::class);
+    function classes():BelongsToMany
+    {
+        return $this->belongsToMany(Classe::class);
     }
 }

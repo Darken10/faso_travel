@@ -17,6 +17,7 @@
         "vite": "^5.0"
     },
     "dependencies": {
-        "alpine": "^0.2.1"
+        "alpine": "^0.2.1",
+        "puppeteer": "^23.3.1"
     }
 }

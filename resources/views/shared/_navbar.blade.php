@@ -13,8 +13,7 @@
           width="50"
           height="50"
           class="p-2"
-          alt="Rz Codes Logo"
-        />
+         alt=''/>
         <div class="mt-3 text-red-600">Travel</div>
       </a>
     </div>
@@ -81,7 +80,7 @@
           <li class="py-2 lg:py-0 ">
             <a
               class="text-blue-600 font-bold no-underline hover:pb-2 hover:border-b-4 hover:border-blue-400"
-              href="#{{-- {{ route('ticket.mes-tickets') }} --}}"
+              href="{{ route('ticket.myTickets') }}"
             >
               Mes Tickets
             </a>

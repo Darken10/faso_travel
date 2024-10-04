@@ -2,6 +2,8 @@
 
 namespace App\Helper\Payement;
 
+use App\Enums\MoyenPayment;
+use App\Enums\StatutPayement;
 use Illuminate\Support\Str;
 
 
@@ -20,4 +22,10 @@ class payement {
         $this->token = Str::random(128);
         return $this->token;
     }
+
+    public static function verificationPayementStatutByPayementApi(string $token,MoyenPayment $moyenPayement=MoyenPayment::LigdiCash):StatutPayement
+    {
+        return StatutPayement::complete;
+    }
+
 }

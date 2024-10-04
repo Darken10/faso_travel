@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use App\Models\voyage\Classe;
 use App\Models\Voyage\Trajet;
 use App\Models\Compagnie\Compagnie;
 use Illuminate\Support\Facades\Schema;
@@ -21,6 +22,7 @@ return new class extends Migration
             $table->time('heure');
             $table->foreignIdFor(Compagnie::class)->constrained()->restrictOnDelete();
             $table->unsignedBigInteger('prix')->default(0);
+            $table->foreignIdFor(Classe::class)->default(1)->constrained()->restrictOnDelete();
             $table->timestamps();
         });
     }

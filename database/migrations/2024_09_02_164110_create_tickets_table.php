@@ -20,14 +20,17 @@ return new class extends Migration
             $table->foreignIdFor(User::class)->nullable()->constrained()->nullOnDelete();
             $table->foreignIdFor(Voyage::class)->nullable()->constrained()->nullOnDelete();
             $table->boolean("a_bagage")->nullable()->default(false);
-            $table->json("bagages")->nullable();
+            $table->json("bagages_data")->nullable();
             $table->date('date');
             $table->enum('type',TypeTicket::values());
             $table->enum('statut',StatutTicket::values());
-            $table->string('code_ticket');
-            $table->string('code_qr')->nullable();
-            $table->string('ticket_image')->nullable();
-            $table->string('ticket_pdf')->nullable();
+            $table->string('numero_ticket');
+            $table->unsignedInteger('numero_chaise')->nullable();
+            $table->string('code_sms');
+            $table->string('code_qr');
+            $table->string('image_uri')->nullable();
+            $table->string('pdf_uri')->nullable();
+            $table->string('code_qr_uri')->nullable();
             $table->timestamps();
         });
     }

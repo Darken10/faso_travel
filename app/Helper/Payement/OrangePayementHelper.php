@@ -2,6 +2,7 @@
 
 namespace App\Helper\Payement;
 
+use App\Enums\MoyenPayment;
 use App\Enums\StatutPayement;
 use App\Models\Ticket\Ticket;
 
@@ -33,4 +34,6 @@ class OrangePayementHelper extends Payement{
     public function payementStatut():StatutPayement{
         return StatutPayement::complete;
     }
+
+
 }

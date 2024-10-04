@@ -2,8 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Enums\SexeUser;
 use App\Enums\UserRole;
 use App\Models\User;
+use Database\Seeders\Voyage\ClasseSeeder;
+use Database\Seeders\Voyage\ConfortSeeder;
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -28,8 +31,12 @@ class DatabaseSeeder extends Seeder
         ]);*/
 
         User::create([
-            'name' => 'Darken',
+            'first_name' => 'Darken',
+            'last_name' => 'Dark',
             'email' => 'darken@darken.com',
+            'sexe'=> SexeUser::Homme,
+            'numero'=> 70707070,
+            'numero_identifiant' => '+226',
             'email_verified_at' => now(),
             'password' => Hash::make('password'),
             'two_factor_secret' => null,
@@ -40,7 +47,11 @@ class DatabaseSeeder extends Seeder
             'role'=> UserRole::User
        ]) ;
         User::create([
-            'name' => 'Client',
+            'first_name' => 'Client',
+            'last_name' => 'Dark',
+            'sexe'=> SexeUser::Homme,
+            'numero'=> 70707071,
+            'numero_identifiant' => '+226',
             'email' => 'client@client.com',
             'email_verified_at' => now(),
             'password' =>  Hash::make('password'),
@@ -52,7 +63,11 @@ class DatabaseSeeder extends Seeder
             'role'=> UserRole::User
         ]) ;
         User::create([
-            'name' => 'Admin',
+            'first_name' => 'Admin',
+            'last_name' => 'Dark',
+            'sexe'=> SexeUser::Homme,
+            'numero'=> 70707072,
+            'numero_identifiant' => '+226',
             'email' => 'admin@admin.com',
             'email_verified_at' => now(),
             'password' => Hash::make('password'),
@@ -64,7 +79,11 @@ class DatabaseSeeder extends Seeder
             'role'=> UserRole::Admin
         ]) ;
         User::create([
-            'name' => 'Root',
+            'first_name' => 'Root',
+            'last_name' => 'Dark',
+            'sexe'=> SexeUser::Homme,
+            'numero'=> 70707073,
+            'numero_identifiant' => '+226',
             'email' => 'root@root.com',
             'email_verified_at' => now(),
             'password' =>  Hash::make('password'),
@@ -76,7 +95,11 @@ class DatabaseSeeder extends Seeder
             'role'=> UserRole::Root
         ]) ;
         User::create([
-            'name' => 'Companie Bosse',
+            'first_name' => 'Compagnie',
+            'last_name' => 'Bosse',
+            'sexe'=> SexeUser::Homme,
+            'numero'=> 70707074,
+            'numero_identifiant' => '+226',
             'email' => 'comapgnie@bosse.com',
             'email_verified_at' => now(),
             'password' =>  Hash::make('password'),
@@ -95,6 +118,8 @@ class DatabaseSeeder extends Seeder
             RegionSeeder::class,
             VilleSeeder::class,
             CompagnieSeeder::class,
+            ConfortSeeder::class,
+            ClasseSeeder::class
         ]);
     }
 }

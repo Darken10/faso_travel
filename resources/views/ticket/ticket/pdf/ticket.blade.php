@@ -15,8 +15,5 @@
     <div>
         <img src="{{ $qrCodePath }}" >
     </div>
-
-
-
 </body>
 </html>

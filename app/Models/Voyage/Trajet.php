@@ -10,6 +10,37 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
+/**
+ * 
+ *
+ * @property int $id
+ * @property int $user_id
+ * @property int $depart_id
+ * @property int $arriver_id
+ * @property int|null $distance
+ * @property string|null $temps
+ * @property int|null $etat
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read Ville $arriver
+ * @property-read Ville $depart
+ * @property-read User $user
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Voyage> $voyages
+ * @property-read int|null $voyages_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Trajet newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Trajet newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Trajet query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Trajet whereArriverId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Trajet whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Trajet whereDepartId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Trajet whereDistance($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Trajet whereEtat($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Trajet whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Trajet whereTemps($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Trajet whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Trajet whereUserId($value)
+ * @mixin \Eloquent
+ */
 class Trajet extends Model
 {
     use HasFactory;

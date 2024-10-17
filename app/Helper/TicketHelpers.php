@@ -17,9 +17,7 @@ class TicketHelpers{
     }
 
     public static function generateTicketCodeQr():string{
-        $code = Ulid::generate(now()).Ulid::generate(now());
-
-        return $code;
+        return date('y').date('m').date('d').date('h').date('m').Ulid::generate(now()).Ulid::generate(now());
     }
 
 }

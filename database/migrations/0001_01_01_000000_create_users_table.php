@@ -2,6 +2,7 @@
 
 use App\Enums\StatutUser;
 use App\Enums\UserRole;
+use App\Models\Compagnie\Compagnie;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;

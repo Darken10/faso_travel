@@ -54,4 +54,9 @@ class Compagnie extends Model
         return $this->hasMany(Voyage::class);
     }
 
+    function users():HasMany{
+        return $this->hasMany(User::class);
+    }
+
+
 }

@@ -63,6 +63,9 @@ Route::prefix('/voyage')->name('voyage.')->middleware('auth')->controller(Voyage
     Route::get('/achete/{voyage}','acheter')->name('acheter')->where([
         'voyage'=>'[0-9]+',
     ]);
+
+    Route::get('/is-my-ticket/{voyage}','is_my_ticket')->name('is_my_ticket')->where(['voyage'=>'[0-9]+',]);
+    Route::post('/is-my-ticket/{voyage}','is_my_ticket_traitement')->name('is_my_ticket_traitement')->where(['voyage'=>'[0-9]+',]);
 });
 
 
@@ -70,6 +73,7 @@ Route::prefix('/ticket')->name('ticket.')->middleware('auth')->controller(Ticket
     Route::post('/payer/{voyage}','createTicket')->name('payer')->where(['voyage'=>'[0-9]+',]);
     Route::get('/mes-tickets','myTickets')->name('myTickets');
     Route::get('/mes-tickets/{ticket}','showMyTicket')->name('show-ticket')->where(['ticket'=>'[0-9]+',]);
+    Route::get('/re-envoyer/{ticket}','reenvoyer')->name('reenvoyer')->where(['ticket'=>'[0-9]+']);
     Route::get('/regenerer/{ticket}','regenerer')->name('regenerer')->where(['ticket'=>'[0-9]+']);
 
 });

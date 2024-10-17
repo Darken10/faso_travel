@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\voyage\Classe;
+use App\Models\Voyage\Classe;
 use App\Models\Voyage\Confort;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;

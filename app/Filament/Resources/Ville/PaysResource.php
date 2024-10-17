@@ -68,11 +68,11 @@ class PaysResource extends Resource
                 //
             ])
             ->actions([
-                ActionGroup::make([
+                Tables\Actions\ActionGroup::make([
                     Tables\Actions\ViewAction::make(),
                     Tables\Actions\EditAction::make(),
-                ]),
-                
+                ])
+
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

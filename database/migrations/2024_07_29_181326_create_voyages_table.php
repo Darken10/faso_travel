@@ -1,12 +1,12 @@
 <?php
 
-use App\Models\User;
-use App\Models\voyage\Classe;
-use App\Models\Voyage\Trajet;
 use App\Models\Compagnie\Compagnie;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
+use App\Models\User;
+use App\Models\Voyage\Classe;
+use App\Models\Voyage\Trajet;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {

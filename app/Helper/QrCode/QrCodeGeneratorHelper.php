@@ -24,6 +24,7 @@ class QrCodeGeneratorHelper {
 
         $name = Str::random(10).'-'.uniqid().date('Y').date('m').date('d').date('h').date('m');
         $uri = "tickets/qrcode/$name.png";
+
         $path = storage_path("app/public/$uri");
         $qrCode->saveToFile($path);
         if(file_exists($path)){

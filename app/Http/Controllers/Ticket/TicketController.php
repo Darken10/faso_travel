@@ -68,12 +68,33 @@ class TicketController extends Controller
         ]);
     }
 
-    public function regenerer(Ticket $ticket){
-        PayementEffectuerEvent::dispatch($ticket);
-        SendClientTicketByMailEvent::dispatch($ticket);
-        return back()->with('success', 'Votre ticket a été regener avec succes et vous sera envoyer par mail');
+    public function reenvoyer(Ticket $ticket){
+        return back()->with('success', 'Votre ticket a été re-envoyer par mail');
     }
 
+    public function regenerer(Ticket $ticket){
+        try {
+
+            $ticket->image_uri = null;
+            $ticket->code_qr = TicketHelpers::generateTicketCodeQr();
+            $ticket->code_sms = TicketHelpers::generateTicketCodeSms();;
+            $ticket->code_qr_uri = null;
+            $ticket->pdf_uri = null;
+            $ticket->save();
+
+            if ($ticket->statut === StatutTicket::Payer or $ticket->statut === StatutTicket::EnAttente or $ticket->statut === StatutTicket::Pause){
+                PayementEffectuerEvent::dispatch($ticket);
+                SendClientTicketByMailEvent::dispatch($ticket);
+            }
+            else{
+                return back()->with('error', 'Desole votre ticket est invalide');
+            }
+        }catch (\Exception $e){
+            return back()->with('error', $e->getMessage());
+        }
+
+        return back()->with('success', 'Votre ticket a été bien regener et vous serez envoyser par mail');
+    }
 
 
 }

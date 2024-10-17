@@ -34,7 +34,10 @@ class OrangePayementController extends Controller
     }
 
 
-    function payer(OrangePayementRequest $request,Ticket $ticket){
+    /**
+     * @throws \Throwable
+     */
+    function payer(OrangePayementRequest $request, Ticket $ticket){
         $data = $request->validated();
         $orangePayement = new OrangePayementHelper($data['numero'], $data['otp'], $ticket->voyage->prix);
 
@@ -50,9 +53,11 @@ class OrangePayementController extends Controller
                 'moyen_payment' => MoyenPayment::OrangeMoney,
                 'code_ticket' => Str::random(12),
             ];
+
             try{
                 DB::beginTransaction();
                 $ticket->statut = StatutTicket::Payer;
+
                 $oldpayements = Payement::query()->whereBelongsTo($ticket)->where('statut',StatutPayement::complete)->get();
 
                 if($oldpayements->count() > 0){
@@ -61,7 +66,6 @@ class OrangePayementController extends Controller
                 else{
                     $payement = Payement::create($data);
                 }
-
                 PayementEffectuerEvent::dispatch($ticket);
                 SendClientTicketByMailEvent::dispatch($ticket);
 
@@ -69,14 +73,16 @@ class OrangePayementController extends Controller
                 return redirect()->route('ticket.show-ticket',['ticket'=>$ticket])->with('success',"Le paiement de votre ticket a été effectué avec succès");
             }
             catch(Exception $e){
-                DB::rollback();
-                throw new Exception($e->getMessage()."   Desoler une erreur est survenu lors de l'achat de ticket");
+                DB::rollBack();
+
+                throw new Exception($e->getMessage());
+                return back()->with('error',"Une erreur est survenue lors de l'enregistrement du paiement");
             }
 
 
         }
         else{
-            return back()->with('error',"L'OTP est incorect");
+            return back()->with('error',"Le code OTP est incorrect");
         }
 
     }

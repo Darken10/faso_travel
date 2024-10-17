@@ -49,7 +49,7 @@ class Ticket extends Model
         ];
     }
 
-    function payement():HasMany
+    function payements():HasMany
     {
         return $this->hasMany(Payement::class);
     }

@@ -2,7 +2,7 @@
 
 namespace Database\Seeders\Voyage;
 
-use App\Models\voyage\Classe;
+use App\Models\Voyage\Classe;
 use Illuminate\Database\Seeder;
 
 class ClasseSeeder extends Seeder
@@ -18,7 +18,8 @@ class ClasseSeeder extends Seeder
              * @var Classe $classe
             */
             $classe = Classe::create([
-                'name'=>$classeName
+                'name'=>$classeName,
+                'user_id'=> rand(1,3)
             ]);
             $classe->conforts()->sync([rand(1,10),rand(1,10),rand(1,10)]);
         }

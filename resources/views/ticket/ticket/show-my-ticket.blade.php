@@ -61,8 +61,8 @@
                     <div class="mt-2 text-sm font-medium    ">
                         Prix :
                         <span class="text-green-600">
-                        @if ($ticket->payement()->first()->montant > 0)
-                                {{ $ticket->payement()->first()->montant }}F CFA
+                        @if ($ticket->payements()->first()->montant > 0)
+                                {{ $ticket->payements()->first()->montant }}F CFA
                             @else
                                 Gratuit
                             @endif
@@ -93,15 +93,28 @@
     </div>
 
     @if($ticket->statut === \App\Enums\StatutTicket::Payer)
-        <div class="flex justify-center my-4 w-full">
-            <div class="max-w-lg p-6 bg-white rounded-lg shadow-md w-full">
-                <div class="flex items-center justify-between text-gray-500 dark:text-gray-400">
-                    <div class="flex items-center ">
-                       <a href="{{ route('ticket.regenerer',$ticket) }}" class="">re-envoyer le PDF par mail</a>
+            <div class="flex justify-center my-4 w-full  ">
+                <div class="max-w-lg p-6 bg-white rounded-lg shadow-md w-full ">
+                    <div class="flex items-center justify-between text-gray-500 dark:text-gray-400">
+                        <div class="flex items-center ">
+                            <a href="{{ route('ticket.reenvoyer',$ticket) }}" class="">re-envoyer le PDF par mail</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+            <div class="flex justify-center my-4 w-full  ">
+                <div class="max-w-lg p-6 bg-white rounded-lg shadow-md w-full">
+                    <div class="flex items-center justify-between text-gray-500 dark:text-gray-400">
+                        <div class="flex items-center ">
+                            <a href="{{ route('ticket.regenerer',$ticket) }}" class="">regenerer le ticket</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
     @endif
+
+
 
 @endsection

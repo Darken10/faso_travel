@@ -4,6 +4,7 @@ namespace App\Models;
 
 //use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use App\Models\Compagnie\Compagnie;
 use Carbon\Carbon;
 use App\Enums\UserRole;
 use App\Models\Post\Like;
@@ -12,6 +13,7 @@ use App\Models\Post\Comment;
 use App\Models\Ticket\Ticket;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Laravel\Jetstream\HasTeams;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Jetstream\HasProfilePhoto;
@@ -43,6 +45,7 @@ class User extends Authenticatable
         'sexe',
         'numero_identifiant',
         'role',
+        'compagnie_id'
     ];
 
     /**
@@ -84,7 +87,7 @@ class User extends Authenticatable
     {
         parent::boot();
         static::creating(callback: function (User $user) {
-            $user->name = $user->first_name .' '. $user->last_name;
+            $user->name = Str::upper($user->first_name) .' '. $user->last_name;
         });
     }
 
@@ -107,5 +110,15 @@ class User extends Authenticatable
         return $this->hasMany(Ticket::class);
     }
 
+    function compagnie(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Compagnie::class);
+    }
+
+    function autrePersonnes():HasMany
+    {
+        return $this->hasMany(Authenticatable::class);
+
+    }
 
 }

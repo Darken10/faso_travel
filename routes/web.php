@@ -54,44 +54,45 @@ Route::prefix('/')->name('post.')->middleware(['auth','verified'])->controller(P
 });
 
 
+Route::prefix('/voyage')->name('voyage.')->middleware('auth')->controller(VoyageController::class)->group(function () {
+    Route::get('/', 'index')->name('index');
+    Route::get('/{voyage}', 'show')->name('show')->where(['voyage' => '[0-9]+',]);
+    Route::get('/achete/{voyage}', 'acheter')->name('acheter')->where(['voyage' => '[0-9]+',]);
 
-Route::prefix('/voyage')->name('voyage.')->middleware('auth')->controller(VoyageController::class)->group(function (){
-    Route::get('/','index')->name('index');
-    Route::get('/{voyage}','show')->name('show')->where([
-        'voyage'=>'[0-9]+',
-    ]);
-    Route::get('/achete/{voyage}','acheter')->name('acheter')->where([
-        'voyage'=>'[0-9]+',
-    ]);
+    Route::get('/is-my-ticket/{voyage}', 'is_my_ticket')->name('is_my_ticket')->where(['voyage' => '[0-9]+',]);
+    Route::post('/is-my-ticket/{voyage}', 'is_my_ticket_traitement')->name('is_my_ticket_traitement')->where(['voyage' => '[0-9]+',]);
 
-    Route::get('/is-my-ticket/{voyage}','is_my_ticket')->name('is_my_ticket')->where(['voyage'=>'[0-9]+',]);
-    Route::post('/is-my-ticket/{voyage}','is_my_ticket_traitement')->name('is_my_ticket_traitement')->where(['voyage'=>'[0-9]+',]);
+    Route::get('/is-my-ticket/autre-ticket-info/{voyage}', 'autre_ticket_info')->name('autre-ticket-info')->where(['voyage' => '[0-9]+',]);
+    Route::post('/is-my-ticket/autre-ticket-info/{voyage}', 'register_autre_personne')->name('register-autre-personne')->where(['voyage' => '[0-9]+',]);
+    Route::get('/is-my-ticket/autre-ticket-info/{voyage}/{autre_personne}', 'payer_ticket_autre_personne')->name('payer-ticket-autre-personne')->where(['voyage' => '[0-9]+',]);
+
+
 });
 
 
-Route::prefix('/ticket')->name('ticket.')->middleware('auth')->controller(TicketController::class)->group(function (){
-    Route::post('/payer/{voyage}','createTicket')->name('payer')->where(['voyage'=>'[0-9]+',]);
-    Route::get('/mes-tickets','myTickets')->name('myTickets');
-    Route::get('/mes-tickets/{ticket}','showMyTicket')->name('show-ticket')->where(['ticket'=>'[0-9]+',]);
-    Route::get('/re-envoyer/{ticket}','reenvoyer')->name('reenvoyer')->where(['ticket'=>'[0-9]+']);
-    Route::get('/regenerer/{ticket}','regenerer')->name('regenerer')->where(['ticket'=>'[0-9]+']);
+Route::prefix('/ticket')->name('ticket.')->middleware('auth')->controller(TicketController::class)->group(function () {
+    Route::post('/payer/{voyage}', 'createTicket')->name('payer')->where(['voyage' => '[0-9]+',]);
+    Route::get('/mes-tickets', 'myTickets')->name('myTickets');
+    Route::get('/mes-tickets/{ticket}', 'showMyTicket')->name('show-ticket')->where(['ticket' => '[0-9]+',]);
+    Route::get('/re-envoyer/{ticket}', 'reenvoyer')->name('reenvoyer')->where(['ticket' => '[0-9]+']);
+    Route::get('/regenerer/{ticket}', 'regenerer')->name('regenerer')->where(['ticket' => '[0-9]+']);
 
 });
 
-Route::prefix('/payement')->name('payement.')->middleware('auth')->group(function (){
-    Route::prefix('/orange')->name('orange.')->controller(OrangePayementController::class)->group(function (){
-        Route::get('/{ticket}','paymentPage')->name('paymentPage')->where(['ticket'=>'[0-9]+']);
-        Route::post('/{ticket}','payer')->name('payer')->where(['ticket'=>'[0-9]+']);
+Route::prefix('/payement')->name('payement.')->middleware('auth')->group(function () {
+    Route::prefix('/orange')->name('orange.')->controller(OrangePayementController::class)->group(function () {
+        Route::get('/{ticket}', 'paymentPage')->name('paymentPage')->where(['ticket' => '[0-9]+']);
+        Route::post('/{ticket}', 'payer')->name('payer')->where(['ticket' => '[0-9]+']);
     });
 });
 
 
-Route::prefix('/validation')->name('admin.')->middleware('auth')->group(function (){
-    Route::prefix('/')->name('validation.')->controller(\App\Http\Controllers\Admin\Ticket\TicketController::class)->group(function (){
-        Route::get('/verification/{ticket}','verification')->name('verification')->where(['ticket'=>'[0-9]+']);
-        Route::post('/validation/{ticket}','valider')->name('valider')->where(['ticket'=>'[0-9]+']);
-        Route::get('/verification-by-numero-code','searchByTelAndCodePage')->name('search-by-tel-and-code-page');
-        Route::post('/verification-by-numero-code','searchByTelAndCode')->name('search-by-tel-and-code-page');
+Route::prefix('/validation')->name('admin.')->middleware('auth')->group(function () {
+    Route::prefix('/')->name('validation.')->controller(\App\Http\Controllers\Admin\Ticket\TicketController::class)->group(function () {
+        Route::get('/verification/{ticket}', 'verification')->name('verification')->where(['ticket' => '[0-9]+']);
+        Route::post('/validation/{ticket}', 'valider')->name('valider')->where(['ticket' => '[0-9]+']);
+        Route::get('/verification-by-numero-code', 'searchByTelAndCodePage')->name('search-by-tel-and-code-page');
+        Route::post('/verification-by-numero-code', 'searchByTelAndCode')->name('search-by-tel-and-code-page');
     });
 });
 
@@ -107,6 +108,6 @@ Route::middleware([
 });
 
 
-Route::get('/test',function (){
+Route::get('/test', function () {
 
 });

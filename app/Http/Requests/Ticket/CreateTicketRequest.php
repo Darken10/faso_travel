@@ -27,7 +27,8 @@ class CreateTicketRequest extends FormRequest
             'bagages' =>['nullable','json'],
             'date' =>['required','date','after_or_equal:today'],
             'type' => ['required'],
-            'accepter'=>['required']
+            'accepter'=>['required'],
+            'autre_personne_id'=>['nullable'],
         ];
     }
 }

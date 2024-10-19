@@ -24,7 +24,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 /**
- * 
+ *
  *
  * @property int $id
  * @property string $first_name
@@ -193,5 +193,7 @@ class User extends Authenticatable
         return $this->hasMany(Authenticatable::class);
 
     }
+
+
 
 }

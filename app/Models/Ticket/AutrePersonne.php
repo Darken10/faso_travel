@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
 
 /**
- * 
+ *
  *
  * @property int $id
  * @property string $first_name
@@ -59,9 +59,9 @@ class AutrePersonne extends Model
     protected static function boot(): void
     {
         parent::boot();
-        static::creating(callback: function (User $user) {
-            $user->name = Str::upper($user->first_name) .' '. $user->last_name;
-            $user->user_id = auth()->user()->id;
+        static::creating(callback: function (AutrePersonne $autrePersonne) {
+            $autrePersonne->name = Str::upper($autrePersonne->first_name) .' '. $autrePersonne->last_name;
+            $autrePersonne->user_id = auth()->user()->id;
         });
     }
 

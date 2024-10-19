@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Voyage;
 
+use App\Models\Ticket\AutrePersonne;
 use App\Models\User;
 
 use App\Models\Voyage\Voyage;
@@ -21,12 +22,14 @@ class AcheterTicketForm extends Component
         ['id' => 2, 'name' => 'Option 2', 'image' => 'https://via.placeholder.com/40'],
         ['id' => 3, 'name' => 'Option 3', 'image' => 'https://via.placeholder.com/40'],
     ];
+    public AutrePersonne|null $autre_personne = null;
 
-    public function mount(Voyage $voyage)
+    public function mount(Voyage $voyage,?AutrePersonne $autre_personne = null)
     {
         // Initialize with one empty item
         $this->items = [['selectedOption' => null, 'number' => null]];
         $this->voyage = $voyage;
+        $this->autre_personne = $autre_personne;
     }
 
 

@@ -31,11 +31,14 @@ class TicketController extends Controller
         $data['code_qr'] = TicketHelpers::generateTicketCodeQr();
         $data['type']  = $data['type'] === 'aller_retour' ? TypeTicket::AllerRetour : TypeTicket::AllerSimple;
 
+        $data['is_my_ticket']= array_key_exists('autre_personne_id', $data);
+
         $tickets = Ticket::query()
                 ->whereBelongsTo(Auth::user())
                 ->whereBelongsTo($voyage)
                 ->where('statut',StatutTicket::EnAttente)
                 ->where('date', $data['date'])
+                ->where('is_my_ticket', true)
                 ->get();
 
        if($tickets->count()===0){
@@ -44,7 +47,6 @@ class TicketController extends Controller
        else{
             $ticket = $tickets->last();
        }
-
         return view('ticket.ticket.choix-moyen-payment',[
             'ticket' => $ticket,
         ]);
@@ -69,6 +71,14 @@ class TicketController extends Controller
     }
 
     public function reenvoyer(Ticket $ticket){
+
+        if ($ticket->statut === StatutTicket::Payer or $ticket->statut === StatutTicket::EnAttente or $ticket->statut === StatutTicket::Pause){
+            PayementEffectuerEvent::dispatch($ticket);
+            SendClientTicketByMailEvent::dispatch($ticket);
+        }
+        else{
+            return back()->with('error', 'Desole votre ticket est invalide');
+        }
         return back()->with('success', 'Votre ticket a été re-envoyer par mail');
     }
 

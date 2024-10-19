@@ -25,13 +25,13 @@ namespace App\Models\Compagnie{
  * @property int $statut_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Compagnie\Gare> $gares
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Gare> $gares
  * @property-read int|null $gares_count
- * @property-read \App\Models\Statut $statut
- * @property-read \App\Models\User|null $user
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $users
+ * @property-read Statut $statut
+ * @property-read User|null $user
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, User> $users
  * @property-read int|null $users_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Voyage\Voyage> $voyages
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Voyage> $voyages
  * @property-read int|null $voyages_count
  * @method static \Illuminate\Database\Eloquent\Builder|Compagnie newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Compagnie newQuery()
@@ -46,6 +46,7 @@ namespace App\Models\Compagnie{
  * @method static \Illuminate\Database\Eloquent\Builder|Compagnie whereStatutId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Compagnie whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Compagnie whereUserId($value)
+ * @mixin \Eloquent
  */
 	class Compagnie extends \Eloquent {}
 }
@@ -64,14 +65,14 @@ namespace App\Models\Compagnie{
  * @property int|null $compagnie_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Voyage\Voyage> $arrives
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Voyage> $arrives
  * @property-read int|null $arrives_count
- * @property-read \App\Models\Compagnie\Compagnie|null $compagnie
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Voyage\Voyage> $departs
+ * @property-read Compagnie|null $compagnie
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Voyage> $departs
  * @property-read int|null $departs_count
- * @property-read \App\Models\Statut $statut
- * @property-read \App\Models\User $user
- * @property-read \App\Models\Ville\Ville $ville
+ * @property-read Statut $statut
+ * @property-read User $user
+ * @property-read Ville $ville
  * @method static \Illuminate\Database\Eloquent\Builder|Gare newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Gare newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Gare query()
@@ -85,6 +86,7 @@ namespace App\Models\Compagnie{
  * @method static \Illuminate\Database\Eloquent\Builder|Gare whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Gare whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Gare whereVilleId($value)
+ * @mixin \Eloquent
  */
 	class Gare extends \Eloquent {}
 }
@@ -108,6 +110,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Membership whereTeamId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Membership whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Membership whereUserId($value)
+ * @mixin \Eloquent
  */
 	class Membership extends \Eloquent {}
 }
@@ -120,7 +123,7 @@ namespace App\Models\Post{
  * @property string $name
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Post\Post> $posts
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Post> $posts
  * @property-read int|null $posts_count
  * @method static \Illuminate\Database\Eloquent\Builder|Category newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Category newQuery()
@@ -129,6 +132,7 @@ namespace App\Models\Post{
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 	class Category extends \Eloquent {}
 }
@@ -145,8 +149,8 @@ namespace App\Models\Post{
  * @property string $commentable_type
  * @property int $commentable_id
  * @property int $nb_likes
- * @property-read \App\Models\Post\Post|null $post
- * @property-read \App\Models\User|null $user
+ * @property-read Post|null $post
+ * @property-read User|null $user
  * @method static \Illuminate\Database\Eloquent\Builder|Comment newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Comment newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Comment query()
@@ -158,6 +162,7 @@ namespace App\Models\Post{
  * @method static \Illuminate\Database\Eloquent\Builder|Comment whereNbLikes($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Comment whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Comment whereUserId($value)
+ * @mixin \Eloquent
  */
 	class Comment extends \Eloquent {}
 }
@@ -171,8 +176,8 @@ namespace App\Models\Post{
  * @property int|null $user_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\Post\Post|null $post
- * @property-read \App\Models\User|null $user
+ * @property-read Post|null $post
+ * @property-read User|null $user
  * @method static \Illuminate\Database\Eloquent\Builder|Like newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Like newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Like query()
@@ -181,6 +186,7 @@ namespace App\Models\Post{
  * @method static \Illuminate\Database\Eloquent\Builder|Like wherePostId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Like whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Like whereUserId($value)
+ * @mixin \Eloquent
  */
 	class Like extends \Eloquent {}
 }
@@ -198,14 +204,14 @@ namespace App\Models\Post{
  * @property int|null $category_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\Post\Category|null $category
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Post\Comment> $comments
+ * @property-read Category|null $category
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Comment> $comments
  * @property-read int|null $comments_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Post\Like> $likes
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Like> $likes
  * @property-read int|null $likes_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Post\Tag> $tags
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Tag> $tags
  * @property-read int|null $tags_count
- * @property-read \App\Models\User|null $user
+ * @property-read User|null $user
  * @method static \Illuminate\Database\Eloquent\Builder|Post newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Post newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Post query()
@@ -218,6 +224,7 @@ namespace App\Models\Post{
  * @method static \Illuminate\Database\Eloquent\Builder|Post whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Post whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Post whereUserId($value)
+ * @mixin \Eloquent
  */
 	class Post extends \Eloquent {}
 }
@@ -230,7 +237,7 @@ namespace App\Models\Post{
  * @property string $name
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Post\Post> $posts
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Post> $posts
  * @property-read int|null $posts_count
  * @method static \Illuminate\Database\Eloquent\Builder|Tag newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Tag newQuery()
@@ -239,6 +246,7 @@ namespace App\Models\Post{
  * @method static \Illuminate\Database\Eloquent\Builder|Tag whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Tag whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Tag whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 	class Tag extends \Eloquent {}
 }
@@ -247,11 +255,12 @@ namespace App\Models{
 /**
  * 
  *
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $users
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, User> $users
  * @property-read int|null $users_count
  * @method static \Illuminate\Database\Eloquent\Builder|Role newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Role newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Role query()
+ * @mixin \Eloquent
  */
 	class Role extends \Eloquent {}
 }
@@ -264,9 +273,9 @@ namespace App\Models{
  * @property string $name
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Compagnie\Compagnie> $compagnies
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Compagnie> $compagnies
  * @property-read int|null $compagnies_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Compagnie\Gare> $gares
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Gare> $gares
  * @property-read int|null $gares_count
  * @method static \Illuminate\Database\Eloquent\Builder|Statut newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Statut newQuery()
@@ -275,6 +284,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Statut whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Statut whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Statut whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 	class Statut extends \Eloquent {}
 }
@@ -305,6 +315,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Team wherePersonalTeam($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Team whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Team whereUserId($value)
+ * @mixin \Eloquent
  */
 	class Team extends \Eloquent {}
 }
@@ -329,6 +340,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|TeamInvitation whereRole($value)
  * @method static \Illuminate\Database\Eloquent\Builder|TeamInvitation whereTeamId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|TeamInvitation whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 	class TeamInvitation extends \Eloquent {}
 }
@@ -349,7 +361,7 @@ namespace App\Models\Ticket{
  * @property int|null $user_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\User|null $user
+ * @property-read User|null $user
  * @method static \Illuminate\Database\Eloquent\Builder|AutrePersonne newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|AutrePersonne newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|AutrePersonne query()
@@ -365,6 +377,7 @@ namespace App\Models\Ticket{
  * @method static \Illuminate\Database\Eloquent\Builder|AutrePersonne whereSexe($value)
  * @method static \Illuminate\Database\Eloquent\Builder|AutrePersonne whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|AutrePersonne whereUserId($value)
+ * @mixin \Eloquent
  */
 	class AutrePersonne extends \Eloquent {}
 }
@@ -380,8 +393,8 @@ namespace App\Models\Ticket{
  * @property string|null $trans_id
  * @property string|null $token
  * @property int|null $code_otp
- * @property \App\Enums\StatutPayement $statut
- * @property \App\Enums\MoyenPayment $moyen_payment
+ * @property StatutPayement $statut
+ * @property MoyenPayment $moyen_payment
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Ticket\Ticket|null $ticket
@@ -399,6 +412,7 @@ namespace App\Models\Ticket{
  * @method static \Illuminate\Database\Eloquent\Builder|Payement whereToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Payement whereTransId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Payement whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 	class Payement extends \Eloquent {}
 }
@@ -413,8 +427,8 @@ namespace App\Models\Ticket{
  * @property bool|null $a_bagage
  * @property string|null $bagages_data
  * @property \Illuminate\Support\Carbon $date
- * @property \App\Enums\TypeTicket $type
- * @property \App\Enums\StatutTicket $statut
+ * @property TypeTicket $type
+ * @property StatutTicket $statut
  * @property string $numero_ticket
  * @property int|null $numero_chaise
  * @property string $code_sms
@@ -428,8 +442,8 @@ namespace App\Models\Ticket{
  * @property int|null $autre_personne_id
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Ticket\Payement> $payements
  * @property-read int|null $payements_count
- * @property-read \App\Models\User|null $user
- * @property-read \App\Models\Voyage\Voyage|null $voyage
+ * @property-read User|null $user
+ * @property-read Voyage|null $voyage
  * @method static \Illuminate\Database\Eloquent\Builder|Ticket newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Ticket newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Ticket query()
@@ -452,6 +466,7 @@ namespace App\Models\Ticket{
  * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereVoyageId($value)
+ * @mixin \Eloquent
  */
 	class Ticket extends \Eloquent {}
 }
@@ -476,30 +491,30 @@ namespace App\Models{
  * @property string|null $remember_token
  * @property int|null $current_team_id
  * @property string|null $profile_photo_path
- * @property \App\Enums\UserRole $role
+ * @property UserRole $role
  * @property string $statut
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property int|null $compagnie_id
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \Illuminate\Foundation\Auth\User> $autrePersonnes
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Authenticatable> $autrePersonnes
  * @property-read int|null $autre_personnes_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Post\Comment> $comments
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Comment> $comments
  * @property-read int|null $comments_count
- * @property-read \App\Models\Compagnie\Compagnie|null $compagnie
+ * @property-read Compagnie|null $compagnie
  * @property-read \App\Models\Team|null $currentTeam
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Post\Like> $likes
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Like> $likes
  * @property-read int|null $likes_count
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Team> $ownedTeams
  * @property-read int|null $owned_teams_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Post\Post> $posts
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Post> $posts
  * @property-read int|null $posts_count
  * @property-read string $profile_photo_url
  * @property-read \App\Models\Membership $membership
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Team> $teams
  * @property-read int|null $teams_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Ticket\Ticket> $tickets
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Ticket> $tickets
  * @property-read int|null $tickets_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens
  * @property-read int|null $tokens_count
@@ -528,6 +543,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|User whereTwoFactorRecoveryCodes($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereTwoFactorSecret($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 	class User extends \Eloquent {}
 }
@@ -543,7 +559,7 @@ namespace App\Models\Ville{
  * @property string $iso2
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Ville\Region> $regions
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Region> $regions
  * @property-read int|null $regions_count
  * @method static \Illuminate\Database\Eloquent\Builder|Pays newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Pays newQuery()
@@ -555,6 +571,7 @@ namespace App\Models\Ville{
  * @method static \Illuminate\Database\Eloquent\Builder|Pays whereMoney($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Pays whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Pays whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 	class Pays extends \Eloquent {}
 }
@@ -568,8 +585,8 @@ namespace App\Models\Ville{
  * @property int $pays_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\Ville\Pays $pays
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Ville\Ville> $villes
+ * @property-read Pays $pays
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Ville> $villes
  * @property-read int|null $villes_count
  * @method static \Illuminate\Database\Eloquent\Builder|Region newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Region newQuery()
@@ -579,6 +596,7 @@ namespace App\Models\Ville{
  * @method static \Illuminate\Database\Eloquent\Builder|Region whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Region wherePaysId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Region whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 	class Region extends \Eloquent {}
 }
@@ -594,16 +612,16 @@ namespace App\Models\Ville{
  * @property int|null $region_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Voyage\Trajet> $arrivers
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Trajet> $arrivers
  * @property-read int|null $arrivers_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Voyage\Trajet> $departs
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Trajet> $departs
  * @property-read int|null $departs_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Compagnie\Gare> $gares
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Gare> $gares
  * @property-read int|null $gares_count
- * @property-read \App\Models\Ville\Region|null $region
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Voyage\Voyage> $voyage_arriver
+ * @property-read Region|null $region
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Voyage> $voyage_arriver
  * @property-read int|null $voyage_arriver_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Voyage\Voyage> $voyage_depart
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Voyage> $voyage_depart
  * @property-read int|null $voyage_depart_count
  * @method static \Illuminate\Database\Eloquent\Builder|Ville newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Ville newQuery()
@@ -615,6 +633,7 @@ namespace App\Models\Ville{
  * @method static \Illuminate\Database\Eloquent\Builder|Ville whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Ville whereRegionId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Ville whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 	class Ville extends \Eloquent {}
 }
@@ -640,6 +659,7 @@ namespace App\Models\Voyage{
  * @method static \Illuminate\Database\Eloquent\Builder|Classe whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Classe whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Classe whereUserId($value)
+ * @mixin \Eloquent
  */
 	class Classe extends \Eloquent {}
 }
@@ -664,6 +684,7 @@ namespace App\Models\Voyage{
  * @method static \Illuminate\Database\Eloquent\Builder|Confort whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Confort whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Confort whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 	class Confort extends \Eloquent {}
 }
@@ -681,10 +702,10 @@ namespace App\Models\Voyage{
  * @property int|null $etat
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\Ville\Ville $arriver
- * @property-read \App\Models\Ville\Ville $depart
- * @property-read \App\Models\User $user
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Voyage\Voyage> $voyages
+ * @property-read Ville $arriver
+ * @property-read Ville $depart
+ * @property-read User $user
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Voyage> $voyages
  * @property-read int|null $voyages_count
  * @method static \Illuminate\Database\Eloquent\Builder|Trajet newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Trajet newQuery()
@@ -698,6 +719,7 @@ namespace App\Models\Voyage{
  * @method static \Illuminate\Database\Eloquent\Builder|Trajet whereTemps($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Trajet whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Trajet whereUserId($value)
+ * @mixin \Eloquent
  */
 	class Trajet extends \Eloquent {}
 }
@@ -719,18 +741,18 @@ namespace App\Models\Voyage{
  * @property int|null $arrive_id
  * @property int $statut_id
  * @property int $nb_pace
- * @property-read \App\Models\Compagnie\Gare|null $arrive
- * @property-read \App\Models\Compagnie\Compagnie $compagnie
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Voyage\Confort> $conforts
+ * @property-read Gare|null $arrive
+ * @property-read Compagnie $compagnie
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Confort> $conforts
  * @property-read int|null $conforts_count
- * @property-read \App\Models\Compagnie\Gare|null $depart
- * @property-read \App\Models\Compagnie\Gare|null $gareArriver
- * @property-read \App\Models\Compagnie\Gare|null $gareDepart
- * @property-read \App\Models\Statut|null $statut
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Ticket\Ticket> $tickets
+ * @property-read Gare|null $depart
+ * @property-read Gare|null $gareArriver
+ * @property-read Gare|null $gareDepart
+ * @property-read Statut|null $statut
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Ticket> $tickets
  * @property-read int|null $tickets_count
- * @property-read \App\Models\Voyage\Trajet $trajet
- * @property-read \App\Models\User $user
+ * @property-read Trajet $trajet
+ * @property-read User $user
  * @method static \Illuminate\Database\Eloquent\Builder|Voyage newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Voyage newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Voyage query()
@@ -747,6 +769,7 @@ namespace App\Models\Voyage{
  * @method static \Illuminate\Database\Eloquent\Builder|Voyage whereTrajetId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Voyage whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Voyage whereUserId($value)
+ * @mixin \Eloquent
  */
 	class Voyage extends \Eloquent {}
 }

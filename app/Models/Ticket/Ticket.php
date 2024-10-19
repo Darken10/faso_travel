@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
- * 
+ *
  *
  * @property int $id
  * @property int|null $user_id
@@ -85,6 +85,8 @@ class Ticket extends Model
         'image_uri',
         'pdf_uri',
         'code_qr_uri',
+        'is_my_ticket',
+        'autre_personne_id',
     ];
 
 

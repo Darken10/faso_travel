@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Requests\Admin\Ticket;
+namespace App\Http\Requests\Auth\Register;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SearchTicketByNumeroRequest extends FormRequest
+class Step3FormRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -22,8 +22,7 @@ class SearchTicketByNumeroRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'numero' => ['required','numeric'],
-            'code' => ['required','numeric'],
+            //
         ];
     }
 }

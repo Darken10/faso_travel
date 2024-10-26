@@ -7,7 +7,7 @@
 
         <title>{{ config('app.name', 'Faso Travel') }} | @yield('title')</title>
 
-        <!-- Fonts 
+        <!-- Fonts
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 -->
@@ -17,14 +17,14 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     </head>
-    <body class="font-sans antialiased bg-gray-100"  >
+    <body class="font-sans antialiased bg-gray-100 dark:bg-gray-700 dark:text-gray-300"  >
         @include('shared._navbar')
 
-        <div class=" container px-6">
+        <div class="  px-6 dark:bg-gray-700 dark:text-gray-300">
             <!-- Page Content -->
-            
 
-            <main class="mt-24" >
+
+            <main class="pt-24 dark:bg-gray-700 dark:text-gray-300" >
                 <!-- flash info -->
                 @if (session('success'))
                     <x-alert type="success"> {{ session('success') }}</x-alert>

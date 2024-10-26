@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin\Ticket;
 use App\Enums\StatutTicket;
 use App\Events\Admin\TicketValiderEvent;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\Ticket\searchTicketByNumeroRequest;
+use App\Http\Requests\Admin\Ticket\SearchTicketByNumeroRequest;
 use App\Models\Ticket\Payement;
 use App\Models\Ticket\Ticket;
 use App\Models\User;
@@ -26,6 +26,9 @@ class TicketController extends Controller
         $tickets = Ticket::query()->where('user_id',$client->id)->orWhere('numero_ticket', 'TK '.$data['numero'])->get();
         if (count($tickets) > 0){
             $ticket = $tickets->where('code_sms',$data['code'])->last();
+            if (!($ticket instanceof Ticket)){
+                return back()->with('error','Les données sont invalides');
+            }
             return  to_route('admin.validation.verification',$ticket);
         }
         return back()->with('error','Les données sont invalides');
@@ -38,18 +41,20 @@ class TicketController extends Controller
         ]);
     }
 
-    public function valider(Ticket $ticket)
+    /**
+     * @throws \Throwable
+     */
+    public function valider(Ticket $ticket): \Illuminate\Http\RedirectResponse
     {
         if($ticket->statut===StatutTicket::Payer) {
             DB::beginTransaction();
                 $ticket->statut = StatutTicket::Valider;
                 $ticket->save();
                 TicketValiderEvent::dispatch($ticket);
-
             DB::commit();
-            return back()->with('success',`Le ticket de M {$ticket->user->name}  a bien ete valider`);
+            return to_route('admin.validation.search-by-tel-and-code-page')->with('success',"Le ticket de M {$ticket->user->name}  a bien ete valider");
         }
-        return back()->with('error',`Le Ticket de M {$ticket->user->name} est invalide`);
+        return back()->with('error',"Le Ticket de M {$ticket->user->name} est invalide");
 
     }
 

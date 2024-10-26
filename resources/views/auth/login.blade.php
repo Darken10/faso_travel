@@ -4,12 +4,17 @@
             <x-authentication-card-logo />
         </x-slot>
 
+        <x-slot name="registre">
+            j'ai pas de compte. <a href="{{ route('register') }}">s'inscrire</a>
+        </x-slot>
+
+
         <x-validation-errors class="mb-4" />
 
         @session('status')
-            <div class="mb-4 font-medium text-sm text-green-600 dark:text-green-400">
-                {{ $value }}
-            </div>
+        <div class="mb-4 font-medium text-sm text-green-600 dark:text-green-400">
+            {{ $value }}
+        </div>
         @endsession
 
         <form method="POST" action="{{ route('login') }}">
@@ -44,5 +49,8 @@
                 </x-button>
             </div>
         </form>
+
+
     </x-authentication-card>
+
 </x-guest-layout>

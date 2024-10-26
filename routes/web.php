@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Http\Controllers\Auth\MyRegisterController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\Ticket\Payement\OrangePayementController;
@@ -111,3 +111,17 @@ Route::middleware([
 Route::get('/test', function () {
 
 });
+
+
+Route::prefix('/auth')->name('auth.')->group(function () {
+    Route::prefix('/register')->name('register.')->controller(MyRegisterController::class)->group(function () {
+        Route::get('/step1', 'step1')->name('step1');
+        Route::get('/step2', 'step2')->name('step2');
+        Route::get('/step3', 'step3')->name('step3');
+
+        Route::post('/step1', 'post_step1')->name('post_step1');
+        Route::post('/step2', 'post_step2')->name('post_step2');
+        Route::post('/step3', 'post_step3')->name('post_step3');
+    });
+});
+//auth.register.step2

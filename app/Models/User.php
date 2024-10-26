@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-//use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use App\Models\Compagnie\Compagnie;
 use Carbon\Carbon;
@@ -96,7 +96,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens;
     use HasFactory;
@@ -117,6 +117,7 @@ class User extends Authenticatable
         'last_name',
         'sexe',
         'numero_identifiant',
+        'numero',
         'role',
         'compagnie_id'
     ];

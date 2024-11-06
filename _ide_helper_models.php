@@ -47,6 +47,8 @@ namespace App\Models\Compagnie{
  * @method static \Illuminate\Database\Eloquent\Builder|Compagnie whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Compagnie whereUserId($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Voyage\Classe> $classes
+ * @property-read int|null $classes_count
  */
 	class Compagnie extends \Eloquent {}
 }
@@ -378,6 +380,8 @@ namespace App\Models\Ticket{
  * @method static \Illuminate\Database\Eloquent\Builder|AutrePersonne whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|AutrePersonne whereUserId($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Ticket\Ticket> $tickets
+ * @property-read int|null $tickets_count
  */
 	class AutrePersonne extends \Eloquent {}
 }
@@ -467,6 +471,13 @@ namespace App\Models\Ticket{
  * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereVoyageId($value)
  * @mixin \Eloquent
+ * @property string|null $transferer_at
+ * @property int|null $valider_by_id
+ * @property string|null $valider_at
+ * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent|null $autre_personne
+ * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereTransfererAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereValiderAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereValiderById($value)
  */
 	class Ticket extends \Eloquent {}
 }
@@ -544,8 +555,10 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|User whereTwoFactorSecret($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Ticket\Ticket> $ticketsAutrePersonne
+ * @property-read int|null $tickets_autre_personne_count
  */
-	class User extends \Eloquent {}
+	class User extends \Eloquent implements \Illuminate\Contracts\Auth\MustVerifyEmail {}
 }
 
 namespace App\Models\Ville{
@@ -685,6 +698,8 @@ namespace App\Models\Voyage{
  * @method static \Illuminate\Database\Eloquent\Builder|Confort whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Confort whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property int $user_id
+ * @method static \Illuminate\Database\Eloquent\Builder|Confort whereUserId($value)
  */
 	class Confort extends \Eloquent {}
 }

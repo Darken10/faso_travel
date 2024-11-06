@@ -58,7 +58,7 @@ class OrangePayementController extends Controller
                 DB::beginTransaction();
                 $ticket->statut = StatutTicket::Payer;
 
-                $oldpayements = Payement::query()->whereBelongsTo($ticket)->where('statut',StatutPayement::complete)->get();
+                $oldpayements = Payement::query()->whereBelongsTo($ticket)->where('statut',StatutPayement::Complete)->get();
 
                 if($oldpayements->count() > 0){
                     $payement = $oldpayements->last();

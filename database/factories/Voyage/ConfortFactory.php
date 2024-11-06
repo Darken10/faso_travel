@@ -2,6 +2,7 @@
 
 namespace Database\Factories\Voyage;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,9 +17,11 @@ class ConfortFactory extends Factory
      */
     public function definition(): array
     {
+        $users = User::all();
         return [
             'title'=>fake()->sentence(rand(3,6)),
             'description'=>fake()->paragraphs(asText: true),
+            'user_id'=>$users->random()->id,
         ];
     }
 }

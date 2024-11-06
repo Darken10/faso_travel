@@ -70,4 +70,9 @@ class AutrePersonne extends Model
         return $this->belongsTo(User::class);
     }
 
+    function tickets()
+    {
+        return $this->morphMany(Ticket::class,'autre_personne');
+    }
+
 }

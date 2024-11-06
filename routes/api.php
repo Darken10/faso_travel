@@ -8,8 +8,19 @@ Route::prefix('/ticket')
     ->name('api.ticket.')
     ->controller(TicketApiController::class)
     ->group(function (){
+        Route::post('/verification/with-number','verificationByNumber')->name('verification-by-number');
+
+
         Route::get('/verification/{ticket_code}','verificationByQrCode')->name('verification-by-QrCode');
+        //les information a fournir en post (ticket_id,numero_ticket)
+        Route::post('/verification/{ticket_code}','validerTicket')->name('valider-ticket');
     });
+
+
+Route::prefix('/user')->controller(\App\Http\Controllers\Api\UserController::class)->group(function (){
+    Route::post('/register','register');
+    Route::post('/login','login');
+});
 
 Route::get('/user', function (Request $request) {
     return $request->user();

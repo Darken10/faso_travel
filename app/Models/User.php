@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\StatutUser;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use App\Models\Compagnie\Compagnie;
@@ -154,6 +155,7 @@ class User extends Authenticatable implements MustVerifyEmail
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'role' => UserRole::class,
+            'statut' => StatutUser::class,
         ];
     }
 
@@ -193,6 +195,11 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Authenticatable::class);
 
+    }
+
+    function ticketsAutrePersonne()
+    {
+        return $this->morphMany(Ticket::class,'autre_personne');
     }
 
 

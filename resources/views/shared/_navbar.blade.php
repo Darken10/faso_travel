@@ -43,7 +43,7 @@
               </button>
         </div>
 
-        <a href="#{{-- {{ route('user.profile.show') }} --}}">
+        <a href="{{ route('profile.show') }}">
           <button type="button" class="relative flex rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
             <span class="absolute -inset-1.5"></span>
             <span class="sr-only">Open user menu</span>
@@ -110,7 +110,7 @@
             </a>
           </li>
           <li class="py-2 lg:py-0 ">
-            <form action="#{{-- {{ route('logout') }} --}}" method="post">
+            <form action="{{ route('logout') }} " method="post">
               @csrf
               <button
                 type="submit"

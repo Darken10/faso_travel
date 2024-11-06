@@ -29,7 +29,7 @@
             <div x-data="{ showButton: false }">
                 <!-- Case à cocher pour afficher le bouton -->
                 <label class="flex items-center">
-                    <input type="checkbox" name="a_bagage" value="{{ old('a_bagage') }}" x-model="showButton" class="mr-2 w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800">
+                    <input type="checkbox" name="a_bagage" @checked(old('a_bagage')) x-model="showButton" class="mr-2 w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800">
                     @if($autre_personne instanceof \App\Models\Ticket\AutrePersonne)
                         Il a des Bagage
                     @else

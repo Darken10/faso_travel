@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\Auth;
 
 /**
- * 
+ *
  *
  * @property int $id
  * @property string $title
@@ -35,12 +35,13 @@ class Confort extends Model
     protected $fillable = [
         'title',
         'description',
+        'user_id',
     ];
     protected static function boot()
     {
         parent::boot();
         static::creating(function (Confort $confort) {
-            $confort->user_id = Auth::id();
+            $confort->user_id = $confort->user_id ?? Auth::id();
         });
     }
 

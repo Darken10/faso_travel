@@ -12,8 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('tickets', function (Blueprint $table) {
-            $table->boolean('is_my_ticket')->default(true);
             $table->foreignIdFor(\App\Models\Ticket\AutrePersonne::class)->nullable()->constrained()->nullOnDelete();
+            $table->boolean('is_my_ticket')->default(true);
+            $table->dateTime('transferer_at')->nullable();
+            $table->bigInteger('valider_by_id')->nullable();
+            $table->dateTime('valider_at')->nullable();
         });
     }
 
@@ -24,7 +27,10 @@ return new class extends Migration
     {
         Schema::table('tickets', function (Blueprint $table) {
             $table->dropColumn('is_my_ticket');
+            $table->dropColumn('transferer_at');
             $table->dropColumn('autre_personne_id');
+            $table->dropColumn('valider_by_id');
+            $table->dropColumn('valider_at');
         });
     }
 };

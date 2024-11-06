@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\Auth;
 
 /**
- * 
+ *
  *
  * @property int $id
  * @property string $name
@@ -43,7 +43,7 @@ class Classe extends Model
     {
         parent::boot();
         static::creating(function (Classe $classe) {
-            $classe->user_id = Auth::id();
+            $classe->user_id = $classe->user_id ??  Auth::id();
         });
     }
 

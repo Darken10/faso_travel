@@ -32,7 +32,7 @@ class OrangePayementHelper extends Payement{
     }
 
     public function payementStatut():StatutPayement{
-        return StatutPayement::complete;
+        return StatutPayement::Complete;
     }
 
 

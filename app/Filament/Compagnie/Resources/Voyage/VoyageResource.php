@@ -6,6 +6,7 @@ use App\Filament\Compagnie\Resources\Voyage\VoyageResource\Pages;
 use App\Filament\Compagnie\Resources\Voyage\VoyageResource\RelationManagers;
 use App\Models\Compagnie\Gare;
 use App\Models\Ville\Ville;
+use App\Models\Voyage\Classe;
 use App\Models\Voyage\Voyage;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -52,7 +53,7 @@ class VoyageResource extends Resource
                     ->required(),
                 Forms\Components\Select::make('statut_id')
                     ->relationship('statut', 'name')
-                    ->label('StatutTicket')
+                    ->label('Statut')
                     ->native(False)->searchable()->preload()
                     ->required(),
                 Forms\Components\TimePicker::make('heure')
@@ -67,7 +68,11 @@ class VoyageResource extends Resource
                 Forms\Components\TextInput::make('nb_pace')
                     ->required()
                     ->numeric()
-                    ->default(0)->columnSpanFull(),
+                    ->default(0),
+                Forms\Components\Select::make('classe_id')
+                    ->options(fn(Get $get):Collection => \Auth::user()->compagnie->classes->pluck('name', 'id'))
+                    ->native(False)->searchable()->preload()
+                    ->required(),
             ]);
     }
 

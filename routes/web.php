@@ -77,6 +77,10 @@ Route::prefix('/ticket')->name('ticket.')->middleware('auth')->controller(Ticket
     Route::get('/re-envoyer/{ticket}', 'reenvoyer')->name('reenvoyer')->where(['ticket' => '[0-9]+']);
     Route::get('/regenerer/{ticket}', 'regenerer')->name('regenerer')->where(['ticket' => '[0-9]+']);
 
+    Route::get('/tansferer/{ticket}', 'tranfererTicketToOtherUser')->name('tranferer-ticket-to-other-user')->where(['ticket' => '[0-9]+']);
+    Route::post('/tansferer/{ticket}', 'tranfererTicketToOtherUserTraitement')->name('tranferer-ticket-to-other-user-traitement')->where(['ticket' => '[0-9]+']);
+    Route::post('/tansferer/{ticket}/traitement', 'tranfererTicket')->name('tranferer-ticket')->where(['ticket' => '[0-9]+']);
+
 });
 
 Route::prefix('/payement')->name('payement.')->middleware('auth')->group(function () {

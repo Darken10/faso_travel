@@ -25,9 +25,10 @@ class VoyageController extends Controller
         ]);
     }
 
-    function acheter(Voyage $voyage): \Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+    function acheter(Voyage $voyage)
     {
         return view('ticket.voyage.achaterTicket',[
+            'autre_personne' => null,
             'voyage'=>$voyage,
         ]);
     }

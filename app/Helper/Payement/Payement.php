@@ -7,7 +7,7 @@ use App\Enums\StatutPayement;
 use Illuminate\Support\Str;
 
 
-class payement {
+class Payement {
 
 
     public string $transaction_id;
@@ -25,7 +25,7 @@ class payement {
 
     public static function verificationPayementStatutByPayementApi(string $token,MoyenPayment $moyenPayement=MoyenPayment::LigdiCash):StatutPayement
     {
-        return StatutPayement::complete;
+        return StatutPayement::Complete;
     }
 
 }

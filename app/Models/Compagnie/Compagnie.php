@@ -4,16 +4,18 @@ namespace App\Models\Compagnie;
 
 use App\Models\User;
 use App\Models\Statut;
+use App\Models\Voyage\Classe;
 use App\Models\Voyage\Voyage;
 use App\Models\Compagnie\Gare;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Support\Facades\Auth;
 
 /**
- * 
+ *
  *
  * @property int $id
  * @property string $name
@@ -92,6 +94,11 @@ class Compagnie extends Model
 
     function users():HasMany{
         return $this->hasMany(User::class);
+    }
+
+    function classes():HasManyThrough
+    {
+        return $this->hasManyThrough(Classe::class,User::class);
     }
 
 

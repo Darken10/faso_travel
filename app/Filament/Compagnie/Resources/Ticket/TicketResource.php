@@ -4,6 +4,7 @@ namespace App\Filament\Compagnie\Resources\Ticket;
 
 use App\Filament\Compagnie\Resources\Ticket\TicketResource\Pages;
 use App\Filament\Compagnie\Resources\Ticket\TicketResource\RelationManagers;
+use App\Filament\Compagnie\Widgets\StatsCompagnieOverview;
 use App\Models\Ticket\Ticket;
 use Filament\Forms;
 use Filament\Forms\Form;

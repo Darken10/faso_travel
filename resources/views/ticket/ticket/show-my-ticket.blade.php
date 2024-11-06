@@ -73,8 +73,19 @@
                 </div>
             </div>
 
-
+            <div class="flex justify-center my-4 w-full  ">
+                <div class="max-w-lg p-6 bg-white rounded-lg shadow-md w-full dark:text-gray-200 dark:bg-gray-800">
+                    <div class="flex items-center justify-between text-gray-500 dark:text-gray-300">
+                        <div class="flex items-center ">
+                            <a href="{{ route('ticket.tranferer-ticket-to-other-user',$ticket) }}" class="">Transferer a un autre utilisateur</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
     @endif
+
+
+
 
 
 

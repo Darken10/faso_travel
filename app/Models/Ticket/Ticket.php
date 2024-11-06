@@ -89,6 +89,9 @@ class Ticket extends Model
         'autre_personne_id',
     ];
 
+    protected $with = [
+        'user',
+    ];
 
     protected function casts()
     {
@@ -150,5 +153,9 @@ class Ticket extends Model
         return $this->voyage->conforts;
     }
 
+    function autre_personne()
+    {
+        return $this->morphTo();
+    }
 
 }

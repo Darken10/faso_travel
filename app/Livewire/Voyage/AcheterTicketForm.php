@@ -17,14 +17,9 @@ class AcheterTicketForm extends Component
     public Voyage $voyage;
     public string $type_ticket;
     public $items = []; // Initialiser une liste vide d'éléments
-    public $options = [
-        ['id' => 1, 'name' => 'Option 1', 'image' => 'https://via.placeholder.com/40'],
-        ['id' => 2, 'name' => 'Option 2', 'image' => 'https://via.placeholder.com/40'],
-        ['id' => 3, 'name' => 'Option 3', 'image' => 'https://via.placeholder.com/40'],
-    ];
     public AutrePersonne|null $autre_personne = null;
 
-    public function mount(Voyage $voyage,?AutrePersonne $autre_personne = null)
+    public function mount(Voyage $voyage, $autre_personne=null): void
     {
         // Initialize with one empty item
         $this->items = [['selectedOption' => null, 'number' => null]];
@@ -33,13 +28,13 @@ class AcheterTicketForm extends Component
     }
 
 
-    public function addItem()
+    public function addItem(): void
     {
 
         $this->items[] = ['selectedOption' => null, 'number' => null];
     }
 
-    public function removeItem($index)
+    public function removeItem($index): void
     {
         unset($this->items[$index]); // Supprimer un élément par index
         $this->items = array_values($this->items); // Réindexer l'array
@@ -52,7 +47,7 @@ class AcheterTicketForm extends Component
 
 
 
-    public function render()
+    public function render(): \Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
         return view('livewire.voyage.acheter-ticket-form');
     }

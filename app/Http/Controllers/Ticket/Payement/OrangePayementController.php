@@ -66,9 +66,9 @@ class OrangePayementController extends Controller
                 else{
                     $payement = Payement::create($data);
                 }
+
                 PayementEffectuerEvent::dispatch($ticket);
                 SendClientTicketByMailEvent::dispatch($ticket);
-
                 DB::commit();
                 return redirect()->route('ticket.show-ticket',['ticket'=>$ticket])->with('success',"Le paiement de votre ticket a été effectué avec succès");
             }

@@ -30,5 +30,6 @@ class PayementCreatPdfListener
             $event->ticket->pdf_uri = PdfGeneratorHelper::generate(storage_path($this->storage_public_dir.$event->ticket->code_qr_uri),$event->ticket);
             $event->ticket->save();
         }
+
     }
 }

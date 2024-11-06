@@ -4,22 +4,20 @@ namespace App\Mail\Ticket;
 
 use App\Models\Ticket\Ticket;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
-use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Envelope;
-use Illuminate\Mail\Mailables\Attachment;
-use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\SerializesModels;
 
-class TicketMail extends Mailable
+class TransfertTicketToOrherUserMyMail extends Mailable
 {
     use Queueable, SerializesModels;
-    public string $storage_public_dir = 'app/public/';
 
     /**
      * Create a new message instance.
      */
-    public function __construct( public Ticket $ticket)
+    public function __construct(public  Ticket $ticket)
     {
         //
     }
@@ -30,7 +28,7 @@ class TicketMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Achat de Ticket',
+            subject: 'Transfert Ticket To Orher User My Mail',
         );
     }
 
@@ -40,7 +38,7 @@ class TicketMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'mail.ticket.ticket-mail',
+            view: 'mail.ticket.transfert-ticket-to-orher-user-my-mail',
         );
     }
 
@@ -51,10 +49,6 @@ class TicketMail extends Mailable
      */
     public function attachments(): array
     {
-        return [
-            Attachment::fromPath(storage_path($this->storage_public_dir.$this->ticket->pdf_uri))
-                ->as('ticket.pdf')
-                ->withMime('application/pdf'),
-        ];
+        return [];
     }
 }

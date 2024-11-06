@@ -474,7 +474,9 @@ namespace App\Models\Ticket{
  * @property string|null $transferer_at
  * @property int|null $valider_by_id
  * @property string|null $valider_at
+ * @property int|null $transferer_a_user_id
  * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent|null $autre_personne
+ * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereTransfererAUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereTransfererAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereValiderAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereValiderById($value)

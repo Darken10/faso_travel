@@ -128,7 +128,7 @@ class Ticket extends Model
     }
 
     function compagnie():Compagnie{
-        return $this->voyage->commpagnie;
+        return $this->voyage->compagnie;
     }
 
     function heureDepart(){

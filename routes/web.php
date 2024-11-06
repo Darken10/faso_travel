@@ -79,7 +79,7 @@ Route::prefix('/ticket')->name('ticket.')->middleware('auth')->controller(Ticket
 
     Route::get('/tansferer/{ticket}', 'tranfererTicketToOtherUser')->name('tranferer-ticket-to-other-user')->where(['ticket' => '[0-9]+']);
     Route::post('/tansferer/{ticket}', 'tranfererTicketToOtherUserTraitement')->name('tranferer-ticket-to-other-user-traitement')->where(['ticket' => '[0-9]+']);
-    Route::post('/tansferer/{ticket}/traitement', 'tranfererTicket')->name('tranferer-ticket')->where(['ticket' => '[0-9]+']);
+    Route::post('/tansferer/{ticket}/traitement', 'tranfererTicketTraitement')->name('tranferer-ticket-traitement')->where(['ticket' => '[0-9]+']);
 
 });
 

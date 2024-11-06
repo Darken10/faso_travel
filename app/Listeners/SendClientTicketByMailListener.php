@@ -4,7 +4,9 @@ namespace App\Listeners;
 
 use App\Events\SendClientTicketByMail;
 use App\Events\SendClientTicketByMailEvent;
+use App\Helper\TicketHelpers;
 use App\Mail\Ticket\TicketMail;
+use App\Models\User;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Mail;
@@ -24,6 +26,7 @@ class SendClientTicketByMailListener
      */
     public function handle(SendClientTicketByMailEvent $event): void
     {
-        Mail::to($event->ticket->user->email)->send(new TicketMail($event->ticket));
+        $email = TicketHelpers::getEmailToSendMail($event->ticket);
+        Mail::to($email)->send(new TicketMail($event->ticket));
     }
 }

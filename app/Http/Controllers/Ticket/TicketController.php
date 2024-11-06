@@ -8,8 +8,10 @@ use App\Enums\TypeTicket;
 use App\Events\CreatedQrCodeEvent;
 use App\Events\PayementEffectuerEvent;
 use App\Events\SendClientTicketByMailEvent;
+use App\Events\TranfererTicketToOtherUserEvent;
 use App\Models\Ticket\AutrePersonne;
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 use App\Helper\TicketHelpers;
 use App\Models\Voyage\Voyage;
@@ -65,7 +67,7 @@ class TicketController extends Controller
 
     function myTickets(){
 
-        $tickets = Ticket::query()->whereBelongsTo(Auth::user())->latest()->get();
+        $tickets = Ticket::query()->whereBelongsTo(Auth::user())->where('is_my_ticket',true)->latest()->get();
 
         return view('ticket.ticket.my-tickets',[
             'tickets' => $tickets,
@@ -93,27 +95,25 @@ class TicketController extends Controller
     }
 
     public function regenerer(Ticket $ticket){
-        try {
-
-            $ticket->image_uri = null;
-            $ticket->code_qr = TicketHelpers::generateTicketCodeQr();
-            $ticket->code_sms = TicketHelpers::generateTicketCodeSms();
-            $ticket->code_qr_uri = null;
-            $ticket->pdf_uri = null;
-            $ticket->save();
-
+        $response = TicketHelpers::regenerateTicket($ticket);
+        if ($response===true){
             if ($ticket->statut === StatutTicket::Payer or $ticket->statut === StatutTicket::EnAttente or $ticket->statut === StatutTicket::Pause){
-                PayementEffectuerEvent::dispatch($ticket);
-                SendClientTicketByMailEvent::dispatch($ticket);
+                try {
+                    PayementEffectuerEvent::dispatch($ticket);
+                    SendClientTicketByMailEvent::dispatch($ticket);
+
+                }catch (Exception $e){
+                    return back()->with('error', 'Une erreur inconnu est survenue');
+                }
             }
-            else{
-                return back()->with('error', 'Desole votre ticket est invalide');
-            }
-        }catch (\Exception $e){
-            return back()->with('error', $e->getMessage());
+            return back()->with('success', 'Votre ticket a été bien regener et vous serez envoyser par mail');
+        }
+        elseif($response===false){
+            return back()->with('error', 'Desole votre ticket est invalide');
+        }else{
+            return back()->with('error', 'Une erreur inconnu est survenue');
         }
 
-        return back()->with('success', 'Votre ticket a été bien regener et vous serez envoyser par mail');
     }
 
     public function tranfererTicketToOtherUser(Ticket $ticket)
@@ -144,8 +144,47 @@ class TicketController extends Controller
     }
 
 
-    public function tranfererTicket(Ticket $ticket,Request $request)
+
+    public function tranfererTicketTraitement(Ticket $ticket, Request $request)
     {
+        $data = $request->validate([
+            'password'=> ['required'],
+            'accepted'=> ['required'],
+            'user_id'=> ['required'],
+        ]);
+        if (\Hash::check($data['password'],$ticket->user->password) ){
+            if (($ticket->statut === StatutTicket::Payer or $ticket->statut === StatutTicket::Pause)){
+                try {
+                    \DB::beginTransaction();
+                    $ticket->is_my_ticket = false;
+                    $ticket->transferer_at = now();
+                    $ticket->transferer_a_user_id = $data['user_id'];
+                    $ticket->save();
+                    $response = TicketHelpers::regenerateTicket($ticket);
+
+                    \DB::commit();
+
+                }catch(\Exception|\Throwable $e){
+                    \DB::rollBack();
+
+                    return back()->with('error',"Une erreur inattendu est survenue! veullier contact l'administrateur");
+                }
+
+                if ($response===true){
+                    TranfererTicketToOtherUserEvent::dispatch($ticket);
+                    return back()->with('success', "Votre ticket a été bien transfere vous n'etes plus en possession de ce Ticket");
+                }
+                elseif($response===false){
+                    return back()->with('error', 'Desole votre ticket est invalide');
+                }
+            }else{
+                return back()->with('error',"Le ticket est invalide");
+            }
+        }else{
+            return back()->with('error',"Votre mot de passe incorrect ");
+        }
+        dd($data);
+
 
     }
 

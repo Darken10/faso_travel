@@ -4,44 +4,47 @@
         <div class=" grid grid-cols-12 items-center  ">
             <div class="w-full border-r-2 border-gray-600 col-span-9 ">
                 <div class=" flex gap-2">
-                    <img src="{{ asset('icon/12503626.png') }}" class="w-4">
+                    <img src="{{ asset('icon/12503626.png') }}" class="w-4" alt="">
                     <div>
                         <h5 class=" text-gray-500 capitalize text-sm">{{ $ticket->type }}</h5>
                     </div>
                 </div>
                 <div>
                     <table class="w-full text-center">
-                        <tr >
-                            <td>
-                                <span class=" text-lg font-bold">{{ $ticket->heureDepart()->format('H:m') }}</span>
-                            </td>
-                            <td>
-                                <span>---------</span>
-                            </td>
-                            <td>
-                                <span class=" text-lg font-bold">{{ $ticket->heureArriver() }}</span>
-                            </td>
-                        </tr>
                         <tr>
                             <td>
                                 <span class=" text-gray-600 capitalize font-semibold">{{ $ticket->villeDepart()->name }} ({{ $ticket->villeDepart()->region->pays->iso2 }})</span>
                             </td>
                             <td>
-                                <span class=" text-sm text-green-500">Direct</span>
+                                <span class=" text-sm text-green-500">
+                                    <div class="mt-2 text-xs font-medium text-gray-800 dark:text-gray-300">
+                                        @if($ticket?->type === \App\Enums\TypeTicket::AllerRetour)
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 21 3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
+                                            </svg>
+                                          @elseif($ticket?->type === \App\Enums\TypeTicket::AllerSimple)
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                                            </svg>
+                                        @else
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                                            </svg>
+                                        @endif
+                                    </div>
+                                </span>
                             </td>
                             <td>
                                 <span class=" text-gray-600 capitalize font-semibold">{{ $ticket->villeArriver()->name }} ({{ $ticket->villeArriver()->region->pays->iso2 }})</span>
                             </td>
                         </tr>
-                        <tr>
-                            <td>
-                                <span class=" text-sm text-gray-600 capitalize font-semibold italic">{{ $ticket->gareDepart()->name }}</span>
-                            </td>
-                            <td>
-                                <span class="  text-green-500"></span>
-                            </td>
-                            <td>
-                                <span class=" text-sm text-gray-600 capitalize font-semibold italic">{{ $ticket->gareArriver()->name }}</span>
+                        <tr >
+                            <td  colspan="3">
+                                <div class="flex-row justify-center ">
+                                    <span class=" text-sm text-gray-600 capitalize font-semibold italic">Le {{ $ticket?->date?->format('d M Y') }} </span>
+                                    <br>
+                                    <span class=" text-sm text-gray-600 capitalize font-semibold italic"> à {{ $ticket?->voyage?->heure?->format('H\h i') }} </span>
+                                </div>
                             </td>
                         </tr>
                     </table>
@@ -51,8 +54,13 @@
                <div class=" absolute -top-2  rounded-md -right-3">
                 <span class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-green-400 border border-green-400">{{ $ticket->statut }}</span>
                </div>
-               <div>
-                    <img  src="{{ asset('storage\tickets\qrcode\UZ4soUZ4eU-66e64c40e2d36202409150209.png') }}" alt="" srcset="">
+               <div class="ml-4  flex-row justify-center">
+                   <div>
+                       cliquer
+                   </div>
+                   <div class="ml-3">
+                       ici
+                   </div>
                </div>
             </div>
         </div>

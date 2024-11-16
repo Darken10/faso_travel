@@ -34,11 +34,11 @@
                 <div class=" flex justify-between my-2">
                     <div class="">
                         <div class=" text-green-600">Gare Depart </div>
-                        <div>{{ $voyage->depart->name }}</div>
+                        <div>{{ $voyage->gareDepart->name }}</div>
                     </div>
                     <div class="">
                         <div class=" text-green-600">Gare d'Arriver </div>
-                        <div>{{ $voyage->arrive->name }}</div>
+                        <div>{{ $voyage->gareArrive->name }}</div>
                     </div>
                 </div>
 
@@ -71,9 +71,26 @@
                     </div>
                     <div class="">
                         <div class=" text-green-600">Classe</div>
-                        <div>A</div>
+                        <div>{{ $voyage->classe->name }}</div>
                     </div>
                 </div>
+                <ul>
+                    @forelse($voyage->classe->conforts as $confort)
+
+                        <div class=" flex justify-between my-2">
+                            <div class="">
+                                <div class=" flex gap-3">
+                                    <img src="{{ asset('images/idee.png') }}" class="w-8" alt="" srcset="">
+                                    <span>{{ $confort->title }}</span>
+                                </div>
+                                <div class="text-xs">{{ $confort->description }}</div>
+                            </div>
+                        </div>
+                    @empty
+                </ul>
+                    Pas de Conforts
+
+                @endforelse
             </div>
 
             <div class="flex justify-end">

@@ -51,7 +51,8 @@ class TicketHelpers{
         if ($ticket?->is_my_ticket){
             $email = $ticket?->user->email;
         } elseif ($ticket?->autre_personne_id!==null){
-            $email = $ticket?->autre_personne->email;
+            $email = $ticket?->autre_personne?->email ?? $ticket?->user?->email;
+
         }elseif ($ticket?->transferer_a_user_id!==null){
             $email = User::find($ticket?->transferer_a_user_id)?->email;
         }else{

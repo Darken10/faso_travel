@@ -142,11 +142,11 @@ class Ticket extends Model
     }
 
     function gareDepart():Gare{
-        return $this->voyage->depart;
+        return $this->voyage->gareDepart;
     }
 
     function gareArriver():Gare{
-        return $this->voyage->arrive;
+        return $this->voyage->gareArriver;
     }
 
     function conforts(){
@@ -155,7 +155,7 @@ class Ticket extends Model
 
     function autre_personne()
     {
-        return $this->morphTo();
+        return $this->belongsTo(AutrePersonne::class);
     }
 
 }

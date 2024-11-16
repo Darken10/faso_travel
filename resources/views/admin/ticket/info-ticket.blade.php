@@ -30,7 +30,13 @@
             </div>
             <div class="flex flex-col items-center pb-10">
                 <img class="w-24 h-24 mb-3 rounded-full shadow-lg" src="{{ asset($ticket->user->profileUrl ?? 'icon/user1.png') }}" alt="Bonnie image"/>
-                <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">{{ $ticket->user->name  }}</h5>
+                <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">
+                    @if($ticket?->is_my_ticket or $ticket->transferer_a_user_id=== auth()->user()->id)
+                        {{$ticket->user->name}}
+                    @else
+                        {{$ticket->autre_personne->name}}
+                    @endif
+                </h5>
                 <span class="text-sm text-gray-500 dark:text-gray-400">{{ $ticket->user->profession?? ''  }}</span>
 
 

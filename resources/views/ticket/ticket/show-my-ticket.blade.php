@@ -10,7 +10,13 @@
                     <img class="w-10 h-10 rounded-full " src="{{ asset(Auth::user()->profileUrl ?Auth::user()->profileUrl: 'icon/user1.png') }}" alt="User">
                     <div class="ml-4">
                         <div class="text-sm font-medium text-gray-900 dark:text-gray-300">
-                            {{ $ticket->user->name }}
+
+                            @if($ticket?->is_my_ticket or $ticket->transferer_a_user_id=== auth()->user()->id)
+                                {{$ticket->user->name}}
+                            @else
+                                {{$ticket->autre_personne->name}}
+                            @endif
+
                         </div>
                         <div class="text-xs font-medium text-gray-600 dark:text-gray-400">
                             {{ $ticket->created_at->format('d/m/Y H:i') }}
@@ -29,6 +35,7 @@
             <div class=" grid md:grid-cols-12 gap-x-2">
 
                 <x-ticket.info-myticket-aller-retour-date-prix :$ticket />
+
 
                 <div class=" col-span-2 mt-4 flex justify-center">
                     @if($ticket->statut === \App\Enums\StatutTicket::Payer)

@@ -23,10 +23,10 @@ class PayementCreatImageListener
      */
     public function handle(CreatedQrCodeEvent $event): void
     {
-
         if($event->ticket->image_uri === null or !file_exists(storage_path($this->storage_public_dir.$event->ticket->image_uri))){
             $event->ticket->image_uri = null;
             $event->ticket->save();
         }
+
     }
 }

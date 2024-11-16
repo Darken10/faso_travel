@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Compagnie\Care;
 use App\Models\Compagnie\Compagnie;
 use App\Models\User;
 use App\Models\Voyage\Classe;
@@ -23,6 +24,7 @@ return new class extends Migration
             $table->foreignIdFor(Compagnie::class)->constrained()->restrictOnDelete();
             $table->unsignedBigInteger('prix')->default(0);
             $table->foreignIdFor(Classe::class)->default(1)->constrained()->restrictOnDelete();
+            $table->foreignIdFor(Care::class)->nullable()->constrained()->nullOnDelete();
             $table->timestamps();
         });
     }

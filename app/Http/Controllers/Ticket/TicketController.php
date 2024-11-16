@@ -67,7 +67,7 @@ class TicketController extends Controller
 
     function myTickets(){
 
-        $tickets = Ticket::query()->whereBelongsTo(Auth::user())->where('is_my_ticket',true)->latest()->get();
+        $tickets = Ticket::query()->whereBelongsTo(Auth::user())->where('transferer_a_user_id',null)->latest()->get();
 
         return view('ticket.ticket.my-tickets',[
             'tickets' => $tickets,

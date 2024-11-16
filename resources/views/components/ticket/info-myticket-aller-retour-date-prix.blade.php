@@ -32,7 +32,7 @@
     </div>
 
     <div class=" mt-2 text-sm font-medium text-gray-700 dark:text-gray-300 flex justify-center">
-        Le {{ $ticket?->voyage?->heure?->format('d M Y') }} à {{ $ticket?->voyage?->heure?->format('H\h i') }}
+        Le {{ $ticket?->date?->format('d M Y') }} à {{ $ticket?->voyage?->heure?->format('H\h i') }}
     </div>
 
     <div class="mt-2 text-sm font-medium  flex justify-center  ">

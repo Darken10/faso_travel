@@ -25,7 +25,6 @@ class PayementCreatQrCodeListener
      */
     public function handle(PayementEffectuerEvent $event): void
     {
-
         if( $event->ticket->code_qr_uri === null or !file_exists(storage_path($this->storage_public_dir.$event->ticket->code_qr_uri))){
 
             $event->ticket->code_qr_uri = QrCodeGeneratorHelper::generate($event->ticket->code_qr);

@@ -2,6 +2,7 @@
 
 namespace App\Models\Voyage;
 
+use App\Models\Compagnie\Care;
 use App\Models\User;
 use App\Models\Statut;
 use App\Models\Ticket\Ticket;
@@ -17,7 +18,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
- * 
+ *
  *
  * @property int $id
  * @property int $trajet_id
@@ -78,7 +79,7 @@ class Voyage extends Model
     ];
 
     protected $casts = [
-        'heure'=>'datetime',
+        'heure' => 'datetime',
     ];
 
     protected static function boot()
@@ -89,48 +90,65 @@ class Voyage extends Model
         });
     }
 
-    function depart():BelongsTo
-    {
-        return $this->belongsTo(Gare::class, 'depart_id');
-    }
-
-    function arrive():BelongsTo{
-        return $this->belongsTo(Gare::class, 'arrive_id');
-    }
-
     function gareDepart():BelongsTo
     {
         return $this->belongsTo(Gare::class, 'depart_id');
     }
 
-    function gareArriver():BelongsTo{
+    function gareArrive(): BelongsTo
+    {
+        return $this->belongsTo(Gare::class, 'arrive_id');
+    }
+
+    function gareArriver(): BelongsTo
+    {
         return $this->belongsTo(Gare::class, 'arrive_id');
     }
 
 
-    function statut():BelongsTo
+    function statut(): BelongsTo
     {
         return $this->belongsTo(Statut::class, 'statut_id');
     }
 
-    function trajet():BelongsTo{
+    function trajet(): BelongsTo
+    {
         return $this->belongsTo(Trajet::class);
     }
 
-    function user():BelongsTo{
+    function user(): BelongsTo
+    {
         return $this->belongsTo(User::class);
     }
 
-    function compagnie():BelongsTo{
+    function compagnie(): BelongsTo
+    {
         return $this->belongsTo(Compagnie::class);
     }
 
-    function conforts():BelongsToMany{
-        return $this->belongsToMany(Confort::class);
+    function classe(): BelongsTo
+    {
+        return $this->belongsTo(Classe::class);
     }
 
-     function tickets():HasMany{
+    function conforts()
+    {
+        return $this->classe?->conforts();
+    }
+
+    function tickets(): HasMany
+    {
         return $this->hasMany(Ticket::class);
-     }
+    }
+
+    function cares(): BelongsToMany
+    {
+        return $this->belongsToMany(Care::class);
+    }
+
+    function care()
+    {
+        return $this->hasOne(Care::class)->latestOfMany();
+    }
 
 }

@@ -43,5 +43,7 @@
 
         @include('shared._footer')
 
+    @yield('script','')
+
     </body>
 </html>

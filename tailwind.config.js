@@ -24,5 +24,6 @@ export default {
         forms,
         typography,
         require('daisyui'),
+        require('flowbite/plugin')
     ],
 };

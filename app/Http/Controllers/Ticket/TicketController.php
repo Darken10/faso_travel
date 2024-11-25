@@ -82,6 +82,16 @@ class TicketController extends Controller
         ]);
     }
 
+
+    function editTicket(Ticket $ticket)
+    {
+        return view('ticket.ticket.edit-ticket',['ticket' => $ticket]);
+    }
+
+    function updateTicket(Ticket $ticket)
+    {
+
+    }
     public function reenvoyer(Ticket $ticket){
 
         if ($ticket->statut === StatutTicket::Payer or $ticket->statut === StatutTicket::EnAttente or $ticket->statut === StatutTicket::Pause){

@@ -2,6 +2,7 @@
 
 namespace App\Filament\Compagnie\Resources\Voyage;
 
+use App\Enums\JoursSemain;
 use App\Filament\Compagnie\Resources\Voyage\VoyageResource\Pages;
 use App\Filament\Compagnie\Resources\Voyage\VoyageResource\RelationManagers;
 use App\Models\Compagnie\Gare;
@@ -69,6 +70,11 @@ class VoyageResource extends Resource
                     ->required()
                     ->numeric()
                     ->default(0),
+                Forms\Components\Select::make('days')
+                    ->options(JoursSemain::values())
+                    ->native(False)->searchable()->preload()
+                    ->multiple()
+                    ->required(),
                 Forms\Components\Select::make('classe_id')
                     ->options(fn(Get $get):Collection => \Auth::user()->compagnie->classes->pluck('name', 'id'))
                     ->native(False)->searchable()->preload()
@@ -139,7 +145,8 @@ class VoyageResource extends Resource
                     TextEntry::make('heure')->label('Heure de Depart'),
                     TextEntry::make('trajet.distance')->label('Distance'),
                     TextEntry::make('prix')->label('Prix'),
-                    TextEntry::make('statut.name')->label('StatutTicket'),
+                    TextEntry::make('statut.name')->label('Statut Voyage'),
+                    TextEntry::make('days')->label('Les Jours'),
 
                 ])->columns(2),
 

@@ -18,11 +18,11 @@ return new class extends Migration
     {
         Schema::create('voyages', function (Blueprint $table) {
             $table->id();
+            $table->time('heure');
+            $table->unsignedBigInteger('prix')->default(0);
             $table->foreignIdFor(Trajet::class)->constrained()->restrictOnDelete();
             $table->foreignIdFor(User::class)->constrained()->restrictOnDelete();
-            $table->time('heure');
             $table->foreignIdFor(Compagnie::class)->constrained()->restrictOnDelete();
-            $table->unsignedBigInteger('prix')->default(0);
             $table->foreignIdFor(Classe::class)->default(1)->constrained()->restrictOnDelete();
             $table->foreignIdFor(Care::class)->nullable()->constrained()->nullOnDelete();
             $table->timestamps();

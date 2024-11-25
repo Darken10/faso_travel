@@ -1,11 +1,14 @@
 <?php
 
+use App\Enums\JoursSemain;
 use App\Http\Controllers\Auth\MyRegisterController;
+use App\Models\Voyage\Days;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\Ticket\Payement\OrangePayementController;
 use App\Http\Controllers\Ticket\TicketController;
 use App\Http\Controllers\Ticket\VoyageController;
+use App\Models\Voyage\Voyage;
 
 /** Client */
 //Post
@@ -24,32 +27,6 @@ Route::prefix('/')->name('post.')->middleware(['auth','verified'])->controller(P
         'post'=>'[0-9]+',
     ])->middleware('auth');
 
-
-/*
-    Route::post('/{post}','storeComment')->name('storeComment')->where([
-        'post'=>'[0-9]+',
-    ])->middleware('auth');
-
-    Route::get('/{comment}/comment','reponse')->name('reponse')->where([
-        'comment'=>'[0-9]+',
-    ])->middleware('auth');
-
-    Route::post('/{comment}/reponse','storeReponse')->name('storeReponse')->where([
-        'comment'=>'[0-9]+',
-    ])->middleware('auth');
-
-    Route::get('/{comment}/comment/like','storeLikeComment')->name('storeLikeComment')->where([
-        'comment'=>'[0-9]+',
-    ])->middleware('auth');
-
-    Route::get('/{reponse}/reponse/like','storeLikeReponse')->name('storeLikeReponse')->where([
-        'reponse'=>'[0-9]+',
-    ])->middleware('auth');
-
-    Route::get('/{compagnie}/compagnie','filterByCompagnie')->name('filterByCompagnie')->where([
-        'compagnie'=>'[0-9]+',
-    ])->middleware('auth');
-*/
 
 });
 
@@ -73,6 +50,8 @@ Route::prefix('/voyage')->name('voyage.')->middleware('auth')->controller(Voyage
 Route::prefix('/ticket')->name('ticket.')->middleware('auth')->controller(TicketController::class)->group(function () {
     Route::post('/payer/{voyage}', 'createTicket')->name('payer')->where(['voyage' => '[0-9]+',]);
     Route::get('/mes-tickets', 'myTickets')->name('myTickets');
+    Route::get('/mes-tickets/{ticket}/edite', 'editTicket')->name('editTicket');
+    Route::post('/mes-tickets/{ticket}/edite', 'updateTicket')->name('updateTicket');
     Route::get('/mes-tickets/{ticket}', 'showMyTicket')->name('show-ticket')->where(['ticket' => '[0-9]+',]);
     Route::get('/re-envoyer/{ticket}', 'reenvoyer')->name('reenvoyer')->where(['ticket' => '[0-9]+']);
     Route::get('/regenerer/{ticket}', 'regenerer')->name('regenerer')->where(['ticket' => '[0-9]+']);

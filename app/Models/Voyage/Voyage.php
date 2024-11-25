@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use App\Enums\JoursSemain;
 
 /**
  *
@@ -76,10 +77,12 @@ class Voyage extends Model
         'statut_id',
         'depart_id',
         'arrive_id',
+        'days'
     ];
 
     protected $casts = [
         'heure' => 'datetime',
+        'days'=> 'array'
     ];
 
     protected static function boot()
@@ -151,4 +154,8 @@ class Voyage extends Model
         return $this->hasOne(Care::class)->latestOfMany();
     }
 
+    function days():BelongsToMany
+    {
+        return $this->belongsToMany(Days::class);
+    }
 }

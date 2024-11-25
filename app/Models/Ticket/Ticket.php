@@ -119,11 +119,11 @@ class Ticket extends Model
 
     #----------------------------------------------------------------
 
-    function villeDepart():Ville{
+    function villeDepart(){
         return $this->voyage->trajet->depart;
     }
 
-    function villeArriver():Ville{
+    function villeArriver(){
         return $this->voyage->trajet->arriver;
     }
 

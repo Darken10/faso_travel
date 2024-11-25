@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api\admin\ticket;
 use App\Enums\MoyenPayment;
 use App\Enums\StatutPayement;
 use App\Enums\StatutTicket;
+use App\Events\Admin\TicketValiderEvent;
 use App\Helper\Payement\Payement;
 use App\Helper\TicketValidation;
 use App\Http\Controllers\Controller;
@@ -53,7 +54,7 @@ class TicketApiController extends Controller
 
 
     /**
-     * Valide un ticket a travers si l'on a les informations a travers QR Code
+     * Valide un ticket si l'on a les informations a travers QR Code
      * @param Request $request
      * @param string $ticket_code
      * @return JsonResponse
@@ -70,6 +71,7 @@ class TicketApiController extends Controller
 
         if ($data['numero_ticket'] === $ticket->numero_ticket and $ticket_code === $ticket->code_qr) {
             if (TicketValidation::valider($ticket)) {
+                TicketValiderEvent::dispatch($ticket);
                 return response()->json([
                     'success' => true,
                     'error' => false,

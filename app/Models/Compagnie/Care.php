@@ -2,6 +2,7 @@
 
 namespace App\Models\Compagnie;
 
+use App\Enums\StatutCare;
 use App\Models\Voyage\Voyage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -18,6 +19,10 @@ class Care extends Model
         'statut',
         'etat',
         'image_uri'
+    ];
+
+    protected $casts = [
+        'statut' => StatutCare::class
     ];
 
     function voyages():HasMany

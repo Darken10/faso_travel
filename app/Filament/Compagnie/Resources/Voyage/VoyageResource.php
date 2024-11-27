@@ -70,14 +70,17 @@ class VoyageResource extends Resource
                     ->required()
                     ->numeric()
                     ->default(0),
-                Forms\Components\Select::make('days')
-                    ->options(JoursSemain::values())
-                    ->native(False)->searchable()->preload()
-                    ->multiple()
-                    ->required(),
+
                 Forms\Components\Select::make('classe_id')
                     ->options(fn(Get $get):Collection => \Auth::user()->compagnie->classes->pluck('name', 'id'))
                     ->native(False)->searchable()->preload()
+                    ->required(),
+                Forms\Components\CheckboxList::make('days')
+                    ->options(
+                            array_combine(array_column(JoursSemain::cases(),'value'),
+                            array_column(JoursSemain::cases(),'name'))
+                    )
+                    ->label('jours de la semain')
                     ->required(),
             ]);
     }

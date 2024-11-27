@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Ticket\Payement;
 
 use App\Events\PayementEffectuerEvent;
 use App\Events\SendClientTicketByMailEvent;
+use App\Helper\TicketHelpers;
 use Exception;
 use App\Enums\MoyenPayment;
 use App\Enums\StatutTicket;
@@ -65,6 +66,9 @@ class OrangePayementController extends Controller
                 else{
                     $payement = Payement::create($data);
                 }
+
+                $ticket->numero_chaise=TicketHelpers::getNumeroChaise($ticket->voyage,$ticket->date);
+                $ticket->save();
 
                 PayementEffectuerEvent::dispatch($ticket);
                 SendClientTicketByMailEvent::dispatch($ticket);

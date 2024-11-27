@@ -11,6 +11,7 @@ use App\Events\SendClientTicketByMailEvent;
 use App\Events\TranfererTicketToOtherUserEvent;
 use App\Models\Ticket\AutrePersonne;
 use App\Models\User;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use App\Helper\TicketHelpers;
@@ -36,6 +37,7 @@ class TicketController extends Controller
         $data['type']  = $data['type'] === 'aller_retour' ? TypeTicket::AllerRetour : TypeTicket::AllerSimple;
         $data['user_id'] = $request->user()->id;
         $data['a_bagage']  = array_key_exists('a_bagage',$data);
+
 
         $tickets = Ticket::query()
                 ->whereBelongsTo(Auth::user())

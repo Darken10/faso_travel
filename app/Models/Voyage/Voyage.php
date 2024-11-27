@@ -77,13 +77,29 @@ class Voyage extends Model
         'statut_id',
         'depart_id',
         'arrive_id',
-        'days'
+        'days',
+        'care_id',
+        'temps'
     ];
+
+
 
     protected $casts = [
         'heure' => 'datetime',
-        'days'=> 'array'
+        'days'=> 'array',
+        'temps'=>'datetime',
     ];
+
+    public function getDays(): \Illuminate\Support\Collection
+    {
+        return collect(json_decode($this->days))->map(fn ($jour)=>JoursSemain::from($jour));
+
+    }
+
+    public function setDays(): void
+    {
+        $this->attributes['days'] = json_encode(collect($this->days)->map(fn ($jour)=>$jour->value));
+    }
 
     protected static function boot()
     {

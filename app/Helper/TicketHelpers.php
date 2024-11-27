@@ -7,6 +7,8 @@ use App\Events\PayementEffectuerEvent;
 use App\Events\SendClientTicketByMailEvent;
 use App\Models\Ticket\Ticket;
 use App\Models\User;
+use App\Models\Voyage\Voyage;
+use Carbon\Carbon;
 use Exception;
 use Faker\Core\Uuid;
 use Symfony\Component\Uid\Ulid;
@@ -20,6 +22,25 @@ class TicketHelpers{
 
     public static function generateTicketCodeSms():string{
         return rand(0,999999);
+    }
+
+    public static function getNumeroChaise(Voyage $voyage,string $date):int{
+        $infoDate = mb_split('-',$date);
+        $NTickets = Ticket::query()
+            ->whereBelongsTo($voyage)
+            ->where('date', $date)
+            ->where('statut',StatutTicket::Payer)
+            ->get()
+            ->count();
+
+        while (
+            Ticket::query()->whereBelongsTo($voyage)->where('date', $date)->where('statut',StatutTicket::Payer)->where('numero_chaise', $NTickets+1)->get()->count() !== 0
+            and $NTickets <= $voyage->cares()->wherePivot('date',$date)->get()->last()?->number_place
+        ){
+            $NTickets++;
+        }
+
+        return $NTickets+1;
     }
 
     public static function generateTicketCodeQr():string{

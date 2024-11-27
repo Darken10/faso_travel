@@ -10,6 +10,7 @@ use App\Models\Compagnie\Gare;
 use App\Models\Ville\Ville;
 use App\Models\Voyage\Confort;
 use App\Models\Voyage\Voyage;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -135,10 +136,14 @@ class Ticket extends Model
         return $this->voyage->heure;
     }
 
-    function heureArriver(){
-        #TODO: je doit calculer la date d'arriver
-
-        return 'a calculer';
+    /**
+     * @return Carbon
+     */
+    function heureArriver():Carbon{
+        $temps = $this->voyage->temps;
+        return $this->voyage->heure->addHours($temps->hour)
+                    ->addMinutes($temps->minute)
+                    ->addSeconds($temps->second);
     }
 
     function gareDepart():Gare{

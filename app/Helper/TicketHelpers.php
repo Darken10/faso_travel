@@ -43,6 +43,23 @@ class TicketHelpers{
         return $NTickets+1;
     }
 
+    public static function getNumeroChaiseDisponible(Voyage $voyage,string $date) : array
+    {
+        $infoDate = mb_split('-',$date);
+        $tkOccuper = Ticket::query()
+            ->whereBelongsTo($voyage)
+            ->where('date', $date)
+            ->where('statut',StatutTicket::Payer)
+            ->get()
+            ->pluck('numero_chaise')->toArray();
+
+
+        $allPlace = range(1, $voyage->nb_pace);
+
+        // Exclure les éléments de $toExclude de $allPlace
+        return array_diff($allPlace, $tkOccuper);
+    }
+
     public static function generateTicketCodeQr():string{
         return date('y').date('m').date('d').date('h').date('m').Ulid::generate(now()).Ulid::generate(now());
     }

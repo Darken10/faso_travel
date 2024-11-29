@@ -174,4 +174,5 @@ class Voyage extends Model
     {
         return $this->belongsToMany(Days::class);
     }
+
 }

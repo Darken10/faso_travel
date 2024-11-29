@@ -5,7 +5,7 @@
 @section('content')
 
     <div class="card m-auto my-4">
-        <h5 class="mb-6 text-3xl font-bold text-gray-900 dark:text-white flex m-auto justify-center">Modifier les informations </h5>
+        <h5 class="mb-6 text-3xl font-bold text-gray-900 dark:text-white flex m-auto justify-center">Modifier les informations du Ticket</h5>
 
         <div class=" grid grid-cols-12 gap-4 mb-4">
             <div class="col-span-6 ">

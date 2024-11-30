@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Notifications\Notifiable;
 
 /**
  *
@@ -69,7 +70,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Ticket extends Model
 {
-    use HasFactory;
+    use HasFactory,Notifiable;
 
     protected $fillable = [
         'user_id',

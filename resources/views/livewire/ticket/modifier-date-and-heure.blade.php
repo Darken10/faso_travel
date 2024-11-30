@@ -1,46 +1,45 @@
 <form wire:submit="save">
-    <div class="  gap-4 mb-4">
-        <div class="col-span-6 ">
-            <x-label for="date_depart" value="{{ __('Date Depart') }}" />
-            <x-select wire:change="handlerDateOnChange" id="statut" type="text" class="mt-1 block w-full" autofocus  value="{{ $ticket->gareDepart()->name }}">
-
+    <div class=" grid grid-cols-12  gap-4 mb-4 ">
+        <div class="sm:col-span-6 col-span-12 ">
+            <x-label for="dateIndex" value="{{ __('Date Depart') }}" />
+            <x-select wire:change="handlerDateOnChange" wire:model="dateIndex" id="dateIndex" type="text" class="mt-1 block w-full" autofocus  >
                 @foreach($dateDispo as $key=>$date)
                     <option value="{{ $key }}">{{ $date }}</option>
                 @endforeach
             </x-select>
-            <x-input-error for="date_depart" class="mt-2" />
+            <x-input-error for="dateIndex" class="mt-2" />
         </div>
-        <div class="col-span-6 ">
-            <x-label for="heure_depart" value="{{ __('Heure Depart') }}" />
+        <div class="sm:col-span-6 col-span-12 ">
+            <x-label for="voyageId" value="{{ __('Heure Depart') }}" />
            {{-- <x-input id="heure_depart" wire:model="heure_depart" type="time" class="mt-1 block w-full" autofocus  />--}}
-            <x-select id="statut" type="text" class="mt-1 block w-full" autofocus  value="{{ $ticket->gareDepart()->name }}">
+            <x-select id="statut" type="text" class="mt-1 block w-full" autofocus  wire:model="voyageId" wire:change="handlerHeureOnChange">
 
                 @foreach($voyages as $voyage)
                     <option value="{{ $voyage->id }}">{{ $voyage->heure->format('h\h i\m\n')}}</option>
                 @endforeach
             </x-select>
-            <x-input-error for="heure_depart" class="mt-2" />
+            <x-input-error for="voyageId" class="mt-2" />
         </div>
 
     </div>
 
     <div class=" grid grid-cols-12 gap-4 mb-4">
 
-        <div class="col-span-6 ">
+        <div class="sm:col-span-6 col-span-12">
             <x-label for="numero_chaise" value="{{ __('Numero de la chaise') }}" />
             <x-select  wire:model="numero_chaise" id="statut" type="text" class="mt-1 block w-full" autofocus  >
                 @foreach($chaiseDispo as $key=>$numero)
-                    <option value="{{ $key }}">{{ $numero }}</option>
+                    <option value="{{ $numero }}">Chaise N°{{ $numero }}</option>
                 @endforeach
             </x-select>
             <x-input-error for="numero_chaise" class="mt-2" />
         </div>
-        <div class="col-span-6 ">
+        <div class="sm:col-span-6 col-span-12">
             <x-label for="statut" value="{{ __('Status') }}" />
-            {{--<x-select id="statut" type="text" class="mt-1 block w-full" autofocus  value="{{ $ticket->gareDepart()->name }}">
+            <x-select id="statut" type="text" class="mt-1 block w-full" autofocus  wire:model="statut">
                 <option value="{{ \App\Enums\StatutTicket::Payer }}">Activer</option>
                 <option value="{{ \App\Enums\StatutTicket::Pause }}">Pause</option>
-            </x-select>--}}
+            </x-select>
             <x-input-error for="statut" class="mt-2" />
         </div>
     </div>

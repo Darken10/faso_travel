@@ -2,39 +2,52 @@
 
 namespace App\Livewire\Ticket;
 
+use App\Enums\StatutTicket;
+use App\Events\PayementEffectuerEvent;
+use App\Events\SendClientTicketByMailEvent;
 use App\Helper\TicketHelpers;
 use App\Models\Ticket\Ticket;
 use App\Models\Voyage\Voyage;
+use App\Notifications\Ticket\TicketUpdateNotification;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
+use function Symfony\Component\String\s;
 
 class ModifierDateAndHeure extends Component
 {
     public Ticket $ticket;
     #[Validate('required')]
-    public ?string $date = null;
+    public ?int $dateIndex = null;
     #[Validate('required ')]
     public ?string $heure_depart = null;
     #[Validate('required')]
     public ?int $numero_chaise = null;
+    #[Validate('required')]
+    public ?int $voyageId = null;
+    #[Validate('required')]
+    public ?StatutTicket $statut = null;
 
     public Collection|array $voyages = [];
     public Collection|array $dateDispo = [];
     public Collection|array $chaiseDispo = [];
+    public Collection|array $dates = [];
 
 
     public function mount(Ticket $ticket){
         $this->ticket = $ticket;
-        $this->date = $ticket->date->format('Y-m-d');
         $this->heure_depart = $ticket->heureDepart()->format('h:i:s');
         $this->numero_chaise = (int)$ticket->numero_chaise;
         $this->voyages = $this->updateHeure()->get();
         $this->dateDispo = $this->getDateDisponibles();
         $this->chaiseDispo = $this->getChaiseDisponibles();
-
-
+        $this->voyageId = $this->ticket->voyage_id;
+        $this->statut = $this->ticket->statut;
+        if ($this->dateDispo->isNotEmpty()){
+            $this->dateIndex = 0;
+            $this->handlerHeureOnChange();
+        }
     }
 
     /**
@@ -42,36 +55,65 @@ class ModifierDateAndHeure extends Component
      */
     public function save()
     {
-        $this->validate();
+        $data = $this->validate();
         try {
+
             \DB::beginTransaction();
-            $this->ticket->date = Carbon::parse($this->date);
-            //$this->ticket->heureDepart = Carbon::parse($this->heure_depart);
-            $this->ticket->numero_chaise = $this->numero_chaise;
+            $this->ticket->date = Carbon::parse($this->dates[$data["dateIndex"]]);
+            $this->ticket->numero_chaise = $data["numero_chaise"];
+            $this->ticket->voyage_id = $data["voyageId"];
+            $this->ticket->statut = $data["statut"] ;
             $this->ticket->save();
-            \DB::commit();
+            $response = TicketHelpers::regenerateTicket($this->ticket);
+            if ($response){
+                PayementEffectuerEvent::dispatch($this->ticket);
+                SendClientTicketByMailEvent::dispatch($this->ticket);
+                \DB::commit();
+                //$this->ticket->notify(new TicketUpdateNotification());
+                return to_route('ticket.show-ticket',['ticket' => $this->ticket])
+                    ->with('success',"Votre Ticket a bien ete modifier");
+            }
+            else{
+                \DB::rollback();
+            }
+
+
+
+
         }
         catch (\Exception $e){
             \DB::rollback();
+            \Session::now("error","Une erreur est survenue");
+
         }
     }
 
     public function handlerDateOnChange(): void
     {
        $this->voyages = $this->updateHeure()->get();
+        $this->chaiseDispo = $this->getChaiseDisponibles();
        // TODO: je doit revoir comment je gere les heures. le system qui est la presentemnet ne permet pas de prendre en compte les date care les heures peuvent etre diferent les differente jours
+    }
+
+    public function handlerHeureOnChange(): void
+    {
+        $this->chaiseDispo = $this->getChaiseDisponibles();
+        // TODO: je doit revoir comment je gere les heures. le system qui est la presentemnet ne permet pas de prendre en compte les date care les heures peuvent etre diferent les differente jours
     }
 
     private function updateHeure(): \Illuminate\Database\Eloquent\Builder|Voyage
     {
-
-        return Voyage::query()
+        $voy = Voyage::find($this->voyageId) ?? $this->ticket->voyage;
+        $voyages = Voyage::query()
             ->whereBelongsTo($this->ticket->voyage->compagnie)
             ->whereBelongsTo($this->ticket->voyage->trajet)
             ->whereBelongsTo($this->ticket->voyage->classe);
+
+
+        return $voyages;
     }
 
-    private function getDateDisponibles(): array
+    private function getDateDisponibles(): array|Collection
     {
 
         $joursSelectionnes = collect($this->ticket->voyage->days); // Les jours sélectionnés dans la base
@@ -84,21 +126,57 @@ class ModifierDateAndHeure extends Component
             $jourSemaine = strtolower($date->translatedFormat('l'));
             if ($joursSelectionnes->contains($jourSemaine)) {
                 $datesDisponibles[] = $date->toDateString() . ' (' . $jourSemaine.')';
+                $this->dates[] = $date->toDateString() ;
             }
         }
-        return $datesDisponibles;
+        return collect($datesDisponibles);
     }
 
 
     private function getChaiseDisponibles(): array|Collection
     {
-        if ($this->date === null) {
+        if ($this->dateIndex === null) {
             return [];
         }
-        $chaiseDisponibles = TicketHelpers::getNumeroChaiseDisponible($this->ticket->voyage, $this->date);
+
+        $voy = Voyage::find($this->voyageId) ?? $this->ticket->voyage;
+        $chaiseDisponibles = TicketHelpers::getNumeroChaiseDisponible($voy, $this->dateDispo[$this->dateIndex]);
 
         return collect($chaiseDisponibles);
 
+    }
+
+    private function verificationVoyage(Voyage $voyage) : array
+    {
+        $verificationTraget = $voyage->trajet_id == $this->ticket->voyage->trajet;
+        $verificationCompagnie = $voyage->compagnie_id == $this->ticket->voyage->compagnie_id;
+        $verificationClasse = $voyage->classe_id == $this->ticket->voyage->classe_id;
+        $verificationDepart = $voyage->depart_id == $this->ticket->voyage->depart_id;
+        $verificationArrive = $voyage->arrive_id == $this->ticket->voyage->arrive_id;
+        $message = [];
+        $verify = false;
+        if ($verificationCompagnie){
+            if ($verificationTraget){
+                if ($verificationClasse){
+                    if ($verificationDepart and  $verificationArrive){
+                        $verify = true;
+                    } else {
+                        $message[] = "La ville de depart ou la ville d'arriver peut pas etre changer";
+                    }
+                } else {
+                    $message[] = "La Classe  peut pas etre changer";
+                }
+            } else {
+                $message[] = "Le Traget  peut pas etre changer";
+            }
+        } else {
+            $message[] = "La compagnie peut pas etre changer";
+        }
+
+        return [
+            'verify' => $verify,
+            "message" => $message
+        ];
     }
 
     public function render(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application

@@ -109,7 +109,7 @@ class TicketController extends Controller
     public function regenerer(Ticket $ticket){
         $response = TicketHelpers::regenerateTicket($ticket);
         if ($response===true){
-            if ($ticket->statut === StatutTicket::Payer or $ticket->statut === StatutTicket::EnAttente or $ticket->statut === StatutTicket::Pause){
+            if ($ticket->statut === StatutTicket::Payer  or $ticket->statut === StatutTicket::Pause){
                 try {
                     PayementEffectuerEvent::dispatch($ticket);
                     SendClientTicketByMailEvent::dispatch($ticket);

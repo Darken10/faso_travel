@@ -38,7 +38,6 @@ class TicketController extends Controller
         $data['user_id'] = $request->user()->id;
         $data['a_bagage']  = array_key_exists('a_bagage',$data);
 
-
         $tickets = Ticket::query()
                 ->whereBelongsTo(Auth::user())
                 ->whereBelongsTo($voyage)
@@ -59,8 +58,6 @@ class TicketController extends Controller
             $ticket = $tickets->last();
        }
 
-
-
         return view('ticket.ticket.choix-moyen-payment',[
             'ticket' => $ticket,
         ]);
@@ -69,7 +66,11 @@ class TicketController extends Controller
 
     function myTickets(){
 
-        $tickets = Ticket::query()->whereBelongsTo(Auth::user())->where('transferer_a_user_id',null)->latest()->get();
+        $tickets = Ticket::query()
+            ->where('transferer_a_user_id',null)
+            ->whereBelongsTo(Auth::user())
+            ->orWhere('transferer_a_user_id',Auth::user()->id)
+            ->latest()->get();
 
         return view('ticket.ticket.my-tickets',[
             'tickets' => $tickets,
@@ -165,7 +166,10 @@ class TicketController extends Controller
             'user_id'=> ['required'],
         ]);
         if (\Hash::check($data['password'],$ticket->user->password) ){
-            if (($ticket->statut === StatutTicket::Payer or $ticket->statut === StatutTicket::Pause)){
+            if (($ticket->statut === StatutTicket::Payer or $ticket->statut === StatutTicket::Pause )){
+                if (!$ticket->is_my_ticket){
+                    return to_route('ticket.myTickets')->with('error', "Desole ce ticket n'est plus en votre possession");
+                }
                 try {
                     \DB::beginTransaction();
                     $ticket->is_my_ticket = false;
@@ -184,7 +188,7 @@ class TicketController extends Controller
 
                 if ($response===true){
                     TranfererTicketToOtherUserEvent::dispatch($ticket);
-                    return back()->with('success', "Votre ticket a été bien transfere vous n'etes plus en possession de ce Ticket");
+                    return to_route('ticket.myTickets')->with('success', "Votre ticket a été bien transfere vous n'etes plus en possession de ce Ticket");
                 }
                 elseif($response===false){
                     return back()->with('error', 'Desole votre ticket est invalide');
@@ -195,9 +199,43 @@ class TicketController extends Controller
         }else{
             return back()->with('error',"Votre mot de passe incorrect ");
         }
-        dd($data);
+        return back()->with('error',"Une erreur inconun ");
+    }
+
+    /*
+     *
+     */
+    function mettreEnPause(Request $request,Ticket $ticket)
+    {
+            if ($ticket->statut === StatutTicket::Payer){
+                if (!$ticket->is_my_ticket and $ticket->transferer_a_user_id !== null){
+                    return to_route('ticket.myTickets')->with('error', "Desole ce ticket n'est plus en votre possession");
+                }
+            }
+
+            try {
+                \DB::beginTransaction();
+                $ticket->statut = StatutTicket::Pause;
+                $ticket->save();
+                \DB::commit();
+                return to_route('ticket.show-ticket',$ticket)->with('success', "Votre ticket a bien ete mise en pause");
+
+            }catch(\Exception|\Throwable $e){
+                \DB::rollBack();
+                return back()->with('error',"Une erreur inattendu est survenue! veullier contact l'administrateur");
+            }
+
+            }
 
 
+    function gotoPayment(Ticket $ticket)
+    {
+        if ($ticket->statut === StatutTicket::EnAttente){
+            return view('ticket.ticket.choix-moyen-payment',[
+                'ticket' => $ticket,
+            ]);
+        }
+        return redirect()->back()->with('error',"Une erreur inattendu est survenue! Le ticket nest pas en etat d'attent de payement");
     }
 
 

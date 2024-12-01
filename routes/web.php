@@ -3,6 +3,7 @@
 use App\Enums\JoursSemain;
 use App\Http\Controllers\Auth\MyRegisterController;
 use App\Models\Voyage\Days;
+use App\Notifications\Ticket\TicketUpdateNotification;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\Ticket\Payement\OrangePayementController;
@@ -51,10 +52,11 @@ Route::prefix('/ticket')->name('ticket.')->middleware('auth')->controller(Ticket
     Route::post('/payer/{voyage}', 'createTicket')->name('payer')->where(['voyage' => '[0-9]+',]);
     Route::get('/mes-tickets', 'myTickets')->name('myTickets');
     Route::get('/mes-tickets/{ticket}/edite', 'editTicket')->name('editTicket');
-    Route::post('/mes-tickets/{ticket}/edite', 'updateTicket')->name('updateTicket');
     Route::get('/mes-tickets/{ticket}', 'showMyTicket')->name('show-ticket')->where(['ticket' => '[0-9]+',]);
     Route::get('/re-envoyer/{ticket}', 'reenvoyer')->name('reenvoyer')->where(['ticket' => '[0-9]+']);
     Route::get('/regenerer/{ticket}', 'regenerer')->name('regenerer')->where(['ticket' => '[0-9]+']);
+    Route::post('/mes-tickets/{ticket}/pause', 'mettreEnPause')->name('mettre-en-pause');
+    Route::get('/mes-tickets/{ticket}/payement', 'gotoPayment')->name('goto-payment');
 
     Route::get('/tansferer/{ticket}', 'tranfererTicketToOtherUser')->name('tranferer-ticket-to-other-user')->where(['ticket' => '[0-9]+']);
     Route::post('/tansferer/{ticket}', 'tranfererTicketToOtherUserTraitement')->name('tranferer-ticket-to-other-user-traitement')->where(['ticket' => '[0-9]+']);
@@ -92,7 +94,9 @@ Route::middleware([
 
 
 Route::get('/test', function () {
-
+    $user = \App\Models\User::findOrFail(1);
+    $user->notify(new \App\Notifications\TicketTestNotification());
+    dd($user);
 });
 
 

@@ -67,7 +67,17 @@ class OrangePayementController extends Controller
                     $payement = Payement::create($data);
                 }
 
-                $ticket->numero_chaise=TicketHelpers::getNumeroChaise($ticket->voyage,$ticket->date);
+                $TkAvecLeMemeNumeroChaise = Ticket::query()
+                    ->where('date',$ticket->date)
+                    ->where('numero_chaise',$ticket->numero_chaise)
+                    ->whereBelongsTo($ticket->voyage)
+                    ->where('statut',StatutTicket::Payer)
+                    ->get();
+                if ($TkAvecLeMemeNumeroChaise->count()>=1){
+                    $ticket->numero_chaise =TicketHelpers::getNumeroChaise($ticket->voyage,$ticket->date);
+                }
+
+
                 $ticket->save();
 
                 PayementEffectuerEvent::dispatch($ticket);

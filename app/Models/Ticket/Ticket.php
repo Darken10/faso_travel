@@ -93,6 +93,7 @@ class Ticket extends Model
 
     protected $with = [
         'user',
+        'payements'
     ];
 
     protected function casts()
@@ -159,9 +160,23 @@ class Ticket extends Model
         return $this->voyage->conforts;
     }
 
+    function classe(){
+        return $this->voyage->classe;
+    }
+
     function autre_personne()
     {
         return $this->belongsTo(AutrePersonne::class);
+    }
+
+    function trajet()
+    {
+        return $this->voyage->trajet;
+    }
+
+    public function prix()
+    {
+        return $this->voyage->prix;
     }
 
 }

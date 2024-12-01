@@ -52,7 +52,15 @@
             </div>
             <div class=" w-full pl-2 ">
                <div class=" absolute -top-2  rounded-md -right-3">
-                <span class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-green-400 border border-green-400">{{ $ticket->statut }}</span>
+                <span @class([
+                        "bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-green-400 border border-green-400"=> $ticket->statut ===\App\Enums\StatutTicket::Payer,
+                        "bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-yellow-300 border border-yellow-300" => $ticket->statut ===\App\Enums\StatutTicket::Pause,
+                        "bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-red-400 border border-red-400"=> $ticket->statut ===\App\Enums\StatutTicket::Bloquer or $ticket->statut ===\App\Enums\StatutTicket::Suspendre,
+                        "bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400"=> $ticket->statut ===\App\Enums\StatutTicket::EnAttente,
+                        "bg-purple-100 text-purple-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-purple-400 border border-purple-400"=>$ticket->statut ===\App\Enums\StatutTicket::Valider,
+                    ])>
+                    {{ $ticket->statut }}
+                </span>
                </div>
                <div class="ml-4  flex-row justify-center">
                    <div>

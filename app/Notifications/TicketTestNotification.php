@@ -1,21 +1,20 @@
 <?php
 
-namespace App\Notifications\Ticket;
+namespace App\Notifications;
 
-use App\Models\Ticket\Ticket;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class TicketUpdateNotification extends Notification
+class TicketTestNotification extends Notification
 {
     use Queueable;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct(private Ticket $ticket)
+    public function __construct()
     {
         //
     }
@@ -36,13 +35,9 @@ class TicketUpdateNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->line('Bonjour Mr.' . $notifiable->name)
-            ->line("Nous vous notifions que votre ticket a ete modifier avec succes.")
-            ->line("Et qu'un nouveau le ticket a ete regener automatiquement.")
-            ->line("Le Numero du Ticket  :".$this->ticket->numero_ticket)
-            ->line("Le Code du Ticket  :".$this->ticket->code_sms)
-            ->action('Voir le Ticket', url(route('ticket.show-ticket',$this->ticket)))
-            ->line('Merci Pour votre Confiance!');
+                    ->line('The introduction to the notification.')
+                    ->action('Notification Action', url('/'))
+                    ->line('Thank you for using our application!');
     }
 
     /**
@@ -53,7 +48,7 @@ class TicketUpdateNotification extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-
+            //
         ];
     }
 }

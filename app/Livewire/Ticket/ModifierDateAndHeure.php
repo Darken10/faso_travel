@@ -6,6 +6,7 @@ use App\Enums\StatutTicket;
 use App\Events\PayementEffectuerEvent;
 use App\Events\SendClientTicketByMailEvent;
 use App\Helper\TicketHelpers;
+use App\Helper\VoyageHelper;
 use App\Models\Ticket\Ticket;
 use App\Models\Voyage\Voyage;
 use App\Notifications\Ticket\TicketUpdateNotification;
@@ -40,14 +41,18 @@ class ModifierDateAndHeure extends Component
         $this->heure_depart = $ticket->heureDepart()->format('h:i:s');
         $this->numero_chaise = (int)$ticket->numero_chaise;
         $this->voyages = $this->updateHeure()->get();
-        $this->dateDispo = $this->getDateDisponibles();
         $this->chaiseDispo = $this->getChaiseDisponibles();
         $this->voyageId = $this->ticket->voyage_id;
         $this->statut = $this->ticket->statut;
-        if ($this->dateDispo->isNotEmpty()){
+
+        $this->getDateDisponibles();
+
+        if (collect($this->dateDispo)->isNotEmpty()){
             $this->dateIndex = 0;
             $this->handlerHeureOnChange();
         }
+
+        $this->handlerDateOnChange();
     }
 
     /**
@@ -69,7 +74,7 @@ class ModifierDateAndHeure extends Component
                 PayementEffectuerEvent::dispatch($this->ticket);
                 SendClientTicketByMailEvent::dispatch($this->ticket);
                 \DB::commit();
-                //$this->ticket->notify(new TicketUpdateNotification());
+                \Auth::user()->notify(new TicketUpdateNotification($this->ticket));
                 return to_route('ticket.show-ticket',['ticket' => $this->ticket])
                     ->with('success',"Votre Ticket a bien ete modifier");
             }
@@ -86,12 +91,22 @@ class ModifierDateAndHeure extends Component
             \Session::now("error","Une erreur est survenue");
 
         }
+        return false;
+
     }
 
     public function handlerDateOnChange(): void
     {
-       $this->voyages = $this->updateHeure()->get();
-        $this->chaiseDispo = $this->getChaiseDisponibles();
+
+        $allVoyagesOfDaySelected = VoyageHelper::getVoyagesByDay($this->dates[$this->dateIndex]);
+        if($allVoyagesOfDaySelected->isNotEmpty()){
+            $this->voyages = $allVoyagesOfDaySelected
+                ->where('compagnie_id',$this->ticket->voyage->compagnie->id)
+                ->where('trajet_id',$this->ticket->voyage->trajet->id)
+                ->where('classe_id',$this->ticket->voyage->classe->id);
+            $this->chaiseDispo = $this->getChaiseDisponibles();
+        }
+
        // TODO: je doit revoir comment je gere les heures. le system qui est la presentemnet ne permet pas de prendre en compte les date care les heures peuvent etre diferent les differente jours
     }
 
@@ -100,6 +115,7 @@ class ModifierDateAndHeure extends Component
         $this->chaiseDispo = $this->getChaiseDisponibles();
         // TODO: je doit revoir comment je gere les heures. le system qui est la presentemnet ne permet pas de prendre en compte les date care les heures peuvent etre diferent les differente jours
     }
+
 
     private function updateHeure(): \Illuminate\Database\Eloquent\Builder|Voyage
     {
@@ -113,23 +129,11 @@ class ModifierDateAndHeure extends Component
         return $voyages;
     }
 
-    private function getDateDisponibles(): array|Collection
+    private function getDateDisponibles()
     {
-
-        $joursSelectionnes = collect($this->ticket->voyage->days); // Les jours sélectionnés dans la base
-        $joursSelectionnes = $joursSelectionnes->map(fn ($jour) => strtolower($jour));
-        $datesDisponibles = [];
-
-        Carbon::setLocale('fr');
-        for ($i = 0; $i < 30; $i++) {
-            $date = Carbon::now()->addDays($i);
-            $jourSemaine = strtolower($date->translatedFormat('l'));
-            if ($joursSelectionnes->contains($jourSemaine)) {
-                $datesDisponibles[] = $date->toDateString() . ' (' . $jourSemaine.')';
-                $this->dates[] = $date->toDateString() ;
-            }
-        }
-        return collect($datesDisponibles);
+        $res = VoyageHelper::getDateDisponiblesWithTicket($this->ticket);
+        $this->dateDispo = $res['datesDisponiblesAndDays'];
+        $this->dates = $res['datesDisponibles'];
     }
 
 
@@ -138,11 +142,7 @@ class ModifierDateAndHeure extends Component
         if ($this->dateIndex === null) {
             return [];
         }
-
-        $voy = Voyage::find($this->voyageId) ?? $this->ticket->voyage;
-        $chaiseDisponibles = TicketHelpers::getNumeroChaiseDisponible($voy, $this->dateDispo[$this->dateIndex]);
-
-        return collect($chaiseDisponibles);
+        return VoyageHelper::getChaiseDisponibles(Voyage::findOrFail($this->voyageId),$this->dates[$this->dateIndex]);
 
     }
 
@@ -178,6 +178,7 @@ class ModifierDateAndHeure extends Component
             "message" => $message
         ];
     }
+
 
     public function render(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application
     {

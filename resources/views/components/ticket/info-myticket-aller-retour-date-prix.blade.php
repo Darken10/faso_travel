@@ -1,6 +1,10 @@
 @props(['ticket'=>null, 'with_statut'=>false])
 
 <div class=" md:col-span-10 mt-2 m-auto dark:text-gray-300">
+
+    <div class=" text-gray-800 flex gap-x-2 items-center dark:text-gray-300 justify-center font-bold">
+        {{ $ticket->compagnie()->name }}
+    </div>
     <div class=" font-medium text-gray-800 flex gap-x-2 items-center dark:text-gray-300">
         <div class="mt-2  font-medium text-gray-800 dark:text-gray-300">
             {{ $ticket?->voyage?->trajet?->depart->name ?? "Nul Part" }} ({{ $ticket?->voyage?->trajet?->depart?->region?->pays->iso2 ?? "Nul Part" }})
@@ -35,16 +39,50 @@
         Le {{ $ticket?->date?->format('d M Y') }} à {{ $ticket?->voyage?->heure?->format('H\h i') }}
     </div>
 
-    <div class="mt-2 text-sm font-medium  flex justify-center  ">
-        Prix :
-        <span class="text-green-600 font-semibold px-2">
-            @if ( $ticket?->payements()->first()?->montant > 0)
-                {{ $ticket?->payements()->first()?->montant }} F CFA
-            @else
-                Gratuit
-            @endif
-        </span>
+
+
+   <div class=" md:flex md:justify-between">
+       <div class="mt-2 text-sm font-medium  flex justify-center ">
+           Classe :
+           <span class="font-semibold px-2">
+            {{ $ticket->voyage->classe->name }}
+            </span>
+       </div>
+       <div class="mt-2 text-sm font-medium   flex justify-center ">
+           Chaise N° {{ $ticket->numero_chaise ?? "Non Définie"}}
+       </div>
+   </div>
+
+    <div class=" md:flex md:justify-between">
+        <div class="mt-2 text-sm font-medium   flex justify-center ">
+            Prix :
+            <span class="text-green-600 font-semibold px-2">
+                @if ( $ticket?->payements()->first()?->montant > 0)
+                   {{ $ticket?->payements()->first()?->montant }} F CFA
+                @else
+                    Gratuit
+                @endif
+            </span>
+        </div>
+        <div class="mt-2 text-sm font-medium  flex justify-center ">
+
+                <span
+                    @class([
+    "bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-green-400 border border-green-400"=> $ticket->statut ===\App\Enums\StatutTicket::Payer,
+    "bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-yellow-300 border border-yellow-300" => $ticket->statut ===\App\Enums\StatutTicket::Pause,
+    "bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-red-400 border border-red-400"=> $ticket->statut ===\App\Enums\StatutTicket::Bloquer or $ticket->statut ===\App\Enums\StatutTicket::Suspendre,
+    "bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400"=> $ticket->statut ===\App\Enums\StatutTicket::EnAttente,
+                        "bg-purple-100 text-purple-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-purple-400 border border-purple-400"=>$ticket->statut ===\App\Enums\StatutTicket::Valider,
+])
+                >
+                    Statut :
+                    {{ $ticket->statut }}
+                </span>
+        </div>
+
     </div>
+
+
     @if($with_statut)
         <div class=" mt-2 flex justify-center">
             <x-ticket.badge-statut :statut="$ticket->statut" />

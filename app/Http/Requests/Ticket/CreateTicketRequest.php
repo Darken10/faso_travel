@@ -29,6 +29,7 @@ class CreateTicketRequest extends FormRequest
             'type' => ['required'],
             'accepter'=>['required'],
             'autre_personne_id'=>['nullable'],
+            'numero_chaise'=>['required'],
         ];
     }
 }

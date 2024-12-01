@@ -11,10 +11,10 @@
                     <div class="ml-4">
                         <div class="text-sm font-medium text-gray-900 dark:text-gray-300">
 
-                            @if($ticket?->is_my_ticket or $ticket->transferer_a_user_id=== auth()->user()->id)
-                                {{$ticket->user->name}}
+                            @if($ticket?->is_my_ticket or $ticket?->transferer_a_user_id=== auth()->user()->id)
+                                {{$ticket?->user?->name}}
                             @else
-                                {{$ticket->autre_personne->name}}
+                                {{$ticket?->autre_personne?->name}}
                             @endif
 
                         </div>
@@ -39,7 +39,7 @@
                 <div id="dropdownDots" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
                     <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownMenuIconButton">
 
-                        @if($ticket?->statut === \App\Enums\StatutTicket::Payer)
+                        @if($ticket?->statut === \App\Enums\StatutTicket::Payer or $ticket?->statut === \App\Enums\StatutTicket::Pause)
                             <li>
                                 <a href="{{ route('ticket.editTicket',$ticket) }}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                                     <div class="flex gap-2">
@@ -78,7 +78,7 @@
                                     </div>
                                 </a>
                             @elseif($ticket?->statut === \App\Enums\StatutTicket::Pause)
-                            <a href="#" data-modal-target="popup-modal-ractive" data-modal-toggle="popup-modal-ractive" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                            <a href="{{ route('ticket.editTicket',$ticket) }}" data-modal-target="popup-modal-ractive" data-modal-toggle="popup-modal-ractive" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                                 <div class="flex gap-2 text-orange-400">
                                     <svg fill="#000000"  height="16px" width="16px" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve">
                                         <path d="M256,0C114.617,0,0,114.615,0,256s114.617,256,256,256s256-114.615,256-256S397.383,0,256,0z M224,320c0,8.836-7.164,16-16,16h-32c-8.836,0-16-7.164-16-16V192c0-8.836,7.164-16,16-16h32c8.836,0,16,7.164,16,16V320z M352,320 c0,8.836-7.164,16-16,16h-32c-8.836,0-16-7.164-16-16V192c0-8.836,7.164-16,16-16h32c8.836,0,16,7.164,16,16V320z"/>
@@ -96,7 +96,7 @@
                                     </div>
                                 </a>
                             @elseif($ticket?->statut === \App\Enums\StatutTicket::EnAttente)
-                                <a href="#" data-modal-target="popup-modal-ractive" data-modal-toggle="popup-modal-ractive" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                <a href="{{ route('ticket.goto-payment',$ticket) }}" data-modal-target="popup-modal-ractive" data-modal-toggle="popup-modal-ractive" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                                     <div class="flex gap-2 text-orange-400">
                                         <svg fill="#000000"  height="16px" width="16px" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve">
                                                 <path d="M256,0C114.617,0,0,114.615,0,256s114.617,256,256,256s256-114.615,256-256S397.383,0,256,0z M224,320c0,8.836-7.164,16-16,16h-32c-8.836,0-16-7.164-16-16V192c0-8.836,7.164-16,16-16h32c8.836,0,16,7.164,16,16V320z M352,320 c0,8.836-7.164,16-16,16h-32c-8.836,0-16-7.164-16-16V192c0-8.836,7.164-16,16-16h32c8.836,0,16,7.164,16,16V320z"/>
@@ -151,13 +151,14 @@
 
             <div class=" grid md:grid-cols-12 gap-x-2">
 
+
                 <x-ticket.info-myticket-aller-retour-date-prix :$ticket />
 
 
                 <div class=" col-span-2 mt-4 flex justify-center">
-                    @if($ticket->statut === \App\Enums\StatutTicket::Payer)
+                    @if($ticket?->statut === \App\Enums\StatutTicket::Payer)
                         <div class=" items-center gap-x-2 block">
-                            <img src="{{ asset(\Illuminate\Support\Facades\Storage::url($ticket->code_qr_uri)) }}" alt="Code QR">
+                            <img src="{{ asset(\Illuminate\Support\Facades\Storage::url($ticket?->code_qr_uri)) }}" alt="Code QR">
                             <div class="flex items-center gap-x-2 text-center ">
                                 code  : {{ $ticket->code_sms }}
                             </div>
@@ -168,7 +169,7 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M6.429 9.75 2.25 12l4.179 2.25m0-4.5 5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L21.75 12l-4.179 2.25m0 0 4.179 2.25L12 21.75 2.25 16.5l4.179-2.25m11.142 0-5.571 3-5.571-3" />
                                 </svg>
-                                <span class="">{{ $ticket->statut }}</span>
+                                <span class="">{{ $ticket?->statut }}</span>
                             </div>
                         </div>
                     @endif
@@ -215,7 +216,7 @@
     <div id="modal-pause" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative p-4 w-full max-w-md max-h-full">
             <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                <button type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="popup-modal">
+                <button type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="modal-pause">
                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                     </svg>
@@ -226,10 +227,16 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                     </svg>
                     <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you sure you want to delete this product?</h3>
-                    <button data-modal-hide="popup-modal" type="button" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
-                        Yes, I'm sure
-                    </button>
-                    <button data-modal-hide="popup-modal" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">No, cancel</button>
+                    <form action="{{ route('ticket.mettre-en-pause',$ticket) }}" method="post">
+                        @csrf
+                        <button data-modal-hide="modal-pause" type="submit" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+                            Oui
+                        </button>
+                        <button data-modal-hide="modal-pause" type="reset" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+                            Non, Annuller
+                        </button>
+                    </form>
+
                 </div>
             </div>
         </div>

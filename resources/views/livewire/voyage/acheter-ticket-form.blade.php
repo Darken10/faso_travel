@@ -1,16 +1,36 @@
 <div >
-    <div class="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
+    <div class="w-full max-w-lg p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
         <form class="space-y-6" action="{{ route('ticket.payer',$voyage)  }}" method="POST" >
             @csrf
             <h5 class="text-xl font-medium text-gray-900 dark:text-white">Acheter le Ticket</h5>
 
             <div class="md:flex gap-4 items-center">
                 <div class="w-full">
-                    <label for="date-voyage" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Date</label>
-                    <input type="date"   wire:model="date" id="date-voyage" name="date" value="{{ old('date') }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  required />
+                    <x-label for="date" value="Date du voyage" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" />
+                    <x-select wire:change="handlerDateOnChange" wire:model="date"  id="date" name="date" type="text" class="mt-1 block w-full" autofocus  value="{{ old('date') }}" >
+                        @foreach($dateDispo as $key=>$date)
+                            <option value="{{ $dates[$key] }}">{{ $date }}</option>
+                        @endforeach
+                    </x-select>
+                    {{--<input type="date"   wire:model="date" id="date-voyage" name="date" value="{{ old('date') }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  required />--}}
                     <x-input-error for="date" />
                 </div>
             </div>
+
+            <div class="md:flex gap-4 items-center">
+                <div class="w-full">
+                    <x-label for="date" value="Numero de la Chaise" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" />
+                    <x-select wire:model="numero_chaise" id="numero_chaise" name="numero_chaise" type="text" class="mt-1 block w-full" autofocus  >
+                        @forelse($chaiseDispo as $key=>$chaise)
+                            <option value="{{ $chaise }}">Chaise N° {{ $chaise }}</option>
+                        @empty
+                            <option value="{{null}}">Pas de Place Disponible</option>
+                        @endforelse
+                    </x-select>
+                    <x-input-error for="numero_chaise" />
+                </div>
+            </div>
+
 
             <div>
                 <div class="md:flex gap-4 items-center">
@@ -59,7 +79,7 @@
                             <input id="accepter" type="checkbox" wire:model="accepter"   name="accepter" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" required />
                         </div>
                         <label for="accepter" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                            <a href="#" class="text-blue-700 hover:underline dark:text-blue-500">J'accepte les conditions</a>
+                            J'accepte <a href="#" class="text-blue-700 hover:underline dark:text-blue-500"> les conditions</a>
                         </label>
                     </div>
                 </div>

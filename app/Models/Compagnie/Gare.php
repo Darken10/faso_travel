@@ -13,42 +13,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Auth;
 
-/**
- * 
- *
- * @property int $id
- * @property string $name
- * @property float $lng
- * @property float $lat
- * @property int $ville_id
- * @property int $statut_id
- * @property int $user_id
- * @property int|null $compagnie_id
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, Voyage> $arrives
- * @property-read int|null $arrives_count
- * @property-read Compagnie|null $compagnie
- * @property-read \Illuminate\Database\Eloquent\Collection<int, Voyage> $departs
- * @property-read int|null $departs_count
- * @property-read Statut $statut
- * @property-read User $user
- * @property-read Ville $ville
- * @method static \Illuminate\Database\Eloquent\Builder|Gare newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Gare newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Gare query()
- * @method static \Illuminate\Database\Eloquent\Builder|Gare whereCompagnieId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Gare whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Gare whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Gare whereLat($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Gare whereLng($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Gare whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Gare whereStatutId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Gare whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Gare whereUserId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Gare whereVilleId($value)
- * @mixin \Eloquent
- */
 class Gare extends Model
 {
     use HasFactory;
@@ -64,12 +28,13 @@ class Gare extends Model
 
     ];
 
-    protected static function boot()
+    protected static function boot(): void
     {
         parent::boot();
 
         static::creating(callback: function (Gare $gare) {
             $gare->user()->associate(Auth::user());
+            $gare->compagnie_id = $gare->user->compagnie_id;
         });
     }
 

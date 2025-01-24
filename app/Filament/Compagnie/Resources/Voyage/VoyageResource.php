@@ -34,54 +34,77 @@ class VoyageResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('ville_depart')
-                    ->options(fn(Get $get):Collection => Ville::all()->where('id','!=',$get('ville_arrive'))->pluck('name', 'id'))
-                    ->native(False)->searchable()->preload()
-                    ->required(),
-                Forms\Components\Select::make('ville_arrive')
-                    ->options(fn(Get $get):Collection => Ville::all()->where('id','!=',$get('ville_depart'))->pluck('name', 'id'))
-                    ->native(False)->searchable()->preload()
-                    ->required(),
-                Forms\Components\Select::make('depart_id')
-                    ->options(fn(Get $get):Collection => Gare::query()->where('ville_id',$get('ville_depart'))->where('statut_id',1)->pluck('name', 'id'))
-                    ->label('Gare de  Depart')
-                    ->native(False)->searchable()->preload()
-                    ->required(),
-                Forms\Components\Select::make('arrive_id')
-                    ->options(fn(Get $get):Collection => Gare::query()->where('ville_id',$get('ville_arrive'))->where('statut_id',1)->pluck('name', 'id'))
-                    ->label('Gare d\'Arrive')
-                    ->native(False)->searchable()->preload()
-                    ->required(),
-                Forms\Components\Select::make('statut_id')
-                    ->relationship('statut', 'name')
-                    ->label('Statut')
-                    ->native(False)->searchable()->preload()
-                    ->required(),
-                Forms\Components\TimePicker::make('heure')
-                    ->required(),
-                Forms\Components\Select::make('compagnie_id')
-                    ->relationship('compagnie', 'name')
-                    ->required(),
-                Forms\Components\TextInput::make('prix')
-                    ->required()
-                    ->numeric()
-                    ->default(0),
-                Forms\Components\TextInput::make('nb_pace')
-                    ->required()
-                    ->numeric()
-                    ->default(0),
+                Forms\Components\Section::make([
+                    Forms\Components\Select::make('ville_depart')
+                        ->options(fn(Get $get):Collection => Ville::all()->where('id','!=',$get('ville_arrive'))->pluck('name', 'id'))
+                        ->native(False)->searchable()->preload()
+                        ->required(),
+                    Forms\Components\Select::make('ville_arrive')
+                        ->options(fn(Get $get):Collection => Ville::all()->where('id','!=',$get('ville_depart'))->pluck('name', 'id'))
+                        ->native(False)->searchable()->preload()
+                        ->required(),
+                    Forms\Components\Select::make('depart_id')
+                        ->options(fn(Get $get):Collection => Gare::query()->where('ville_id',$get('ville_depart'))->where('statut_id',1)->pluck('name', 'id'))
+                        ->label('Gare de  Depart')
+                        ->native(False)->searchable()->preload()
+                        ->required(),
+                    Forms\Components\Select::make('arrive_id')
+                        ->options(fn(Get $get):Collection => Gare::query()->where('ville_id',$get('ville_arrive'))->where('statut_id',1)->pluck('name', 'id'))
+                        ->label('Gare d\'Arrive')
+                        ->native(False)->searchable()->preload()
+                        ->required(),
+                ])->columns()
+                    ->label("Le Lieu de depart et d'arrive")
+                    ->description("Les informations concernant la ville et la gare de depart et d'arrive")
+                ->disabled(true),
 
-                Forms\Components\Select::make('classe_id')
-                    ->options(fn(Get $get):Collection => \Auth::user()->compagnie->classes->pluck('name', 'id'))
-                    ->native(False)->searchable()->preload()
-                    ->required(),
-                Forms\Components\CheckboxList::make('days')
-                    ->options(
+                Forms\Components\Section::make([
+                    Forms\Components\Select::make('statut_id')
+                        ->relationship('statut', 'name')
+                        ->label('Statut')
+                        ->native(False)->searchable()->preload()
+                        ->required()->columnSpanFull(),
+                    Forms\Components\TimePicker::make('heure')
+                        ->required()->native(false),
+                    Forms\Components\TimePicker::make('temps')
+                        ->required()->native(false),
+                    Forms\Components\TextInput::make('prix')
+                        ->label('Prix d\'aller simple')
+                        ->suffix("XOF")
+                        ->required()
+                        ->numeric()
+                        ->default(0),
+                    Forms\Components\TextInput::make('prix_aller_retour')
+                        ->required()
+                        ->label('Prix d\'aller-retour')
+                        ->suffix("XOF")
+                        ->numeric()
+                        ->default(0),
+                    Forms\Components\TextInput::make('nb_pace')
+                        ->label('Nombre de place')
+                        ->required()
+                        ->numeric()
+                        ->default(0),
+
+                    Forms\Components\Select::make('classe_id')
+                        ->options(fn(Get $get):Collection => \Auth::user()->compagnie->classes->pluck('name', 'id'))
+                        ->native(False)->searchable()->preload()
+                        ->required(),
+
+                ])->columns()->description("Les informations concernant le prix et l'heure de depart"),
+
+
+                Forms\Components\Section::make([
+                    Forms\Components\Checkbox::make('is_quotidient')
+                    ->label("Le Voyage est il quotidient ?"),
+                    Forms\Components\CheckboxList::make('days')
+                        ->options(
                             array_combine(array_column(JoursSemain::cases(),'value'),
-                            array_column(JoursSemain::cases(),'name'))
-                    )
-                    ->label('jours de la semain')
-                    ->required(),
+                                array_column(JoursSemain::cases(),'name'))
+                        )
+                        ->label('jours de la semain')->columnSpanFull()
+                        ->required(),
+                ])->columns()->description("Les informations concernant le calendrier du voyage en question"),
             ]);
     }
 

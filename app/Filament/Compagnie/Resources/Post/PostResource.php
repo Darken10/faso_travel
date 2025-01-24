@@ -40,7 +40,7 @@ class PostResource extends Resource
                     ->relationship('category', 'name')->createOptionForm([
                         Forms\Components\TextInput::make('name')
                             ->required(),
-                    ]),
+                    ])->required()->preload()->searchable(),
                 Forms\Components\Select::make('tags')->multiple()
                     ->relationship('tags', 'name')
                     ->createOptionForm([

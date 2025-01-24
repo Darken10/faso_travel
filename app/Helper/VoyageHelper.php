@@ -30,7 +30,6 @@ class VoyageHelper
             ->get()
             ->pluck('numero_chaise')->toArray();
 
-
         $allPlace = range(1, $voyage->nb_pace);
 
         // Exclure les éléments de $toExclude de $allPlace

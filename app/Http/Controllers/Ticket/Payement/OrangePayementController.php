@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Ticket\Payement;
 
+use App\Enums\TypeTicket;
 use App\Events\PayementEffectuerEvent;
 use App\Events\SendClientTicketByMailEvent;
 use App\Helper\TicketHelpers;
@@ -40,7 +41,8 @@ class OrangePayementController extends Controller
      */
     function payer(OrangePayementRequest $request, Ticket $ticket){
         $data = $request->validated();
-        $orangePayement = new OrangePayementHelper($data['numero'], $data['otp'], $ticket->voyage->prix);
+        $prix = $ticket->voyage->getPrix($ticket->type);
+        $orangePayement = new OrangePayementHelper($data['numero'], $data['otp'], $prix);
 
         if($orangePayement->payement()){
             $data = [

@@ -20,11 +20,14 @@ return new class extends Migration
             $table->id();
             $table->time('heure');
             $table->unsignedBigInteger('prix')->default(0);
+            $table->unsignedBigInteger('prix_aller_retour')->default(0);
+            $table->boolean('is_quotidient')->default(true);
+            $table->time('temps')->nullable();
+            $table->json('days')->default(json_encode([\App\Enums\JoursSemain::ToutLesJours]));
             $table->foreignIdFor(Trajet::class)->constrained()->restrictOnDelete();
             $table->foreignIdFor(User::class)->constrained()->restrictOnDelete();
             $table->foreignIdFor(Compagnie::class)->constrained()->restrictOnDelete();
             $table->foreignIdFor(Classe::class)->default(1)->constrained()->restrictOnDelete();
-            $table->foreignIdFor(Care::class)->nullable()->constrained()->nullOnDelete();
             $table->timestamps();
         });
     }

@@ -2,6 +2,7 @@
 
 namespace App\Models\Voyage;
 
+use App\Enums\TypeTicket;
 use App\Models\Compagnie\Care;
 use App\Models\User;
 use App\Models\Statut;
@@ -79,9 +80,11 @@ class Voyage extends Model
         'arrive_id',
         'days',
         'care_id',
-        'temps'
+        'temps',
+        "prix_aller_retour",
+        "is_quotidient",
+        "temps",
     ];
-
 
 
     protected $casts = [
@@ -106,6 +109,7 @@ class Voyage extends Model
         parent::boot();
         static::creating(function ($voyage) {
             $voyage->user_id = Auth::id();
+            $voyage->compagnie_id = $voyage->user->compagnie_id;
         });
     }
 
@@ -173,6 +177,11 @@ class Voyage extends Model
     function days():BelongsToMany
     {
         return $this->belongsToMany(Days::class);
+    }
+
+    function getPrix(TypeTicket $type):float
+    {
+        return $type===TypeTicket::AllerRetour ? $this->prix_aller_retour : $this->prix;
     }
 
 }

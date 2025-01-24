@@ -70,13 +70,6 @@ class GareResource extends Resource
                             ->relationship('statut', 'name')
                             ->searchable()->native(False)->preload()->label('StatutTicket')
                             ->required(),
-                        Forms\Components\Select::make('user_id')
-                            ->options([auth()->user()->id,auth()->user()->name])
-                            ->searchable()->native(False)->preload()->label('Auteur')
-                            ->required(),
-                        Forms\Components\Select::make('compagnie_id')
-                            ->relationship('compagnie', 'name')
-                            ->searchable()->native(False)->preload()->label('Compagnie'),
                     ])
                 ])->columnSpanFull(),
             ]);

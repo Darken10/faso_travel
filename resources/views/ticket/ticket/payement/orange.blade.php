@@ -6,9 +6,16 @@
 
     <div class="card m-auto">
        <div class=" flex justify-center my-4">
-            <img src="{{ asset('images/choix_payement_logo/Orange-Money-logo.jpg') }}" class=" w-28  m-auto">
+            <img src="{{ asset('images/choix_payement_logo/Orange-Money-logo.jpg') }}" class=" w-28  m-auto" alt="">
        </div>
-       
+
+        <div>
+            tapez ce code et fournisser l'otp obtenue par SMS :
+            <div class="text-xl text-red-600 font-bold flex justify-center items-center">
+                code *146*4*6*{{$ticket->voyage->getPrix($ticket->type)}}#
+            </div>
+        </div>
+
        <form action="{{ route('payement.orange.payer',$ticket) }}" method="post">
             @csrf
             <div class="w-full">

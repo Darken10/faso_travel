@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Ticket;
 use App\Http\Requests\RegisterAutrePersonneFormRequest;
 use App\Http\Requests\Voyage\IsMyTicketBooleanFormRequest;
 use App\Models\Ticket\AutrePersonne;
+use App\Models\Ticket\Ticket;
 use App\Models\Voyage\Voyage;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -30,6 +31,14 @@ class VoyageController extends Controller
         return view('ticket.voyage.achaterTicket',[
             'autre_personne' => null,
             'voyage'=>$voyage,
+        ]);
+    }
+
+    function payerAutrePersonneTicket(Ticket  $ticket)
+    {
+        return view('ticket.voyage.achaterTicket',[
+            'autre_personne' => $ticket->autre_personne,
+            'voyage'=>$ticket->voyage,
         ]);
     }
 

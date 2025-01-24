@@ -3,7 +3,7 @@
 use App\Enums\JoursSemain;
 use App\Http\Controllers\Auth\MyRegisterController;
 use App\Models\Voyage\Days;
-use App\Notifications\Ticket\TicketUpdateNotification;
+use App\Notifications\Ticket\TicketNotification;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\Ticket\Payement\OrangePayementController;
@@ -36,6 +36,7 @@ Route::prefix('/voyage')->name('voyage.')->middleware('auth')->controller(Voyage
     Route::get('/', 'index')->name('index');
     Route::get('/{voyage}', 'show')->name('show')->where(['voyage' => '[0-9]+',]);
     Route::get('/achete/{voyage}', 'acheter')->name('acheter')->where(['voyage' => '[0-9]+',]);
+    Route::get('/my-ticket/achete/{ticket}', 'payerAutrePersonneTicket')->name('payerAutrePersonneTicket')->where(['ticket' => '[0-9]+',]);
 
     Route::get('/is-my-ticket/{voyage}', 'is_my_ticket')->name('is_my_ticket')->where(['voyage' => '[0-9]+',]);
     Route::post('/is-my-ticket/{voyage}', 'is_my_ticket_traitement')->name('is_my_ticket_traitement')->where(['voyage' => '[0-9]+',]);
@@ -43,13 +44,13 @@ Route::prefix('/voyage')->name('voyage.')->middleware('auth')->controller(Voyage
     Route::get('/is-my-ticket/autre-ticket-info/{voyage}', 'autre_ticket_info')->name('autre-ticket-info')->where(['voyage' => '[0-9]+',]);
     Route::post('/is-my-ticket/autre-ticket-info/{voyage}', 'register_autre_personne')->name('register-autre-personne')->where(['voyage' => '[0-9]+',]);
     Route::get('/is-my-ticket/autre-ticket-info/{voyage}/{autre_personne}', 'payer_ticket_autre_personne')->name('payer-ticket-autre-personne')->where(['voyage' => '[0-9]+',]);
-
-
 });
 
 
 Route::prefix('/ticket')->name('ticket.')->middleware('auth')->controller(TicketController::class)->group(function () {
     Route::post('/payer/{voyage}', 'createTicket')->name('payer')->where(['voyage' => '[0-9]+',]);
+    /*Route::post('/my-ticket/payer/{voyage}/{ticket}', 'createTicket')->name('my-ticket.payer')->where(['voyage' => '[0-9]+','ticket' =>'[0-9]+']);*/
+
     Route::get('/mes-tickets', 'myTickets')->name('myTickets');
     Route::get('/mes-tickets/{ticket}/edite', 'editTicket')->name('editTicket');
     Route::get('/mes-tickets/{ticket}', 'showMyTicket')->name('show-ticket')->where(['ticket' => '[0-9]+',]);
@@ -112,3 +113,6 @@ Route::prefix('/auth')->name('auth.')->group(function () {
     });
 });
 //auth.register.step2
+
+Route::get('/notifications',[\App\Http\Controllers\Divers\NotificationsController::class,'allNotifications'])->name('user.notifications');
+Route::get('/notifications/{notificationId}',[\App\Http\Controllers\Divers\NotificationsController::class,'showNotification'])->name('user.notifications.show');

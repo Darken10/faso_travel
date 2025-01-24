@@ -35,13 +35,13 @@
         </div>
     </div>
 
-    <div class=" mt-2 text-sm font-medium text-gray-700 dark:text-gray-300 flex justify-center">
+    <div class=" mt-2 text-sm font-medium text-gray-800 dark:text-gray-300 flex justify-center">
         Le {{ $ticket?->date?->format('d M Y') }} à {{ $ticket?->voyage?->heure?->format('H\h i') }}
     </div>
 
 
 
-   <div class=" md:flex md:justify-between">
+   <div class=" md:flex md:justify-between text-gray-800">
        <div class="mt-2 text-sm font-medium  flex justify-center ">
            Classe :
            <span class="font-semibold px-2">
@@ -53,12 +53,14 @@
        </div>
    </div>
 
-    <div class=" md:flex md:justify-between">
+    <div class=" md:flex md:justify-between text-gray-800">
         <div class="mt-2 text-sm font-medium   flex justify-center ">
             Prix :
             <span class="text-green-600 font-semibold px-2">
                 @if ( $ticket?->payements()->first()?->montant > 0)
-                   {{ $ticket?->payements()->first()?->montant }} F CFA
+                   {{ $ticket?->payements()->first()?->montant  }} F CFA
+                @elseif ( $ticket->statut === \App\Enums\StatutTicket::EnAttente)
+                    {{ $ticket->prix() }} F CFA
                 @else
                     Gratuit
                 @endif

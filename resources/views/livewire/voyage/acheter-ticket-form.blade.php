@@ -1,5 +1,5 @@
 <div >
-    <div class="w-full max-w-lg p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
+    <div class="w-full max-w-2xl p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
         <form class="space-y-6" action="{{ route('ticket.payer',$voyage)  }}" method="POST" >
             @csrf
             <h5 class="text-xl font-medium text-gray-900 dark:text-white">Acheter le Ticket</h5>

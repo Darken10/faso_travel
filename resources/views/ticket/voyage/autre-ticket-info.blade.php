@@ -73,7 +73,7 @@
                         <div class="md:flex gap-4 items-center col-span-4">
                             <div class="w-full">
                                 <x-label for="numero"> Numero: </x-label>
-                                <input  type="text"
+                                <input  type="tel"
                                           id="numero"
                                           name="numero"
                                           value="{{ old('numero') }}"

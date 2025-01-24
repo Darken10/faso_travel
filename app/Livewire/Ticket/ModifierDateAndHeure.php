@@ -9,7 +9,7 @@ use App\Helper\TicketHelpers;
 use App\Helper\VoyageHelper;
 use App\Models\Ticket\Ticket;
 use App\Models\Voyage\Voyage;
-use App\Notifications\Ticket\TicketUpdateNotification;
+use App\Notifications\Ticket\TicketNotification;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Livewire\Attributes\Validate;
@@ -74,7 +74,7 @@ class ModifierDateAndHeure extends Component
                 PayementEffectuerEvent::dispatch($this->ticket);
                 SendClientTicketByMailEvent::dispatch($this->ticket);
                 \DB::commit();
-                \Auth::user()->notify(new TicketUpdateNotification($this->ticket));
+                \Auth::user()->notify(new TicketNotification($this->ticket));
                 return to_route('ticket.show-ticket',['ticket' => $this->ticket])
                     ->with('success',"Votre Ticket a bien ete modifier");
             }

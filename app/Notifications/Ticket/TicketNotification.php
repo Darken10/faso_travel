@@ -2,20 +2,26 @@
 
 namespace App\Notifications\Ticket;
 
+use App\Enums\TypeNotification;
 use App\Models\Ticket\Ticket;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class TicketUpdateNotification extends Notification
+class TicketNotification extends Notification
 {
     use Queueable;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct(private Ticket $ticket)
+    public function __construct(
+        private Ticket $ticket,
+        private TypeNotification $type,
+        private string $title,
+        private string $message,
+    )
     {
         //
     }
@@ -27,7 +33,7 @@ class TicketUpdateNotification extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return ['database'];
     }
 
     /**
@@ -53,7 +59,11 @@ class TicketUpdateNotification extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-
+            'user'=>$notifiable,
+            'ticket'=> $this->ticket,
+            'type'=> $this->type,
+            'title'=> $this->title,
+            'message'=> $this->message,
         ];
     }
 }

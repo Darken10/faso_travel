@@ -5,13 +5,11 @@ namespace App\Http\Controllers\Ticket;
 use App\Enums\StatutTicket;
 use App\Enums\StatutUser;
 use App\Enums\TypeTicket;
-use App\Events\CreatedQrCodeEvent;
 use App\Events\PayementEffectuerEvent;
 use App\Events\SendClientTicketByMailEvent;
 use App\Events\TranfererTicketToOtherUserEvent;
 use App\Models\Ticket\AutrePersonne;
 use App\Models\User;
-use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use App\Helper\TicketHelpers;
@@ -20,13 +18,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Ticket\CreateTicketRequest;
 use App\Models\Ticket\Ticket;
 use Illuminate\Support\Facades\Auth;
-use Spatie\Browsershot\Browsershot;
 
 class TicketController extends Controller
 {
     private string $storage_public_dir = 'app/public/';
 
-    public function createTicket(CreateTicketRequest $request, Voyage $voyage)
+    public function createTicket(CreateTicketRequest $request, Voyage $voyage,Ticket $ticket=null)
     {
         $data = $request->validated();
         $data['voyage_id'] = $voyage->id;

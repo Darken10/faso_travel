@@ -19,7 +19,7 @@
 
                         </div>
                         <div class="text-xs font-medium text-gray-600 dark:text-gray-400">
-                            {{ $ticket->created_at->format('d/m/Y H:i') }}
+                            {{ $ticket->created_at->diffForHumans() }}
                         </div>
 
                     </div>
@@ -95,13 +95,21 @@
                                         Debloquer
                                     </div>
                                 </a>
+
                             @elseif($ticket?->statut === \App\Enums\StatutTicket::EnAttente)
-                                <a href="{{ route('ticket.goto-payment',$ticket) }}" data-modal-target="popup-modal-ractive" data-modal-toggle="popup-modal-ractive" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                <a href="
+                                        @if(!$ticket?->is_my_ticket and $ticket->autre_personne instanceof \App\Models\Ticket\AutrePersonne)
+                                            {{ route('voyage.payerAutrePersonneTicket',$ticket) }}
+                                        @else
+                                            {{ route('voyage.acheter',$ticket->voyage) }}
+                                        @endif
+                                        " data-modal-target="popup-modal-ractive" data-modal-toggle="popup-modal-ractive" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                                     <div class="flex gap-2 text-orange-400">
                                         <svg fill="#000000"  height="16px" width="16px" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve">
                                                 <path d="M256,0C114.617,0,0,114.615,0,256s114.617,256,256,256s256-114.615,256-256S397.383,0,256,0z M224,320c0,8.836-7.164,16-16,16h-32c-8.836,0-16-7.164-16-16V192c0-8.836,7.164-16,16-16h32c8.836,0,16,7.164,16,16V320z M352,320 c0,8.836-7.164,16-16,16h-32c-8.836,0-16-7.164-16-16V192c0-8.836,7.164-16,16-16h32c8.836,0,16,7.164,16,16V320z"/>
                                             </svg>
                                         Payer
+
                                     </div>
                                 </a>
                             @endif

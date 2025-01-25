@@ -8,28 +8,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Auth;
 
-/**
- *
- *
- * @property int $id
- * @property string $name
- * @property string|null $description
- * @property int $user_id
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Voyage\Confort> $conforts
- * @property-read int|null $conforts_count
- * @method static \Illuminate\Database\Eloquent\Builder|Classe newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Classe newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Classe query()
- * @method static \Illuminate\Database\Eloquent\Builder|Classe whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Classe whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Classe whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Classe whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Classe whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Classe whereUserId($value)
- * @mixin \Eloquent
- */
 class Classe extends Model
 {
     use HasFactory;

@@ -18,56 +18,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 
-/**
- *
- *
- * @property int $id
- * @property int|null $user_id
- * @property int|null $voyage_id
- * @property bool|null $a_bagage
- * @property string|null $bagages_data
- * @property \Illuminate\Support\Carbon $date
- * @property TypeTicket $type
- * @property StatutTicket $statut
- * @property string $numero_ticket
- * @property int|null $numero_chaise
- * @property string $code_sms
- * @property string $code_qr
- * @property string|null $image_uri
- * @property string|null $pdf_uri
- * @property string|null $code_qr_uri
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property int $is_my_ticket
- * @property int|null $autre_personne_id
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Ticket\Payement> $payements
- * @property-read int|null $payements_count
- * @property-read User|null $user
- * @property-read Voyage|null $voyage
- * @method static \Illuminate\Database\Eloquent\Builder|Ticket newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Ticket newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Ticket query()
- * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereABagage($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereAutrePersonneId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereBagagesData($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereCodeQr($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereCodeQrUri($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereCodeSms($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereDate($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereImageUri($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereIsMyTicket($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereNumeroChaise($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereNumeroTicket($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ticket wherePdfUri($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereStatut($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereType($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereUserId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereVoyageId($value)
- * @mixin \Eloquent
- */
 class Ticket extends Model
 {
     use HasFactory,Notifiable;

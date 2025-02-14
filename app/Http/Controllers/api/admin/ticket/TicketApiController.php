@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\api\admin\ticket;
 
-use App\Enums\MoyenPayment;
 use App\Enums\StatutPayement;
 use App\Enums\StatutTicket;
 use App\Events\Admin\TicketValiderEvent;
@@ -12,6 +11,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Ticket\Ticket;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Throwable;
 
 class TicketApiController extends Controller
 {
@@ -33,13 +33,7 @@ class TicketApiController extends Controller
             $ticket = $tickets->last();
             $verificationStatusPayement = Payement::verificationPayementStatutByPayementApi($ticket?->payements->last()?->token,$ticket?->payements?->last()?->moyen_payment);
 
-            return response()->json([
-                'is_exist'=> true,
-                'is_payement_valide'=> $verificationStatusPayement=== StatutPayement::Complete,
-                'payement_statut'=> $verificationStatusPayement,
-                'is_valide'=>($verificationStatusPayement=== StatutPayement::Complete and $ticket->statut === StatutTicket::Payer),
-                'ticket'=>$tickets->last(),
-            ]);
+            return response()->json($tickets->last());
         }
 
         return response()->json([
@@ -58,7 +52,7 @@ class TicketApiController extends Controller
      * @param Request $request
      * @param string $ticket_code
      * @return JsonResponse
-     * @throws \Throwable
+     * @throws Throwable
      */
     function validerTicket(Request $request, string $ticket_code)
     {
@@ -72,12 +66,7 @@ class TicketApiController extends Controller
         if ($data['numero_ticket'] === $ticket->numero_ticket and $ticket_code === $ticket->code_qr) {
             if (TicketValidation::valider($ticket)) {
                 TicketValiderEvent::dispatch($ticket);
-                return response()->json([
-                    'success' => true,
-                    'error' => false,
-                    'ticket' => $ticket,
-                    'message' => 'Le ticket a ete bien validé',
-                ]);
+                return response()->json($ticket->load(["user",'payements',]));
             }
             return response()->json([
                 'success' => false,
@@ -102,7 +91,7 @@ class TicketApiController extends Controller
 
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
     function verificationByNumber(Request $request)
     {

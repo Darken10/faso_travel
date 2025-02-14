@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Auth;
 
 class Care extends Model
 {
@@ -18,8 +19,19 @@ class Care extends Model
         'number_place',
         'statut',
         'etat',
-        'image_uri'
+        'image_uri',
+        'compagnie_id',
     ];
+
+
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        static::creating(callback: function (Care $care) {
+            $care->compagnie_id = Auth::user()->compagnie_id;
+        });
+    }
 
     protected $casts = [
         'statut' => StatutCare::class

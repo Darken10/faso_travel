@@ -6,6 +6,7 @@ use App\Filament\Compagnie\Resources\Ticket\TicketResource\Pages;
 use App\Filament\Compagnie\Resources\Ticket\TicketResource\RelationManagers;
 use App\Filament\Compagnie\Widgets\StatsCompagnieOverview;
 use App\Models\Ticket\Ticket;
+use Filament\Actions\Action;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -55,6 +56,13 @@ class TicketResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->headerActions([
+                Tables\Actions\Action::make('validate')
+                    ->label('Validation')
+                    ->color('primary')
+                    ->icon('heroicon-o-check')
+                    ->url('tickets/validate')
+            ])
             ->filters([
                 //
             ])
@@ -81,6 +89,7 @@ class TicketResource extends Resource
             'index' => Pages\ListTickets::route('/'),
             'create' => Pages\CreateTicket::route('/create'),
             'edit' => Pages\EditTicket::route('/{record}/edit'),
+            'validate' => Pages\ValidateTicket::route('/validate'),
         ];
     }
 }

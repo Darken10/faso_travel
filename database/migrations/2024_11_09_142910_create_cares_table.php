@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedSmallInteger('number_place')->default(1);
             $table->enum('statut',StatutCare::values());
             $table->unsignedSmallInteger('etat')->default(1)->min(0)->max(10);
-            $table->string('image_uri');
+            $table->string('image_uri')->nullable();
             $table->foreignIdFor(App\Models\Compagnie\Compagnie::class)->nullable()->constrained()->nullOnDelete();
             $table->timestamps();
         });

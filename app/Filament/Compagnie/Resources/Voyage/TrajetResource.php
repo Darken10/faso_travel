@@ -29,6 +29,7 @@ class TrajetResource extends Resource
 
     protected static ?string $navigationGroup = 'Voyage';
 
+
     public static function form(Form $form): Form
     {
         return $form

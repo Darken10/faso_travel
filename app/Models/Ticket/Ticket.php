@@ -43,7 +43,8 @@ class Ticket extends Model
 
     protected $with = [
         'user',
-        'payements'
+        'payements',
+        'voyage',
     ];
 
     protected function casts()

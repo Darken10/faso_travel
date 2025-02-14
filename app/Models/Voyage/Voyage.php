@@ -41,6 +41,17 @@ class Voyage extends Model
         "temps",
     ];
 
+    protected $with = [
+        'user',
+        'gareDepart',
+        'gareArrive',
+        'statut',
+        'trajet',
+        'compagnie'
+
+    ];
+
+
 
     protected $casts = [
         'heure' => 'datetime',

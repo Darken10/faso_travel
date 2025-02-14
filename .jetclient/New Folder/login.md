@@ -1,7 +1,7 @@
 ```toml
 name = 'login'
 method = 'POST'
-url = 'http://127.0.0.1:8000/api/user/login'
+url = 'http://192.168.62.58:8000/api/user/login'
 sortWeight = 2000000
 id = 'ea980260-93b4-4d41-920f-1bb329fe13b7'
 
@@ -9,7 +9,8 @@ id = 'ea980260-93b4-4d41-920f-1bb329fe13b7'
 type = 'JSON'
 raw = '''
 {
-  
+  "email": "darken@darken.com",
+  "password": "password"
 }'''
 ```
 

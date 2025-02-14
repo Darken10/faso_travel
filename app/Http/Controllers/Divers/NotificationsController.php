@@ -2,24 +2,23 @@
 
 namespace App\Http\Controllers\Divers;
 
-use App\Enums\TypeNotification;
 use App\Http\Controllers\Controller;
 use App\Models\Ticket\Ticket;
-use Filament\Notifications\Notification;
-use Illuminate\Http\Request;
-use JetBrains\PhpStorm\NoReturn;
-use PhpParser\Builder\Enum_;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 
 class NotificationsController extends Controller
 {
-    function allNotifications(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application
+    function allNotifications(): View|Factory|Application
     {
         return view('divers.notifications-liste',[
             'notifications' => \Auth::user()->notifications()->get(),
         ]);
     }
 
-     function showNotification($notificationId): \Illuminate\Http\RedirectResponse
+     function showNotification($notificationId): RedirectResponse
     {
         $notification = \Auth::user()->notifications()->whereId($notificationId)->get()->last();
         $notification->markAsRead();

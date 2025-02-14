@@ -13,7 +13,7 @@ class CarePolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -21,7 +21,7 @@ class CarePolicy
      */
     public function view(User $user, Care $care): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -29,7 +29,7 @@ class CarePolicy
      */
     public function create(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -37,7 +37,7 @@ class CarePolicy
      */
     public function update(User $user, Care $care): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -45,7 +45,7 @@ class CarePolicy
      */
     public function delete(User $user, Care $care): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -53,7 +53,7 @@ class CarePolicy
      */
     public function restore(User $user, Care $care): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -61,6 +61,6 @@ class CarePolicy
      */
     public function forceDelete(User $user, Care $care): bool
     {
-        //
+        return true;
     }
 }

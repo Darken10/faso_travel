@@ -24,6 +24,13 @@ class Trajet extends Model
     ];
 
 
+    protected $with = [
+        'depart',
+        "arriver"
+
+    ];
+
+
     protected static function boot()
     {
         parent::boot();

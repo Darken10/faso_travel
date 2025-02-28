@@ -9,9 +9,12 @@ use App\Helper\Payement\Payement;
 use App\Helper\TicketValidation;
 use App\Http\Controllers\Controller;
 use App\Models\Ticket\Ticket;
+use App\Notifications\Ticket\ValiderTicketDeUserNotification;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Throwable;
+
+use function Ramsey\Uuid\v1;
 
 class TicketApiController extends Controller
 {
@@ -33,7 +36,14 @@ class TicketApiController extends Controller
             $ticket = $tickets->last();
             $verificationStatusPayement = Payement::verificationPayementStatutByPayementApi($ticket?->payements->last()?->token,$ticket?->payements?->last()?->moyen_payment);
 
-            return response()->json($tickets->last());
+            return response()->json([
+                'is_valide' => true,
+                'is_exist' => true,
+                'ticket' => $tickets->last(),
+                'message' => [
+                    'error' => 'Le code QR du ticket est invalide'
+                ]
+            ]);
         }
 
         return response()->json([
@@ -50,23 +60,31 @@ class TicketApiController extends Controller
     /**
      * Valide un ticket si l'on a les informations a travers QR Code
      * @param Request $request
-     * @param string $ticket_code
      * @return JsonResponse
      * @throws Throwable
      */
-    function validerTicket(Request $request, string $ticket_code)
+    function validerTicket(Request $request)
     {
         $data = $request->validate([
             'ticket_id' => ['required'],
             'numero_ticket' => ['required'],
+            "ticket_code_qr" =>['required'],
         ]);
         /** @var Ticket $ticket */
         $ticket = Ticket::query()->find($data['ticket_id']);
 
-        if ($data['numero_ticket'] === $ticket->numero_ticket and $ticket_code === $ticket->code_qr) {
+        if ($data['numero_ticket'] === $ticket->numero_ticket and $data['ticket_code_qr'] === $ticket->code_qr) {
             if (TicketValidation::valider($ticket)) {
                 TicketValiderEvent::dispatch($ticket);
-                return response()->json($ticket->load(["user",'payements',]));
+                $ticket->user->notify(new ValiderTicketDeUserNotification($ticket));
+                return response()->json([
+                    'success' => true,
+                    'error' => false,
+                    'ticket' => $ticket->load(["user",'payements','voyage']),
+                    'message' => [
+                        'success' => 'Ticket Valider avec success'
+                    ]
+                ]);
             }
             return response()->json([
                 'success' => false,
@@ -79,8 +97,8 @@ class TicketApiController extends Controller
         }
 
         return response()->json([
-            'is_valide' => false,
-            'is_exist' => false,
+            'success' => false,
+            'error' => true,
             'ticket' => null,
             'message' => [
                 'error' => 'Une erreur est survenu lors de la validation du ticket',

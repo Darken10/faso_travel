@@ -44,7 +44,7 @@ class TicketNotification extends Notification
         return (new MailMessage)
             ->line('Bonjour Mr.' . $notifiable->name)
             ->line("Nous vous notifions que votre ticket a ete modifier avec succes.")
-            ->line("Et qu'un nouveau le ticket a ete regener automatiquement.")
+            ->line("Et qu'un nouveau ticket a ete regener automatiquement.")
             ->line("Le Numero du Ticket  :".$this->ticket->numero_ticket)
             ->line("Le Code du Ticket  :".$this->ticket->code_sms)
             ->action('Voir le Ticket', url(route('ticket.show-ticket',$this->ticket)))

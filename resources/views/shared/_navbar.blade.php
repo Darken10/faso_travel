@@ -7,15 +7,7 @@
 <nav class=" z-50 top-0 fixed w-full lg:px-16 px-6 bg-white shadow-md flex flex-wrap items-center lg:py-0 py-2 border-b-4 xl:py-0  border-blue-800">
 
     <div class="flex-1 flex justify-between items-center">
-        <a href="/" class="flex text-lg font-semibold capitalize no-underline cente" style="vertical-align: center">
-        <img
-          src="{{ asset('images/favicon.png') }}"
-          width="50"
-          height="50"
-          class="p-2"
-         alt=''/>
-        <div class="mt-3 text-red-600">Travel</div>
-      </a>
+        <x-logo></x-logo>
     </div>
     <label for="menu-toggle" class="cursor-pointer lg:hidden block">
       <svg

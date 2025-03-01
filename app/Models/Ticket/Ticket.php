@@ -11,12 +11,14 @@ use App\Models\Ville\Ville;
 use App\Models\Voyage\Confort;
 use App\Models\Voyage\Voyage;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 
 class Ticket extends Model
 {
@@ -47,7 +49,27 @@ class Ticket extends Model
         'voyage',
     ];
 
-    protected function casts()
+    protected static function booted(): void
+    {
+        static::addGlobalScope('userCompany', function (Builder $builder) {
+            if (Auth::check()) {
+                // Récupération des identifiants des compagnies liées à l'utilisateur connecté.
+                $companyId = Auth::user()->compagnie_id;
+
+                // Filtrer les tickets dont le voyage est rattaché à la compagnie de l'utilisateur
+                $builder->whereHas('voyage', function ($query) use ($companyId) {
+                    $query->where('compagnie_id', $companyId);
+                });
+            }
+        });
+    }
+
+    public function canValider(): bool
+    {
+        return $this->statut === StatutTicket::Payer;
+    }
+
+    protected function casts(): array
     {
         return [
             'type'=> TypeTicket::class,
@@ -115,7 +137,7 @@ class Ticket extends Model
         return $this->voyage->classe;
     }
 
-    function autre_personne()
+    function autre_personne(): BelongsTo
     {
         return $this->belongsTo(AutrePersonne::class);
     }
@@ -125,9 +147,9 @@ class Ticket extends Model
         return $this->voyage->trajet;
     }
 
-    public function prix()
+    public function prix(): float
     {
-        return $this->voyage->prix;
+        return $this->voyage->getPrix($this->type);
     }
 
 }

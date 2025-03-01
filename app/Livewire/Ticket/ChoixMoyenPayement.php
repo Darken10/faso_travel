@@ -14,7 +14,7 @@ class ChoixMoyenPayement extends Component
     }
 
     public function orange(){
-        
+
         return to_route('payement.orange.paymentPage',['ticket' => $this->ticket]);
     }
 
@@ -23,7 +23,6 @@ class ChoixMoyenPayement extends Component
     }
 
     public function ligdiCash(){
-        dd('ligdiCash');
     }
 
     public function wave(){

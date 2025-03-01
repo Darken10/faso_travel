@@ -4,11 +4,12 @@ namespace App\Enums;
 
 enum MoyenPayment: string
 {
-    case OrangeMoney = 'Orange Money';
-    case MoovMoney = 'Moov Money';
-    case LigdiCash = 'LigdiCash';
-    case CartVisa = 'Cart Visa';
-
+    case ORRANGE_MONEY = 'Orange Money';
+    case MOOV_MONEY = 'Moov Money';
+    case LIGDICASH = 'LigdiCash';
+    case CARTE_VISA = 'Cart Visa';
+    const CORIS_MONEY = "Coris Money";
+    const WAVE = "Wave";
 
     public static function values():array
     {

@@ -17,10 +17,10 @@ class TicketNotification extends Notification
      * Create a new notification instance.
      */
     public function __construct(
-        private Ticket $ticket,
-        private TypeNotification $type,
-        private string $title,
-        private string $message,
+        private readonly Ticket           $ticket,
+        private readonly TypeNotification $type,
+        private readonly string           $title,
+        private readonly string           $message,
     )
     {
         //

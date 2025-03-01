@@ -17,12 +17,12 @@ use Symfony\Component\Uid\Ulid;
 class TicketHelpers{
 
     public static function generateTicketNumber():string{
-        $number = rand(0,999999);
+        $number = str_pad(rand(0,999999),6,"0",STR_PAD_LEFT);
         return "TK $number";
     }
 
     public static function generateTicketCodeSms():string{
-        return rand(0,999999);
+        return str_pad(rand(0,999999),6,"0",STR_PAD_LEFT);
     }
 
     public static function getNumeroChaise(Voyage $voyage,string $date):int{

@@ -34,3 +34,7 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 
+
+
+Route::post('/process-payment/{provider}', [\App\Http\Controllers\Ticket\Payement\PaymentController2::class, 'processPayment']);
+

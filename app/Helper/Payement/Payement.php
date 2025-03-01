@@ -23,7 +23,7 @@ class Payement {
         return $this->token;
     }
 
-    public static function verificationPayementStatutByPayementApi(string $token,MoyenPayment $moyenPayement=MoyenPayment::LigdiCash):StatutPayement
+    public static function verificationPayementStatutByPayementApi(string $token,MoyenPayment $moyenPayement=MoyenPayment::LIGDICASH):StatutPayement
     {
         return StatutPayement::Complete;
     }

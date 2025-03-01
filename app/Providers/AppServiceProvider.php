@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\features\payement\PaymentGatewayFactory2;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -11,7 +12,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->singleton(PaymentGatewayFactory2::class, function ($app) {
+            return new PaymentGatewayFactory2();
+        });
     }
 
     /**

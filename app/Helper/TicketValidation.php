@@ -4,6 +4,8 @@ namespace App\Helper;
 
 use App\Enums\StatutTicket;
 use App\Events\Admin\TicketValiderEvent;
+use App\Events\Ticket\TicketActiveEvent;
+use App\Events\Ticket\TicketBlockerEvent;
 use App\Models\Ticket\Ticket;
 use App\Models\User;
 use Illuminate\Support\Collection;
@@ -59,6 +61,66 @@ class TicketValidation
             return  null;
     }
 
+    /**
+     * permet de valider un ticket
+     * @param Ticket $ticket
+     * @return bool
+     * @throws \Throwable
+     */
+    public static function bloque(Ticket $ticket):bool
+    {
+        DB::beginTransaction();
+        $ticket->statut = StatutTicket::Bloquer;
+        $ticket->save();
+        DB::commit();
+
+        if ($ticket->statut === StatutTicket::Bloquer){
+            TicketBlockerEvent::dispatch($ticket);
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+
+    /**
+     * permet de valider un ticket
+     * @param Ticket $ticket
+     * @return bool
+     * @throws \Throwable
+     */
+    public static function pause(Ticket $ticket):bool
+    {
+        DB::beginTransaction();
+        $ticket->statut = StatutTicket::Pause;
+        $ticket->save();
+        DB::commit();
+
+        if ($ticket->statut === StatutTicket::Pause){
+            TicketBlockerEvent::dispatch($ticket);
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    /**
+     * @throws \Throwable
+     */
+    public static function active(Ticket $ticket): bool
+    {
+        DB::beginTransaction();
+        $ticket->statut = StatutTicket::Pause;
+        $ticket->save();
+        DB::commit();
+
+        if ($ticket->statut === StatutTicket::Pause){
+            TicketActiveEvent::dispatch($ticket);
+            return true;
+        }else{
+            return false;
+        }
+    }
 
 
 }

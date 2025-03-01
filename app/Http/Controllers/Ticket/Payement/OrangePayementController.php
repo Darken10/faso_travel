@@ -40,6 +40,7 @@ class OrangePayementController extends Controller
      * @throws \Throwable
      */
     function payer(OrangePayementRequest $request, Ticket $ticket){
+
         $data = $request->validated();
         $prix = $ticket->voyage->getPrix($ticket->type);
         $orangePayement = new OrangePayementHelper($data['numero'], $data['otp'], $prix);
@@ -53,7 +54,7 @@ class OrangePayementController extends Controller
                 "token" => $orangePayement->token,
                 'code_otp' => $data['otp'],
                 'statut' => $orangePayement->payementStatut(),
-                'moyen_payment' => MoyenPayment::OrangeMoney,
+                'moyen_payment' => MoyenPayment::ORRANGE_MONEY,
                 'code_ticket' => Str::random(12),
             ];
 

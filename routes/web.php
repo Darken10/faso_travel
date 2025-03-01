@@ -116,3 +116,15 @@ Route::prefix('/auth')->name('auth.')->group(function () {
 
 Route::get('/notifications',[\App\Http\Controllers\Divers\NotificationsController::class,'allNotifications'])->name('user.notifications');
 Route::get('/notifications/{notificationId}',[\App\Http\Controllers\Divers\NotificationsController::class,'showNotification'])->name('user.notifications.show');
+
+
+Route::get("/test",[\App\Http\Controllers\Ticket\Payement\PayementTest::class,'pay']);
+
+Route::post('/process-payment/{ticket}/{provider}', [\App\Http\Controllers\Ticket\Payement\PaymentController2::class, 'processPayment'])->name("controller2-payment.payment-process");
+
+
+Route::get('/process-payment/{ticket}/{provider}/success', [\App\Http\Controllers\Ticket\Payement\PaymentController2::class, 'successFunction'])->name("controller-payment.success");
+Route::get('/process-payment/{ticket}/{provider}/cancel', [\App\Http\Controllers\Ticket\Payement\PaymentController2::class, 'cancelFunction'])->name("controller-payment.cancel");
+Route::get('/process-payment/{ticket}/{provider}/callback', [\App\Http\Controllers\Ticket\Payement\PaymentController2::class, 'callbackFunction'])->name("controller-payment.callback");
+
+

@@ -9,11 +9,14 @@
             <img src="{{ asset('images/choix_payement_logo/moovMoney.jpg') }}" class="w-24 h-24 me-2 -ms-1 " alt="Logo de Orange Money" srcset="">
         </div>
     </button>
-    <button type="button" class="choix-payement" wire:click="ligdiCash">
-        <div class="flex justify-center">
-            <img src="{{ asset('images/choix_payement_logo/ligdiCash.jpeg') }}" class="w-24 h-24 me-2 -ms-1 " alt="Logo de Orange Money" srcset="">
-        </div>
-    </button>
+    <form  action="{{route('controller2-payment.payment-process',['provider' => 'ligdicash','ticket' => $this->ticket])}}" method="POST">
+        @csrf
+        <button   type="submit" class="choix-payement w-full mx-2" >
+            <div class="flex justify-center relative">
+                <img src="{{ asset('images/choix_payement_logo/ligdiCash.jpeg') }}" class="w-24 h-24 me-2 -ms-1 " alt="Logo de Orange Money" srcset="">
+            </div>
+        </button>
+    </form>
     <button type="button" class="choix-payement" wire:click="wave">
         <div class="flex justify-center">
             <img src="{{ asset('images/choix_payement_logo/wave.png') }}" class="w-24 h-24 me-2 -ms-1 " alt="Logo de Orange Money" srcset="">

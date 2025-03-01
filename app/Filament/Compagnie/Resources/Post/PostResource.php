@@ -91,9 +91,11 @@ class PostResource extends Resource
                 ->schema([
                     TextEntry::make('title')->label('Titre'),
                     TextEntry::make('category.name')->label('Categorie'),
-                    TextEntry::make('tags.name')->label('Etiquette')->columnSpanFull(),
+                    TextEntry::make('tags.name')->label('Etiquette')->columnSpanFull()
+                        ->badge()
+                        ->color('success'),
                     TextEntry::make('content')->label('Contenu')->columnSpanFull(),
-                    ImageEntry::make('images_uri')->label('Image')->columnSpanFull(),
+                    ImageEntry::make('images_uri')->label('Image')->columnSpanFull()
                 ])->columns(2),
 
         ]);

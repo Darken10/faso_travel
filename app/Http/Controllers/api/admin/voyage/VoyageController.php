@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\api\admin\voyage;
 
+use App\Filament\Compagnie\Resources\Ticket\TicketResource;
 use App\Http\Controllers\Controller;
 use App\Models\Voyage\Voyage;
+use App\resources\PassagerResource;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -23,10 +25,9 @@ class VoyageController extends Controller
         if ($date){
             $list = explode("-",$date);
             $dat = Carbon::create($list[2],$list[1],$list[0]);
-
           $tickets = $tickets->whereDate('date',$dat)->get();
         }
 
-        return response()->json($tickets);
+        return response()->json($tickets->map(function($ticket){return new PassagerResource($ticket);})->toArray());
     }
 }

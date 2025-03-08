@@ -3,6 +3,7 @@
 namespace App\Helper;
 
 use App\Enums\StatutTicket;
+use App\Enums\TypeTicket;
 use App\Events\Admin\TicketValiderEvent;
 use App\Events\Ticket\TicketActiveEvent;
 use App\Events\Ticket\TicketBlockerEvent;
@@ -22,13 +23,26 @@ class TicketValidation
     public static function valider(Ticket $ticket):bool
     {
         DB::beginTransaction();
-        $ticket->statut = StatutTicket::Valider;
-        $ticket->valider_by_id = \Auth::user()->id?? 1;
-        $ticket->valider_at = now();
+        if ($ticket->type===TypeTicket::AllerRetour){
+            $ticket->statut = StatutTicket::Pause;
+            $ticket->type = TypeTicket::RetourSimple;
+            $ticket->valider_by_id = \Auth::user()->id;
+            $ticket->valider_at = now();
+
+        } elseif ($ticket->type===TypeTicket::RetourSimple){
+            $ticket->statut = StatutTicket::Valider;
+            $ticket->retour_validate_at = now();
+            $ticket->retour_validate_by = \Auth::user()->id;
+        } else{
+            $ticket->statut = StatutTicket::Valider;
+            $ticket->valider_by_id = \Auth::user()->id;
+            $ticket->valider_at = now();
+        }
+
         $ticket->save();
         DB::commit();
 
-        if ($ticket->statut === StatutTicket::Valider){
+        if ($ticket->statut === StatutTicket::Valider || ($ticket->statut === StatutTicket::Pause && $ticket->type === TypeTicket::RetourSimple)){
             TicketValiderEvent::dispatch($ticket);
             return true;
         }else{

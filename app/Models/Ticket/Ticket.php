@@ -41,6 +41,8 @@ class Ticket extends Model
         'code_qr_uri',
         'is_my_ticket',
         'autre_personne_id',
+        'retour_validate_by',
+        "transferer_at", "valider_by_id", "valider_at", "transferer_a_user_id"
     ];
 
     protected $with = [

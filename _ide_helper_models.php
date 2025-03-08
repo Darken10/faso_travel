@@ -13,13 +13,14 @@
 
 namespace App\Models\Compagnie{
 /**
- *
+ * 
  *
  * @property int $id
  * @property string $immatrculation
  * @property int $number_place
+ * @property \App\Enums\StatutCare $statut
  * @property int $etat
- * @property string $image_uri
+ * @property string|null $image_uri
  * @property int|null $compagnie_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -27,25 +28,25 @@ namespace App\Models\Compagnie{
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Voyage\Voyage> $voyages
  * @property-read int|null $voyages_count
  * @method static \Database\Factories\Compagnie\CareFactory factory($count = null, $state = [])
- * @method static \Illuminate\Database\Eloquent\Builder|Care newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Care newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Care query()
- * @method static \Illuminate\Database\Eloquent\Builder|Care whereCompagnieId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Care whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Care whereEtat($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Care whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Care whereImageUri($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Care whereImmatrculation($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Care whereNumberPlace($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Care whereStatut($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Care whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Care newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Care newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Care query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Care whereCompagnieId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Care whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Care whereEtat($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Care whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Care whereImageUri($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Care whereImmatrculation($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Care whereNumberPlace($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Care whereStatut($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Care whereUpdatedAt($value)
  */
 	class Care extends \Eloquent {}
 }
 
 namespace App\Models\Compagnie{
 /**
- *
+ * 
  *
  * @property int $id
  * @property string $name
@@ -67,26 +68,26 @@ namespace App\Models\Compagnie{
  * @property-read int|null $users_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Voyage\Voyage> $voyages
  * @property-read int|null $voyages_count
- * @method static \Illuminate\Database\Eloquent\Builder|Compagnie newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Compagnie newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Compagnie query()
- * @method static \Illuminate\Database\Eloquent\Builder|Compagnie whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Compagnie whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Compagnie whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Compagnie whereLogoUri($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Compagnie whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Compagnie whereSigle($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Compagnie whereSlogant($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Compagnie whereStatutId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Compagnie whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Compagnie whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Compagnie newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Compagnie newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Compagnie query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Compagnie whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Compagnie whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Compagnie whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Compagnie whereLogoUri($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Compagnie whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Compagnie whereSigle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Compagnie whereSlogant($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Compagnie whereStatutId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Compagnie whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Compagnie whereUserId($value)
  */
 	class Compagnie extends \Eloquent {}
 }
 
 namespace App\Models\Compagnie{
 /**
- *
+ * 
  *
  * @property int $id
  * @property string $name
@@ -106,26 +107,26 @@ namespace App\Models\Compagnie{
  * @property-read \App\Models\Statut $statut
  * @property-read \App\Models\User $user
  * @property-read \App\Models\Ville\Ville $ville
- * @method static \Illuminate\Database\Eloquent\Builder|Gare newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Gare newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Gare query()
- * @method static \Illuminate\Database\Eloquent\Builder|Gare whereCompagnieId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Gare whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Gare whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Gare whereLat($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Gare whereLng($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Gare whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Gare whereStatutId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Gare whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Gare whereUserId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Gare whereVilleId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Gare newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Gare newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Gare query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Gare whereCompagnieId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Gare whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Gare whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Gare whereLat($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Gare whereLng($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Gare whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Gare whereStatutId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Gare whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Gare whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Gare whereVilleId($value)
  */
 	class Gare extends \Eloquent {}
 }
 
 namespace App\Models{
 /**
- *
+ * 
  *
  * @property int $id
  * @property int $team_id
@@ -133,22 +134,22 @@ namespace App\Models{
  * @property string|null $role
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @method static \Illuminate\Database\Eloquent\Builder|Membership newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Membership newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Membership query()
- * @method static \Illuminate\Database\Eloquent\Builder|Membership whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Membership whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Membership whereRole($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Membership whereTeamId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Membership whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Membership whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Membership newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Membership newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Membership query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Membership whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Membership whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Membership whereRole($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Membership whereTeamId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Membership whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Membership whereUserId($value)
  */
 	class Membership extends \Eloquent {}
 }
 
 namespace App\Models\Post{
 /**
- *
+ * 
  *
  * @property int $id
  * @property string $name
@@ -156,20 +157,20 @@ namespace App\Models\Post{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Post\Post> $posts
  * @property-read int|null $posts_count
- * @method static \Illuminate\Database\Eloquent\Builder|Category newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Category newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Category query()
- * @method static \Illuminate\Database\Eloquent\Builder|Category whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Category whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Category whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Category whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Category newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Category newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Category query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Category whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Category whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Category whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Category whereUpdatedAt($value)
  */
 	class Category extends \Eloquent {}
 }
 
 namespace App\Models\Post{
 /**
- *
+ * 
  *
  * @property int $id
  * @property string $message
@@ -181,24 +182,24 @@ namespace App\Models\Post{
  * @property int $nb_likes
  * @property-read \App\Models\Post\Post|null $post
  * @property-read \App\Models\User|null $user
- * @method static \Illuminate\Database\Eloquent\Builder|Comment newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Comment newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Comment query()
- * @method static \Illuminate\Database\Eloquent\Builder|Comment whereCommentableId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Comment whereCommentableType($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Comment whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Comment whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Comment whereMessage($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Comment whereNbLikes($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Comment whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Comment whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Comment newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Comment newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Comment query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Comment whereCommentableId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Comment whereCommentableType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Comment whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Comment whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Comment whereMessage($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Comment whereNbLikes($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Comment whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Comment whereUserId($value)
  */
 	class Comment extends \Eloquent {}
 }
 
 namespace App\Models\Post{
 /**
- *
+ * 
  *
  * @property int $id
  * @property int|null $post_id
@@ -207,26 +208,26 @@ namespace App\Models\Post{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Post\Post|null $post
  * @property-read \App\Models\User|null $user
- * @method static \Illuminate\Database\Eloquent\Builder|Like newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Like newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Like query()
- * @method static \Illuminate\Database\Eloquent\Builder|Like whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Like whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Like wherePostId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Like whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Like whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Like newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Like newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Like query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Like whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Like whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Like wherePostId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Like whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Like whereUserId($value)
  */
 	class Like extends \Eloquent {}
 }
 
 namespace App\Models\Post{
 /**
- *
+ * 
  *
  * @property int $id
  * @property string $title
  * @property string $content
- * @property array|null $images_uri
+ * @property array<array-key, mixed>|null $images_uri
  * @property int $nb_views
  * @property int|null $user_id
  * @property int|null $category_id
@@ -240,25 +241,25 @@ namespace App\Models\Post{
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Post\Tag> $tags
  * @property-read int|null $tags_count
  * @property-read \App\Models\User|null $user
- * @method static \Illuminate\Database\Eloquent\Builder|Post newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Post newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Post query()
- * @method static \Illuminate\Database\Eloquent\Builder|Post whereCategoryId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Post whereContent($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Post whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Post whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Post whereImagesUri($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Post whereNbViews($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Post whereTitle($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Post whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Post whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Post newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Post newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Post query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Post whereCategoryId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Post whereContent($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Post whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Post whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Post whereImagesUri($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Post whereNbViews($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Post whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Post whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Post whereUserId($value)
  */
 	class Post extends \Eloquent {}
 }
 
 namespace App\Models\Post{
 /**
- *
+ * 
  *
  * @property int $id
  * @property string $name
@@ -266,33 +267,33 @@ namespace App\Models\Post{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Post\Post> $posts
  * @property-read int|null $posts_count
- * @method static \Illuminate\Database\Eloquent\Builder|Tag newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Tag newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Tag query()
- * @method static \Illuminate\Database\Eloquent\Builder|Tag whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Tag whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Tag whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Tag whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Tag newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Tag newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Tag query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Tag whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Tag whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Tag whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Tag whereUpdatedAt($value)
  */
 	class Tag extends \Eloquent {}
 }
 
 namespace App\Models{
 /**
- *
+ * 
  *
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $users
  * @property-read int|null $users_count
- * @method static \Illuminate\Database\Eloquent\Builder|Role newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Role newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Role query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Role newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Role newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Role query()
  */
 	class Role extends \Eloquent {}
 }
 
 namespace App\Models{
 /**
- *
+ * 
  *
  * @property int $id
  * @property string $name
@@ -302,20 +303,20 @@ namespace App\Models{
  * @property-read int|null $compagnies_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Compagnie\Gare> $gares
  * @property-read int|null $gares_count
- * @method static \Illuminate\Database\Eloquent\Builder|Statut newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Statut newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Statut query()
- * @method static \Illuminate\Database\Eloquent\Builder|Statut whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Statut whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Statut whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Statut whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Statut newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Statut newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Statut query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Statut whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Statut whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Statut whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Statut whereUpdatedAt($value)
  */
 	class Statut extends \Eloquent {}
 }
 
 namespace App\Models{
 /**
- *
+ * 
  *
  * @property int $id
  * @property int $user_id
@@ -326,26 +327,26 @@ namespace App\Models{
  * @property-read \App\Models\User|null $owner
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\TeamInvitation> $teamInvitations
  * @property-read int|null $team_invitations_count
- * @property-read \App\Models\Membership $membership
+ * @property-read \App\Models\Membership|null $membership
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $users
  * @property-read int|null $users_count
  * @method static \Database\Factories\TeamFactory factory($count = null, $state = [])
- * @method static \Illuminate\Database\Eloquent\Builder|Team newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Team newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Team query()
- * @method static \Illuminate\Database\Eloquent\Builder|Team whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Team whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Team whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Team wherePersonalTeam($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Team whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Team whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Team newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Team newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Team query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Team whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Team whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Team whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Team wherePersonalTeam($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Team whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Team whereUserId($value)
  */
 	class Team extends \Eloquent {}
 }
 
 namespace App\Models{
 /**
- *
+ * 
  *
  * @property int $id
  * @property int $team_id
@@ -354,22 +355,22 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Team $team
- * @method static \Illuminate\Database\Eloquent\Builder|TeamInvitation newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|TeamInvitation newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|TeamInvitation query()
- * @method static \Illuminate\Database\Eloquent\Builder|TeamInvitation whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|TeamInvitation whereEmail($value)
- * @method static \Illuminate\Database\Eloquent\Builder|TeamInvitation whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|TeamInvitation whereRole($value)
- * @method static \Illuminate\Database\Eloquent\Builder|TeamInvitation whereTeamId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|TeamInvitation whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|TeamInvitation newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|TeamInvitation newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|TeamInvitation query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|TeamInvitation whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|TeamInvitation whereEmail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|TeamInvitation whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|TeamInvitation whereRole($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|TeamInvitation whereTeamId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|TeamInvitation whereUpdatedAt($value)
  */
 	class TeamInvitation extends \Eloquent {}
 }
 
 namespace App\Models\Ticket{
 /**
- *
+ * 
  *
  * @property int $id
  * @property string $first_name
@@ -386,28 +387,28 @@ namespace App\Models\Ticket{
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Ticket\Ticket> $tickets
  * @property-read int|null $tickets_count
  * @property-read \App\Models\User|null $user
- * @method static \Illuminate\Database\Eloquent\Builder|AutrePersonne newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|AutrePersonne newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|AutrePersonne query()
- * @method static \Illuminate\Database\Eloquent\Builder|AutrePersonne whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|AutrePersonne whereEmail($value)
- * @method static \Illuminate\Database\Eloquent\Builder|AutrePersonne whereFirstName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|AutrePersonne whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|AutrePersonne whereLastName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|AutrePersonne whereLienRelation($value)
- * @method static \Illuminate\Database\Eloquent\Builder|AutrePersonne whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|AutrePersonne whereNumero($value)
- * @method static \Illuminate\Database\Eloquent\Builder|AutrePersonne whereNumeroIdentifiant($value)
- * @method static \Illuminate\Database\Eloquent\Builder|AutrePersonne whereSexe($value)
- * @method static \Illuminate\Database\Eloquent\Builder|AutrePersonne whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|AutrePersonne whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|AutrePersonne newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|AutrePersonne newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|AutrePersonne query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|AutrePersonne whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|AutrePersonne whereEmail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|AutrePersonne whereFirstName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|AutrePersonne whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|AutrePersonne whereLastName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|AutrePersonne whereLienRelation($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|AutrePersonne whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|AutrePersonne whereNumero($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|AutrePersonne whereNumeroIdentifiant($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|AutrePersonne whereSexe($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|AutrePersonne whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|AutrePersonne whereUserId($value)
  */
 	class AutrePersonne extends \Eloquent {}
 }
 
 namespace App\Models\Ticket{
 /**
- *
+ * 
  *
  * @property int $id
  * @property int|null $ticket_id
@@ -421,27 +422,27 @@ namespace App\Models\Ticket{
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Ticket\Ticket|null $ticket
- * @method static \Illuminate\Database\Eloquent\Builder|Payement newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Payement newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Payement query()
- * @method static \Illuminate\Database\Eloquent\Builder|Payement whereCodeOtp($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Payement whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Payement whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Payement whereMontant($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Payement whereMoyenPayment($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Payement whereNumeroPayment($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Payement whereStatut($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Payement whereTicketId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Payement whereToken($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Payement whereTransId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Payement whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Payement newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Payement newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Payement query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Payement whereCodeOtp($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Payement whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Payement whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Payement whereMontant($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Payement whereMoyenPayment($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Payement whereNumeroPayment($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Payement whereStatut($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Payement whereTicketId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Payement whereToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Payement whereTransId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Payement whereUpdatedAt($value)
  */
 	class Payement extends \Eloquent {}
 }
 
 namespace App\Models\Ticket{
 /**
- *
+ * 
  *
  * @property int $id
  * @property int|null $user_id
@@ -466,6 +467,8 @@ namespace App\Models\Ticket{
  * @property int|null $valider_by_id
  * @property string|null $valider_at
  * @property int|null $transferer_a_user_id
+ * @property int|null $retour_validate_by
+ * @property string|null $retour_validate_at
  * @property-read \App\Models\Ticket\AutrePersonne|null $autre_personne
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
@@ -473,39 +476,41 @@ namespace App\Models\Ticket{
  * @property-read int|null $payements_count
  * @property-read \App\Models\User|null $user
  * @property-read \App\Models\Voyage\Voyage|null $voyage
- * @method static \Illuminate\Database\Eloquent\Builder|Ticket newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Ticket newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Ticket query()
- * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereABagage($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereAutrePersonneId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereBagagesData($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereCodeQr($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereCodeQrUri($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereCodeSms($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereDate($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereImageUri($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereIsMyTicket($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereNumeroChaise($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereNumeroTicket($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ticket wherePdfUri($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereStatut($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereTransfererAUserId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereTransfererAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereType($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereUserId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereValiderAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereValiderById($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ticket whereVoyageId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Ticket newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Ticket newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Ticket query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Ticket whereABagage($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Ticket whereAutrePersonneId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Ticket whereBagagesData($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Ticket whereCodeQr($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Ticket whereCodeQrUri($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Ticket whereCodeSms($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Ticket whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Ticket whereDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Ticket whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Ticket whereImageUri($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Ticket whereIsMyTicket($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Ticket whereNumeroChaise($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Ticket whereNumeroTicket($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Ticket wherePdfUri($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Ticket whereRetourValidateAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Ticket whereRetourValidateBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Ticket whereStatut($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Ticket whereTransfererAUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Ticket whereTransfererAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Ticket whereType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Ticket whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Ticket whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Ticket whereValiderAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Ticket whereValiderById($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Ticket whereVoyageId($value)
  */
 	class Ticket extends \Eloquent {}
 }
 
 namespace App\Models{
 /**
- *
+ * 
  *
  * @property int $id
  * @property string $first_name
@@ -516,7 +521,7 @@ namespace App\Models{
  * @property int|null $numero
  * @property string $numero_identifiant
  * @property \Illuminate\Support\Carbon|null $email_verified_at
- * @property mixed $password
+ * @property string $password
  * @property string|null $two_factor_secret
  * @property string|null $two_factor_recovery_codes
  * @property string|null $two_factor_confirmed_at
@@ -543,7 +548,7 @@ namespace App\Models{
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Post\Post> $posts
  * @property-read int|null $posts_count
  * @property-read string $profile_photo_url
- * @property-read \App\Models\Membership $membership
+ * @property-read \App\Models\Membership|null $membership
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Team> $teams
  * @property-read int|null $teams_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Ticket\Ticket> $tickets
@@ -553,37 +558,37 @@ namespace App\Models{
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens
  * @property-read int|null $tokens_count
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
- * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|User query()
- * @method static \Illuminate\Database\Eloquent\Builder|User whereCompagnieId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereCurrentTeamId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereEmail($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereEmailVerifiedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereFirstName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereLastName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereNumero($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereNumeroIdentifiant($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User wherePassword($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereProfilePhotoPath($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereRememberToken($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereRole($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereSexe($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereStatut($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereTwoFactorConfirmedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereTwoFactorRecoveryCodes($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereTwoFactorSecret($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCompagnieId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCurrentTeamId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereEmail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereEmailVerifiedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereFirstName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereLastName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereNumero($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereNumeroIdentifiant($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User wherePassword($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereProfilePhotoPath($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereRememberToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereRole($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereSexe($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereStatut($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereTwoFactorConfirmedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereTwoFactorRecoveryCodes($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereTwoFactorSecret($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereUpdatedAt($value)
  */
 	class User extends \Eloquent implements \Illuminate\Contracts\Auth\MustVerifyEmail {}
 }
 
 namespace App\Models\Ville{
 /**
- *
+ * 
  *
  * @property int $id
  * @property string $name
@@ -594,23 +599,23 @@ namespace App\Models\Ville{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Ville\Region> $regions
  * @property-read int|null $regions_count
- * @method static \Illuminate\Database\Eloquent\Builder|Pays newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Pays newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Pays query()
- * @method static \Illuminate\Database\Eloquent\Builder|Pays whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Pays whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Pays whereIdentityNumber($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Pays whereIso2($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Pays whereMoney($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Pays whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Pays whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Pays newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Pays newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Pays query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Pays whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Pays whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Pays whereIdentityNumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Pays whereIso2($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Pays whereMoney($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Pays whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Pays whereUpdatedAt($value)
  */
 	class Pays extends \Eloquent {}
 }
 
 namespace App\Models\Ville{
 /**
- *
+ * 
  *
  * @property int $id
  * @property string $name
@@ -620,21 +625,21 @@ namespace App\Models\Ville{
  * @property-read \App\Models\Ville\Pays $pays
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Ville\Ville> $villes
  * @property-read int|null $villes_count
- * @method static \Illuminate\Database\Eloquent\Builder|Region newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Region newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Region query()
- * @method static \Illuminate\Database\Eloquent\Builder|Region whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Region whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Region whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Region wherePaysId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Region whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Region newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Region newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Region query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Region whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Region whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Region whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Region wherePaysId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Region whereUpdatedAt($value)
  */
 	class Region extends \Eloquent {}
 }
 
 namespace App\Models\Ville{
 /**
- *
+ * 
  *
  * @property int $id
  * @property string $name
@@ -654,23 +659,23 @@ namespace App\Models\Ville{
  * @property-read int|null $voyage_arriver_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Voyage\Voyage> $voyage_depart
  * @property-read int|null $voyage_depart_count
- * @method static \Illuminate\Database\Eloquent\Builder|Ville newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Ville newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Ville query()
- * @method static \Illuminate\Database\Eloquent\Builder|Ville whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ville whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ville whereLat($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ville whereLng($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ville whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ville whereRegionId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ville whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Ville newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Ville newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Ville query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Ville whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Ville whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Ville whereLat($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Ville whereLng($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Ville whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Ville whereRegionId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Ville whereUpdatedAt($value)
  */
 	class Ville extends \Eloquent {}
 }
 
 namespace App\Models\Voyage{
 /**
- *
+ * 
  *
  * @property int $id
  * @property string $name
@@ -682,22 +687,22 @@ namespace App\Models\Voyage{
  * @property-read int|null $conforts_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Voyage\Voyage> $voyages
  * @property-read int|null $voyages_count
- * @method static \Illuminate\Database\Eloquent\Builder|Classe newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Classe newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Classe query()
- * @method static \Illuminate\Database\Eloquent\Builder|Classe whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Classe whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Classe whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Classe whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Classe whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Classe whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Classe newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Classe newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Classe query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Classe whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Classe whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Classe whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Classe whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Classe whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Classe whereUserId($value)
  */
 	class Classe extends \Eloquent {}
 }
 
 namespace App\Models\Voyage{
 /**
- *
+ * 
  *
  * @property int $id
  * @property string $title
@@ -708,36 +713,36 @@ namespace App\Models\Voyage{
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Voyage\Classe> $classes
  * @property-read int|null $classes_count
  * @method static \Database\Factories\Voyage\ConfortFactory factory($count = null, $state = [])
- * @method static \Illuminate\Database\Eloquent\Builder|Confort newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Confort newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Confort query()
- * @method static \Illuminate\Database\Eloquent\Builder|Confort whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Confort whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Confort whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Confort whereTitle($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Confort whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Confort whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Confort newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Confort newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Confort query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Confort whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Confort whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Confort whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Confort whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Confort whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Confort whereUserId($value)
  */
 	class Confort extends \Eloquent {}
 }
 
 namespace App\Models\Voyage{
 /**
- *
+ * 
  *
  * @property \App\Enums\JoursSemain $name
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Voyage\Voyage> $voyages
  * @property-read int|null $voyages_count
- * @method static \Illuminate\Database\Eloquent\Builder|Days newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Days newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Days query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Days newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Days newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Days query()
  */
 	class Days extends \Eloquent {}
 }
 
 namespace App\Models\Voyage{
 /**
- *
+ * 
  *
  * @property int $id
  * @property int $user_id
@@ -753,25 +758,25 @@ namespace App\Models\Voyage{
  * @property-read \App\Models\User $user
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Voyage\Voyage> $voyages
  * @property-read int|null $voyages_count
- * @method static \Illuminate\Database\Eloquent\Builder|Trajet newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Trajet newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Trajet query()
- * @method static \Illuminate\Database\Eloquent\Builder|Trajet whereArriverId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Trajet whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Trajet whereDepartId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Trajet whereDistance($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Trajet whereEtat($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Trajet whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Trajet whereTemps($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Trajet whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Trajet whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Trajet newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Trajet newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Trajet query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Trajet whereArriverId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Trajet whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Trajet whereDepartId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Trajet whereDistance($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Trajet whereEtat($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Trajet whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Trajet whereTemps($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Trajet whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Trajet whereUserId($value)
  */
 	class Trajet extends \Eloquent {}
 }
 
 namespace App\Models\Voyage{
 /**
- *
+ * 
  *
  * @property int $id
  * @property \Illuminate\Support\Carbon $heure
@@ -804,26 +809,26 @@ namespace App\Models\Voyage{
  * @property-read int|null $tickets_count
  * @property-read \App\Models\Voyage\Trajet $trajet
  * @property-read \App\Models\User $user
- * @method static \Illuminate\Database\Eloquent\Builder|Voyage newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Voyage newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Voyage query()
- * @method static \Illuminate\Database\Eloquent\Builder|Voyage whereArriveId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Voyage whereClasseId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Voyage whereCompagnieId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Voyage whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Voyage whereDays($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Voyage whereDepartId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Voyage whereHeure($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Voyage whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Voyage whereIsQuotidient($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Voyage whereNbPace($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Voyage wherePrix($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Voyage wherePrixAllerRetour($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Voyage whereStatutId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Voyage whereTemps($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Voyage whereTrajetId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Voyage whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Voyage whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Voyage newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Voyage newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Voyage query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Voyage whereArriveId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Voyage whereClasseId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Voyage whereCompagnieId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Voyage whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Voyage whereDays($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Voyage whereDepartId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Voyage whereHeure($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Voyage whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Voyage whereIsQuotidient($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Voyage whereNbPace($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Voyage wherePrix($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Voyage wherePrixAllerRetour($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Voyage whereStatutId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Voyage whereTemps($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Voyage whereTrajetId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Voyage whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Voyage whereUserId($value)
  */
 	class Voyage extends \Eloquent {}
 }

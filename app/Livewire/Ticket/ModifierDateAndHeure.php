@@ -3,6 +3,7 @@
 namespace App\Livewire\Ticket;
 
 use App\Enums\StatutTicket;
+use App\Enums\TypeNotification;
 use App\Events\PayementEffectuerEvent;
 use App\Events\SendClientTicketByMailEvent;
 use App\Helper\TicketHelpers;
@@ -74,7 +75,7 @@ class ModifierDateAndHeure extends Component
                 PayementEffectuerEvent::dispatch($this->ticket);
                 SendClientTicketByMailEvent::dispatch($this->ticket);
                 \DB::commit();
-                \Auth::user()->notify(new TicketNotification($this->ticket));
+                \Auth::user()->notify(new TicketNotification($this->ticket,TypeNotification::UpdateTicket,"Reactivation de ticket","Vous avez reactiver le ticket avec success"));
                 return to_route('ticket.show-ticket',['ticket' => $this->ticket])
                     ->with('success',"Votre Ticket a bien ete modifier");
             }

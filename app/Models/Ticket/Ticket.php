@@ -52,14 +52,15 @@ class Ticket extends Model
     protected static function booted(): void
     {
         static::addGlobalScope('userCompany', function (Builder $builder) {
-            if (Auth::check()) {
-                // Récupération des identifiants des compagnies liées à l'utilisateur connecté.
-                $companyId = Auth::user()->compagnie_id;
+            if (Auth::check() && request()->is('compagnie/ticket*')) {
+                if (Auth::user()->compagnie_id) {
+                    $companyId = Auth::user()->compagnie_id;
 
-                // Filtrer les tickets dont le voyage est rattaché à la compagnie de l'utilisateur
-                $builder->whereHas('voyage', function ($query) use ($companyId) {
-                    $query->where('compagnie_id', $companyId);
-                });
+                    // Filtrer les tickets dont le voyage est rattaché à la compagnie de l'utilisateur
+                    $builder->whereHas('voyage', function ($query) use ($companyId) {
+                        $query->where('compagnie_id', $companyId);
+                    });
+                }
             }
         });
     }

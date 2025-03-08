@@ -147,7 +147,7 @@ class Voyage extends Model
 
     function getPrix(TypeTicket $type):float
     {
-        return $type===TypeTicket::AllerRetour ? $this->prix_aller_retour : $this->prix;
+        return $type ==TypeTicket::AllerRetour ? $this->prix_aller_retour : $this->prix;
     }
 
 }

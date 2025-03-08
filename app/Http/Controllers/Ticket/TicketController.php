@@ -31,7 +31,7 @@ class TicketController extends Controller
         $data['numero_ticket'] = TicketHelpers::generateTicketNumber();
         $data['code_sms'] = TicketHelpers::generateTicketCodeSms();
         $data['code_qr'] = TicketHelpers::generateTicketCodeQr();
-        $data['type']  = $data['type'] === 'aller_retour' ? TypeTicket::AllerRetour : TypeTicket::AllerSimple;
+        $data['type']  = $data['type'] == 'aller_retour' ? TypeTicket::AllerRetour : TypeTicket::AllerSimple;
         $data['user_id'] = $request->user()->id;
         $data['a_bagage']  = array_key_exists('a_bagage',$data);
 
@@ -41,6 +41,7 @@ class TicketController extends Controller
                 ->where('statut',StatutTicket::EnAttente)
                 ->where('date', $data['date'])
                 ->where('is_my_ticket', true)
+                ->where('type',$data['type'])
                 ->get();
 
        if($tickets->count()===0){
@@ -48,16 +49,18 @@ class TicketController extends Controller
                $data['is_my_ticket']= false;
                $autre = AutrePersonne::find($data['autre_personne_id']);
            }
-
            $ticket = Ticket::create($data);
+           return view('ticket.ticket.choix-moyen-payment',[
+               'ticket' => $ticket,
+           ]);
        }
        else{
             $ticket = $tickets->last();
+           return view('ticket.ticket.choix-moyen-payment',[
+               'ticket' => $ticket,
+           ])->with("success","Un ticket non payer existe deja a votre nom pour le meme trajet a la meme date");
        }
 
-        return view('ticket.ticket.choix-moyen-payment',[
-            'ticket' => $ticket,
-        ]);
     }
 
 

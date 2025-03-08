@@ -2,8 +2,13 @@
 
 use App\Enums\JoursSemain;
 use App\Http\Controllers\Auth\MyRegisterController;
+use App\Http\Controllers\Divers\NotificationsController;
+use App\Http\Controllers\Ticket\Payement\PayementTest;
+use App\Http\Controllers\Ticket\Payement\PaymentController2;
+use App\Models\User;
 use App\Models\Voyage\Days;
 use App\Notifications\Ticket\TicketNotification;
+use App\Notifications\TicketTestNotification;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\Ticket\Payement\OrangePayementController;
@@ -95,8 +100,8 @@ Route::middleware([
 
 
 Route::get('/test', function () {
-    $user = \App\Models\User::findOrFail(1);
-    $user->notify(new \App\Notifications\TicketTestNotification());
+    $user = User::findOrFail(1);
+    $user->notify(new TicketTestNotification());
     dd($user);
 });
 
@@ -114,17 +119,17 @@ Route::prefix('/auth')->name('auth.')->group(function () {
 });
 //auth.register.step2
 
-Route::get('/notifications',[\App\Http\Controllers\Divers\NotificationsController::class,'allNotifications'])->name('user.notifications');
-Route::get('/notifications/{notificationId}',[\App\Http\Controllers\Divers\NotificationsController::class,'showNotification'])->name('user.notifications.show');
+Route::get('/notifications',[NotificationsController::class,'allNotifications'])->name('user.notifications');
+Route::get('/notifications/{notificationId}',[NotificationsController::class,'showNotification'])->name('user.notifications.show');
 
 
-Route::get("/test",[\App\Http\Controllers\Ticket\Payement\PayementTest::class,'pay']);
+Route::get("/test",[PayementTest::class,'pay']);
 
-Route::post('/process-payment/{ticket}/{provider}', [\App\Http\Controllers\Ticket\Payement\PaymentController2::class, 'processPayment'])->name("controller2-payment.payment-process");
+Route::post('/process-payment2/{ticket}/{provider}', [PaymentController2::class, 'processPayment'])->name("controller2-payment.payment-process")->where(['ticket' => '[0-9]+','provider' => '[a-zA-Z]+']);
 
 
-Route::get('/process-payment/{ticket}/{provider}/success', [\App\Http\Controllers\Ticket\Payement\PaymentController2::class, 'successFunction'])->name("controller-payment.success");
-Route::get('/process-payment/{ticket}/{provider}/cancel', [\App\Http\Controllers\Ticket\Payement\PaymentController2::class, 'cancelFunction'])->name("controller-payment.cancel");
-Route::get('/process-payment/{ticket}/{provider}/callback', [\App\Http\Controllers\Ticket\Payement\PaymentController2::class, 'callbackFunction'])->name("controller-payment.callback");
+Route::get('/process-payment/{ticket}/{provider}/success', [PaymentController2::class, 'successFunction'])->name("controller-payment.success");
+Route::get('/process-payment/{ticket}/{provider}/cancel', [PaymentController2::class, 'cancelFunction'])->name("controller-payment.cancel");
+Route::get('/process-payment/{ticket}/{provider}/callback', [PaymentController2::class, 'callbackFunction'])->name("controller-payment.callback");
 
 

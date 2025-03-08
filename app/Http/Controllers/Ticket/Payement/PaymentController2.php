@@ -16,7 +16,6 @@ use App\Models\Ticket\Ticket;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 
 class PaymentController2 extends Controller
 {
@@ -86,7 +85,7 @@ class PaymentController2 extends Controller
 
     public function cancelFunction(Request $request,Ticket $ticket)
     {
-        dd($request);
+        return to_route('voyage.index')->with("error","Votre payement a ete annuler");
     }
 
     public function callbackFunction(Request $request,Ticket $ticket)

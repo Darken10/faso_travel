@@ -66,4 +66,9 @@ class Compagnie extends Model
     }
 
 
+    function chauffeurs():HasMany
+    {
+        return $this->hasMany(Chauffer::class);
+    }
+
 }

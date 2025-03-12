@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Statut;
 use App\Models\Ville\Ville;
 use App\Models\Voyage\Voyage;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -35,6 +36,18 @@ class Gare extends Model
         static::creating(callback: function (Gare $gare) {
             $gare->user()->associate(Auth::user());
             $gare->compagnie_id = $gare->user->compagnie_id;
+        });
+    }
+
+    protected static function booted(): void
+    {
+        static::addGlobalScope('gareCompany', function (Builder $builder) {
+            if (Auth::check() && request()->is('compagnie*')) {
+                if (Auth::user()->compagnie_id) {
+                    $companyId = Auth::user()->compagnie_id;
+                    $builder->where('compagnie_id', $companyId);
+                }
+            }
         });
     }
 

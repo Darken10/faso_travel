@@ -1,0 +1,65 @@
+<?php
+
+namespace App\Models\Voyage;
+
+use App\Models\Compagnie\Care;
+use App\Models\Compagnie\Chauffer;
+use App\Models\Ticket\Ticket;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+class VoyageInstance extends Model
+{
+    use HasUuids;
+    use SoftDeletes;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        "voyage_id",
+        "date",
+        "care_id",
+        "heure",
+        "nb_place",
+        "chauffer_id",
+    ];
+
+    public function voyage(): BelongsTo
+    {
+        return $this->belongsTo(Voyage::class);
+    }
+
+    public function care(): BelongsTo
+    {
+        return $this->belongsTo(Care::class);
+    }
+
+
+    public function chauffer(): BelongsTo
+    {
+        return $this->belongsTo(Chauffer::class);
+    }
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array
+     */
+    protected function casts(): array
+    {
+        return [
+            "date" => "datetime",
+        ];
+    }
+
+    public function tickets(): HasMany
+    {
+        return $this->hasMany(Ticket::class);
+    }
+}

@@ -10,6 +10,7 @@ use App\Models\Compagnie\Gare;
 use App\Models\Ville\Ville;
 use App\Models\Voyage\Confort;
 use App\Models\Voyage\Voyage;
+use App\Models\Voyage\VoyageInstance;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -42,7 +43,9 @@ class Ticket extends Model
         'is_my_ticket',
         'autre_personne_id',
         'retour_validate_by',
-        "transferer_at", "valider_by_id", "valider_at", "transferer_a_user_id"
+        "transferer_at", "valider_by_id", "valider_at", "transferer_a_user_id",
+        "retour_validate_at",
+        "voyage_instance_id"
     ];
 
     protected $with = [
@@ -153,6 +156,16 @@ class Ticket extends Model
     public function prix(): float
     {
         return $this->voyage->getPrix($this->type);
+    }
+
+    public function heureRdv():Carbon
+    {
+        return $this->voyage->heure->subMinutes(10);
+    }
+
+    public function voyageInstance():BelongsTo
+    {
+        return $this->belongsTo(VoyageInstance::class);
     }
 
 }

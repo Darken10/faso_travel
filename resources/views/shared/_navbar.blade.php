@@ -24,8 +24,8 @@
 
 
     <!-- Profile dropdown -->
-    <div class="relative ml-3 flex items-center ">
-        <a class="mx-6 " href="{{ route('user.notifications') }}">
+    <div class="relative  flex items-center ">
+        <a class="mx-4 " href="{{ route('user.notifications') }}">
             <button type="button" class="relative rounded-full  p-1 text-gray-600 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                 <span class="absolute -inset-1.5"></span>
                 <span class="sr-only">View notifications</span>

@@ -3,7 +3,10 @@
 namespace App\Models\Compagnie;
 
 use App\Enums\StatutCare;
+use App\Models\User;
 use App\Models\Voyage\Voyage;
+use App\Models\Voyage\VoyageInstance;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -37,6 +40,18 @@ class Care extends Model
         'statut' => StatutCare::class
     ];
 
+
+    protected static function booted(): void
+    {
+        static::addGlobalScope('careCompany', function (Builder $builder) {
+            if (Auth::check() && request()->is('compagnie/compagnie/cares*')) {
+                if (Auth::user()->compagnie_id) {
+                    $companyId = Auth::user()->compagnie_id;
+                    $builder->where('compagnie_id', $companyId);
+                }
+            }
+        });
+    }
     function voyages():HasMany
     {
         return  $this->hasMany(Voyage::class);
@@ -45,6 +60,11 @@ class Care extends Model
     function compagnie():BelongsTo
     {
         return  $this->belongsTo(Compagnie::class);
+    }
+
+    function voyageInstances():HasMany
+    {
+        return $this->hasMany(VoyageInstance::class);
     }
 
 }

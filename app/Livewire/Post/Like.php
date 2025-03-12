@@ -2,6 +2,9 @@
 
 namespace App\Livewire\Post;
 
+use App\Enums\TypeNotification;
+use App\Models\Ticket\Ticket;
+use App\Notifications\GlobaleTicketNotification;
 use Livewire\Component;
 use App\Models\Post\Post;
 use App\Models\Post\Like as PostLike;
@@ -19,6 +22,7 @@ class Like extends Component
 
     function storeLikePost()
     {
+        
 
         $data['user_id'] = Auth::user()->id;
         $data['post_id'] = $this->post->id;

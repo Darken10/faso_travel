@@ -3,6 +3,7 @@
 namespace App\Filament\Compagnie\Resources\Compagnie;
 
 use Filament\Forms;
+use Filament\Forms\Components\Actions\Action;
 use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Infolist;
@@ -39,36 +40,46 @@ class GareResource extends Resource
             ->schema([
                 Wizard::make([
                     Step::make('Position de la Gare')->schema([
-                            Forms\Components\Select::make('pays_id')
-                                ->options(fn (Get $get): Collection => Pays::all()->pluck('name', 'id'))
-                                ->afterStateUpdated(fn (Set $set) => $set('region_id', null))
-                                ->searchable()->native(False)->preload()->live()->label('Pays'),
-                                //->hiddenOn(VillesRelationManager::class),
-                            Forms\Components\Select::make('region_id')
-                                ->options(fn (Get $get): Collection => Region::where('pays_id', $get('pays_id'))->get()->pluck('name', 'id'))
-                                ->searchable()->native(False)->preload()->live()->label('Region')
-                                ->afterStateUpdated(fn (Set $set) => $set('ville_id', null)),
-                                //->hiddenOn(VillesRelationManager::class),
-                            Forms\Components\Select::make('ville_id')
-                                ->options(fn (Get $get): Collection => Ville::where('region_id', $get('region_id'))->get()->pluck('name', 'id'))
-                                ->searchable()->native(False)->preload()->live()->label('Ville')
-                                ->columnSpanFull(),
-                                //->hiddenOn(VillesRelationManager::class),
+                        Forms\Components\Select::make('pays_id')
+                            ->options(fn (Get $get): Collection => Pays::all()->pluck('name', 'id'))
+                            ->afterStateUpdated(fn (Set $set) => $set('region_id', null))
+                            ->searchable()->native(false)->preload()->live()->label('Pays'),
 
-                            Forms\Components\TextInput::make('lng')
-                                ->required()
-                                ->numeric(),
-                            Forms\Components\TextInput::make('lat')
-                                ->required()
-                                ->numeric(),
+                        Forms\Components\Select::make('region_id')
+                            ->options(fn (Get $get): Collection => Region::where('pays_id', $get('pays_id'))->get()->pluck('name', 'id'))
+                            ->searchable()->native(false)->preload()->live()->label('Region')
+                            ->afterStateUpdated(fn (Set $set) => $set('ville_id', null)),
+
+                        Forms\Components\Select::make('ville_id')
+                            ->options(fn (Get $get): Collection => Ville::where('region_id', $get('region_id'))->get()->pluck('name', 'id'))
+                            ->searchable()->native(false)->preload()->live()->label('Ville')
+                            ->columnSpanFull(),
+
+                        Forms\Components\TextInput::make('lng')
+                            ->id('lngField')
+                            ->required()
+                            ->numeric()
+                            ->label('Longitude'),
+
+                        Forms\Components\TextInput::make('lat')
+                            ->id('latField')
+                            ->required()
+                            ->numeric()
+                            ->label('Latitude')
+                        ->prefixAction(Action::make('getLocation')
+                            ->label('Détecter ma position')
+                            ->action(fn () => request()->session()->flash('get-location', true))
+                            ->icon('heroicon-o-rectangle-stack')),
+
 
                     ])->columns(2),
+
                     Step::make('Information de la Gare')->schema([
                         Forms\Components\TextInput::make('name')
                             ->required(),
                         Forms\Components\Select::make('statut_id')
                             ->relationship('statut', 'name')
-                            ->searchable()->native(False)->preload()->label('StatutTicket')
+                            ->searchable()->native(false)->preload()->label('Statut')
                             ->required(),
                     ])
                 ])->columnSpanFull(),

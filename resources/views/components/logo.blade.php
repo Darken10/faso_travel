@@ -5,5 +5,5 @@
         height="90"
         class="p-2"
         alt=''/>
-    <div class="mt-3 text-blue-600 font-bold text-3xl " style="color: #0000cc">Travel</div>
+    <div class="hidden md:block mt-3 text-blue-600 font-bold text-3xl " style="color: #0000cc">Travel</div>
 </a>

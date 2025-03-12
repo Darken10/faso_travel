@@ -100,11 +100,11 @@
                             {{ $voyage->heure->format('H\h i\m\n') }}
                         </td>
                         <td class="px-6 py-4">
-                          
+
                             {{ $voyage->prix }} XOF
                         </td>
                         <td class="px-6 py-4">
-                            <a href="{{ route('voyage.show',$voyage) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Voir</a> 
+                            <a href="{{ route('voyage.show',$voyage) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Voir</a>
                         </td>
                     </tr>
                 @empty

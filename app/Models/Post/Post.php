@@ -7,6 +7,7 @@ use App\Models\Post\Tag;
 use App\Models\Post\Like;
 use App\Models\Post\Comment;
 use App\Models\Post\Category;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -33,6 +34,20 @@ class Post extends Model
 
         static::creating(callback: function (Post $post) {
             $post->user()->associate(Auth::user());
+        });
+    }
+
+    protected static function booted(): void
+    {
+        static::addGlobalScope('postCompany', function (Builder $builder) {
+            if (Auth::check() && request()->is('compagnie/post*')) {
+                if (Auth::user()->compagnie_id) {
+                    $companyId = Auth::user()->compagnie_id;
+                    $users = User::where('compagnie_id', $companyId)->get()->pluck('id')->toArray();
+
+                    $builder->whereIn('user_id', $users);
+                }
+            }
         });
     }
 

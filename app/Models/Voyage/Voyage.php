@@ -11,6 +11,7 @@ use App\Models\Voyage\Trajet;
 use App\Models\Compagnie\Gare;
 use App\Models\Voyage\Confort;
 use App\Models\Compagnie\Compagnie;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -58,6 +59,20 @@ class Voyage extends Model
         'days'=> 'array',
         'temps'=>'datetime',
     ];
+
+
+    protected static function booted(): void
+    {
+        static::addGlobalScope('voyageCompany', function (Builder $builder) {
+            if (Auth::check() && request()->is('compagnie/voyage*')) {
+                if (Auth::user()->compagnie_id) {
+                    $companyId = Auth::user()->compagnie_id;
+                    $builder->where('compagnie_id', $companyId);
+                }
+            }
+        });
+    }
+
 
     public function getDays(): \Illuminate\Support\Collection
     {

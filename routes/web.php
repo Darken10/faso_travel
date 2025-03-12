@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\MyRegisterController;
 use App\Http\Controllers\Divers\NotificationsController;
 use App\Http\Controllers\Ticket\Payement\PayementTest;
 use App\Http\Controllers\Ticket\Payement\PaymentController2;
+use App\Http\Controllers\Voyages\VoyageInstanceController;
 use App\Models\User;
 use App\Models\Voyage\Days;
 use App\Notifications\Ticket\TicketNotification;
@@ -123,7 +124,9 @@ Route::get('/notifications',[NotificationsController::class,'allNotifications'])
 Route::get('/notifications/{notificationId}',[NotificationsController::class,'showNotification'])->name('user.notifications.show');
 
 
-Route::get("/test",[PayementTest::class,'pay']);
+Route::get("/test",function (){
+    dd(\App\Models\Voyage\VoyageInstance::all());
+});
 
 Route::post('/process-payment2/{ticket}/{provider}', [PaymentController2::class, 'processPayment'])->name("controller2-payment.payment-process")->where(['ticket' => '[0-9]+','provider' => '[a-zA-Z]+']);
 
@@ -132,4 +135,6 @@ Route::get('/process-payment/{ticket}/{provider}/success', [PaymentController2::
 Route::get('/process-payment/{ticket}/{provider}/cancel', [PaymentController2::class, 'cancelFunction'])->name("controller-payment.cancel");
 Route::get('/process-payment/{ticket}/{provider}/callback', [PaymentController2::class, 'callbackFunction'])->name("controller-payment.callback");
 
+
+Route::get("create-all-voyages-instances", [VoyageInstanceController::class, 'createAllInstance'])->name('create-all-voyages-instances');
 

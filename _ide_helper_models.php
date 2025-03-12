@@ -833,3 +833,18 @@ namespace App\Models\Voyage{
 	class Voyage extends \Eloquent {}
 }
 
+namespace App\Models\Voyage{
+/**
+ * 
+ *
+ * @property-read \App\Models\Voyage\Voyage|null $voyage
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|VoyageInstance newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|VoyageInstance newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|VoyageInstance onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|VoyageInstance query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|VoyageInstance withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|VoyageInstance withoutTrashed()
+ */
+	class VoyageInstance extends \Eloquent {}
+}
+

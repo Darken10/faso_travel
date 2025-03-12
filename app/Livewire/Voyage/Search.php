@@ -19,7 +19,7 @@ class Search extends Component
     public  $heureQuery = '' ;
     public $voyages = [];
 
-   
+
     public function updated($property)
     {
         $query = Voyage::query();
@@ -28,7 +28,7 @@ class Search extends Component
                                     ->where('name','like','%'.$this->compagnieQuery.'%')
                                     ->orWhere('sigle','like','%'.$this->compagnieQuery.'%')
                                      ->get()->pluck('id')->toArray();
-                                     
+
             $query = $query->whereIn('compagnie_id',$compagnies) ;
         }
 
@@ -39,7 +39,7 @@ class Search extends Component
             $arrivers = Ville::query()
                             ->where('name','like','%'.$this->arriverQuery.'%')
                             ->get()->pluck('id')->toArray();
-           
+
 
             $tragets = Trajet::query()->whereIn('depart_id',$departs)->WhereIn('arriver_id',$arrivers)
                                 ->get()->pluck('id')->toArray();
@@ -48,10 +48,10 @@ class Search extends Component
         }
 
         if ( $property==="heureQuery"){
-            
+
             $query = $query->where('heure','>',$this->heureQuery) ;
         }
-        
+
         return $this->voyages = $query->get();
     }
 

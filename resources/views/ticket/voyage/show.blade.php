@@ -44,17 +44,6 @@
 
                 <div class=" flex justify-between my-2">
                     <div class="">
-                        <div class=" text-green-600">Date Depart </div>
-                        <div>{{ $voyage->heure->format('j/m/Y') }}</div>
-                    </div>
-                    <div class="">
-                        <div class=" text-green-600">Date d'Arriver </div>
-                        <div>{{ $voyage->heure->format('j/m/Y') }}</div>
-                    </div>
-                </div>
-
-                <div class=" flex justify-between my-2">
-                    <div class="">
                         <div class=" text-green-600">Heure Depart </div>
                         <div>{{ $voyage->heure->format('h \h i\m\n') }}</div>
                     </div>
@@ -74,23 +63,8 @@
                         <div>{{ $voyage->classe->name }}</div>
                     </div>
                 </div>
-                <ul>
-                    @forelse($voyage->classe->conforts as $confort)
 
-                        <div class=" flex justify-between my-2">
-                            <div class="">
-                                <div class=" flex gap-3">
-                                    <img src="{{ asset('images/idee.png') }}" class="w-8" alt="" srcset="">
-                                    <span>{{ $confort->title }}</span>
-                                </div>
-                                <div class="text-xs">{{ $confort->description }}</div>
-                            </div>
-                        </div>
-                    @empty
-                </ul>
-                    Pas de Conforts
-
-                @endforelse
+                <x-accordion :conforts="$voyage->classe->conforts"></x-accordion>
             </div>
 
             <div class="flex justify-end">

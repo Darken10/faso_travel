@@ -41,5 +41,7 @@
         @stack('modals')
 
         @livewireScripts
+        <script src="{{ asset('js/filament.js') }}"></script>
+
     </body>
 </html>

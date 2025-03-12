@@ -8,6 +8,7 @@ use App\Events\SendClientTicketByMailEvent;
 use App\Helper\TicketHelpers;
 use App\Mail\Ticket\TicketMail;
 use App\Models\User;
+use App\Notifications\GlobaleTicketNotification;
 use App\Notifications\Ticket\PayerTicketNotification;
 use App\Notifications\Ticket\TicketNotification;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -34,5 +35,7 @@ class SendClientTicketByMailListener
         $title = "Achat de Ticket {$event->ticket->villeDepart()->name} a {$event->ticket->villeArriver()->name}";
         $message = "votre ticket a bien ete payer, un mail vous a ete envoyer avec plus d'information";
         $event->ticket->user->notify(new TicketNotification($event->ticket,TypeNotification::PayerTicket,$title,$message));
+
+        $event->ticket->user->notify(new GlobaleTicketNotification(TypeNotification::PayerTicket,$event->ticket));
     }
 }

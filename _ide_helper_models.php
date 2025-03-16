@@ -25,6 +25,8 @@ namespace App\Models\Compagnie{
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Compagnie\Compagnie|null $compagnie
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Voyage\VoyageInstance> $voyageInstances
+ * @property-read int|null $voyage_instances_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Voyage\Voyage> $voyages
  * @property-read int|null $voyages_count
  * @method static \Database\Factories\Compagnie\CareFactory factory($count = null, $state = [])
@@ -48,6 +50,43 @@ namespace App\Models\Compagnie{
 /**
  * 
  *
+ * @property string $id
+ * @property string $first_name
+ * @property string $last_name
+ * @property \Illuminate\Support\Carbon $date_naissance
+ * @property string $genre
+ * @property int $compagnie_id
+ * @property string $statut
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \App\Models\Compagnie\Compagnie|null $compagnie
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Voyage\VoyageInstance> $voyageInstances
+ * @property-read int|null $voyage_instances_count
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Chauffer newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Chauffer newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Chauffer onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Chauffer query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Chauffer whereCompagnieId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Chauffer whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Chauffer whereDateNaissance($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Chauffer whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Chauffer whereFirstName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Chauffer whereGenre($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Chauffer whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Chauffer whereLastName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Chauffer whereStatut($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Chauffer whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Chauffer withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Chauffer withoutTrashed()
+ */
+	class Chauffer extends \Eloquent {}
+}
+
+namespace App\Models\Compagnie{
+/**
+ * 
+ *
  * @property int $id
  * @property string $name
  * @property string $sigle
@@ -58,6 +97,8 @@ namespace App\Models\Compagnie{
  * @property int $statut_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Compagnie\Chauffer> $chauffeurs
+ * @property-read int|null $chauffeurs_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Voyage\Classe> $classes
  * @property-read int|null $classes_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Compagnie\Gare> $gares
@@ -469,6 +510,7 @@ namespace App\Models\Ticket{
  * @property int|null $transferer_a_user_id
  * @property int|null $retour_validate_by
  * @property string|null $retour_validate_at
+ * @property string|null $voyage_instance_id
  * @property-read \App\Models\Ticket\AutrePersonne|null $autre_personne
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
@@ -476,6 +518,7 @@ namespace App\Models\Ticket{
  * @property-read int|null $payements_count
  * @property-read \App\Models\User|null $user
  * @property-read \App\Models\Voyage\Voyage|null $voyage
+ * @property-read \App\Models\Voyage\VoyageInstance|null $voyageInstance
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Ticket newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Ticket newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Ticket query()
@@ -504,6 +547,7 @@ namespace App\Models\Ticket{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Ticket whereValiderAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Ticket whereValiderById($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Ticket whereVoyageId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Ticket whereVoyageInstanceId($value)
  */
 	class Ticket extends \Eloquent {}
 }
@@ -809,6 +853,8 @@ namespace App\Models\Voyage{
  * @property-read int|null $tickets_count
  * @property-read \App\Models\Voyage\Trajet $trajet
  * @property-read \App\Models\User $user
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Voyage\VoyageInstance> $voyage_instances
+ * @property-read int|null $voyage_instances_count
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Voyage newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Voyage newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Voyage query()
@@ -837,11 +883,37 @@ namespace App\Models\Voyage{
 /**
  * 
  *
+ * @property string $id
+ * @property int $voyage_id
+ * @property int|null $care_id
+ * @property string|null $chauffer_id
+ * @property \Illuminate\Support\Carbon $date
+ * @property \Illuminate\Support\Carbon $heure
+ * @property int $nb_place
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property string $statut
+ * @property-read \App\Models\Compagnie\Care|null $care
+ * @property-read \App\Models\Compagnie\Chauffer|null $chauffer
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Ticket\Ticket> $tickets
+ * @property-read int|null $tickets_count
  * @property-read \App\Models\Voyage\Voyage|null $voyage
  * @method static \Illuminate\Database\Eloquent\Builder<static>|VoyageInstance newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|VoyageInstance newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|VoyageInstance onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|VoyageInstance query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|VoyageInstance whereCareId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|VoyageInstance whereChaufferId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|VoyageInstance whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|VoyageInstance whereDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|VoyageInstance whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|VoyageInstance whereHeure($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|VoyageInstance whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|VoyageInstance whereNbPlace($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|VoyageInstance whereStatut($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|VoyageInstance whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|VoyageInstance whereVoyageId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|VoyageInstance withTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|VoyageInstance withoutTrashed()
  */

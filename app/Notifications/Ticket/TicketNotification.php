@@ -3,6 +3,7 @@
 namespace App\Notifications\Ticket;
 
 use App\Enums\TypeNotification;
+use App\Mail\ticket\TicketNotificationMail;
 use App\Models\Ticket\Ticket;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -20,7 +21,7 @@ class TicketNotification extends Notification
         private readonly Ticket           $ticket,
         private readonly TypeNotification $type,
         private readonly string           $title,
-        private readonly string           $message,
+        private readonly string           $message ="",
     )
     {
         //
@@ -33,22 +34,16 @@ class TicketNotification extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['database'];
+        return ['database','mail'];
     }
 
     /**
      * Get the mail representation of the notification.
+     * @throws \Exception
      */
-    public function toMail(object $notifiable): MailMessage
+    public function toMail(object $notifiable): TicketNotificationMail
     {
-        return (new MailMessage)
-            ->line('Bonjour Mr.' . $notifiable->name)
-            ->line("Nous vous notifions que votre ticket a ete modifier avec succes.")
-            ->line("Et qu'un nouveau ticket a ete regener automatiquement.")
-            ->line("Le Numero du Ticket  :".$this->ticket->numero_ticket)
-            ->line("Le Code du Ticket  :".$this->ticket->code_sms)
-            ->action('Voir le Ticket', url(route('ticket.show-ticket',$this->ticket)))
-            ->line('Merci Pour votre Confiance!');
+        return new TicketNotificationMail($this->ticket, $this->type, $this->title, $notifiable->email);
     }
 
     /**

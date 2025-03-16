@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Ticket\Payement;
 
+use App\Enums\TypeNotification;
 use App\Enums\TypeTicket;
 use App\Events\PayementEffectuerEvent;
 use App\Events\SendClientTicketByMailEvent;
 use App\Helper\TicketHelpers;
+use App\Notifications\Ticket\TicketNotification;
 use Exception;
 use App\Enums\MoyenPayment;
 use App\Enums\StatutTicket;
@@ -42,7 +44,7 @@ class OrangePayementController extends Controller
     function payer(OrangePayementRequest $request, Ticket $ticket){
 
         $data = $request->validated();
-        $prix = $ticket->voyage->getPrix($ticket->type);
+        $prix = $ticket->voyageInstance->getPrix($ticket->type);
         $orangePayement = new OrangePayementHelper($data['numero'], $data['otp'], $prix);
 
         if($orangePayement->payement()){
@@ -71,20 +73,19 @@ class OrangePayementController extends Controller
                 }
 
                 $TkAvecLeMemeNumeroChaise = Ticket::query()
-                    ->where('date',$ticket->date)
+                    ->whereBelongsTo($ticket->voyageInstance)
                     ->where('numero_chaise',$ticket->numero_chaise)
-                    ->whereBelongsTo($ticket->voyage)
                     ->where('statut',StatutTicket::Payer)
                     ->get();
                 if ($TkAvecLeMemeNumeroChaise->count()>=1){
-                    $ticket->numero_chaise =TicketHelpers::getNumeroChaise($ticket->voyage,$ticket->date);
+                    $ticket->numero_chaise =TicketHelpers::getNumeroChaise($ticket->voyageInstance);
                 }
 
 
                 $ticket->save();
 
                 PayementEffectuerEvent::dispatch($ticket);
-                SendClientTicketByMailEvent::dispatch($ticket);
+                SendClientTicketByMailEvent::dispatch($ticket,TypeNotification::TICKET_PAYER);
                 DB::commit();
                 return redirect()->route('ticket.show-ticket',['ticket'=>$ticket])->with('success',"Le paiement de votre ticket a été effectué avec succès");
             }

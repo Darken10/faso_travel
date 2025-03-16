@@ -8,6 +8,7 @@ use App\Events\SendClientTicketByMailEvent;
 use App\Models\Ticket\Ticket;
 use App\Models\User;
 use App\Models\Voyage\Voyage;
+use App\Models\Voyage\VoyageInstance;
 use Carbon\Carbon;
 use Exception;
 use Faker\Core\Uuid;
@@ -25,18 +26,16 @@ class TicketHelpers{
         return str_pad(rand(0,999999),6,"0",STR_PAD_LEFT);
     }
 
-    public static function getNumeroChaise(Voyage $voyage,string $date):int{
-        $infoDate = mb_split('-',$date);
+    public static function getNumeroChaise(VoyageInstance $voyage):int{
         $NTickets = Ticket::query()
             ->whereBelongsTo($voyage)
-            ->where('date', $date)
             ->where('statut',StatutTicket::Payer)
             ->get()
             ->count();
 
         while (
-            Ticket::query()->whereBelongsTo($voyage)->where('date', $date)->where('statut',StatutTicket::Payer)->where('numero_chaise', $NTickets+1)->get()->count() !== 0
-            and $NTickets <= $voyage->cares()->wherePivot('date',$date)->get()->last()?->number_place
+            Ticket::query()->whereBelongsTo($voyage)->where('statut',StatutTicket::Payer)->where('numero_chaise', $NTickets+1)->get()->count() !== 0
+            and ($NTickets <= $voyage->care?->number_place || $NTickets <= $voyage->voyage->cares->last()?->number_place)
         ){
             $NTickets++;
         }

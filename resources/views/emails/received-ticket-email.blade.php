@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Confirmation d'Achat - Ticket de Voyage</title>
+    <title>Ticket de Voyage - Réception</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -19,7 +20,7 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         .header {
-            background: #007bff;
+            background: #28a745;
             color: #ffffff;
             padding: 15px;
             text-align: center;
@@ -37,29 +38,23 @@
         }
         .button {
             display: inline-block;
-            background: #007bff;
+            background: #28a745;
             color: #ffffff;
             padding: 10px 20px;
             text-decoration: none;
             border-radius: 5px;
             margin-top: 10px;
         }
-        .center{
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            align-items: center;
-        }
     </style>
 </head>
 <body>
 <div class="container">
     <div class="header">
-        <h2>Confirmation d'Achat - Ticket de Voyage</h2>
+        <h2>Ticket de Voyage - Réception</h2>
     </div>
     <div class="content">
-        <p>Bonjour <strong>{{$ticket->is_my_ticket ? $ticket->user->name : $ticket->autre_personne->name}}</strong>,</p>
-        <p>Nous avons le plaisir de vous confirmer que votre achat de ticket a été effectué avec succès. Vous trouverez ci-dessous les détails de votre voyage :</p>
+        <p>Bonjour <strong>[Nom du destinataire]</strong>,</p>
+        <p>Vous avez reçu un ticket de voyage de la part de <strong>[Nom de l'expéditeur]</strong>.</p>
         <p><strong>Détails du Voyage :</strong></p>
         <ul>
             <li><strong>Numéro du ticket :</strong> {{$ticket->numero_ticket}}</li>
@@ -72,19 +67,14 @@
         <div class=" center">
             <img src="{{ asset(\Illuminate\Support\Facades\Storage::url($ticket->code_qr_uri))  }}"   alt="Le code QR">
         </div>
-        <div class=" center">
-            {{$ticket->code_sms}}
-        </div>
 
         <p>Vous trouverez en pièce jointe votre ticket en format PDF.</p>
         <p>Vous pouvez également visualiser votre ticket en cliquant sur le bouton ci-dessous :</p>
         <p class="center"><a href="{{route('ticket.show-ticket',$ticket)}}" class="button">voir mon ticket</a></p>
-        <p>Bon voyage et merci d'avoir choisi notre service !</p>
     </div>
     <div class="footer">
-        <p>&copy; 2025 Votre Liptra SARL. Tous droits réservés.</p>
+        <p>&copy; 2025 Votre Compagnie de Voyage. Tous droits réservés.</p>
     </div>
 </div>
 </body>
 </html>
-

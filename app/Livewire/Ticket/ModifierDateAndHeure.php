@@ -10,6 +10,7 @@ use App\Helper\TicketHelpers;
 use App\Helper\VoyageHelper;
 use App\Models\Ticket\Ticket;
 use App\Models\Voyage\Voyage;
+use App\Models\Voyage\VoyageInstance;
 use App\Notifications\Ticket\TicketNotification;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
@@ -20,40 +21,26 @@ use function Symfony\Component\String\s;
 class ModifierDateAndHeure extends Component
 {
     public Ticket $ticket;
-    #[Validate('required')]
-    public ?int $dateIndex = null;
-    #[Validate('required ')]
-    public ?string $heure_depart = null;
+
     #[Validate('required')]
     public ?int $numero_chaise = null;
     #[Validate('required')]
-    public ?int $voyageId = null;
+    public ?string $voyageInstanceId = null;
+
     #[Validate('required')]
     public ?StatutTicket $statut = null;
-
-    public Collection|array $voyages = [];
-    public Collection|array $dateDispo = [];
     public Collection|array $chaiseDispo = [];
-    public Collection|array $dates = [];
+    public Collection|array $voyageInstances = [];
 
 
-    public function mount(Ticket $ticket){
+    public function mount(Ticket $ticket): void
+    {
         $this->ticket = $ticket;
-        $this->heure_depart = $ticket->heureDepart()->format('h:i:s');
         $this->numero_chaise = (int)$ticket->numero_chaise;
-        $this->voyages = $this->updateHeure()->get();
+        $this->voyageInstances = $this->updateHeure()->get();
         $this->chaiseDispo = $this->getChaiseDisponibles();
-        $this->voyageId = $this->ticket->voyage_id;
+        $this->voyageInstanceId = $this->voyageInstances->first()->id;
         $this->statut = $this->ticket->statut;
-
-        $this->getDateDisponibles();
-
-        if (collect($this->dateDispo)->isNotEmpty()){
-            $this->dateIndex = 0;
-            $this->handlerHeureOnChange();
-        }
-
-        $this->handlerDateOnChange();
     }
 
     /**
@@ -63,88 +50,47 @@ class ModifierDateAndHeure extends Component
     {
         $data = $this->validate();
         try {
-
             \DB::beginTransaction();
-            $this->ticket->date = Carbon::parse($this->dates[$data["dateIndex"]]);
             $this->ticket->numero_chaise = $data["numero_chaise"];
-            $this->ticket->voyage_id = $data["voyageId"];
+            $this->ticket->voyage_instance_id = $data["voyageInstanceId"];
             $this->ticket->statut = $data["statut"] ;
             $this->ticket->save();
             $response = TicketHelpers::regenerateTicket($this->ticket);
             if ($response){
                 PayementEffectuerEvent::dispatch($this->ticket);
-                SendClientTicketByMailEvent::dispatch($this->ticket);
+                SendClientTicketByMailEvent::dispatch($this->ticket,TypeNotification::TICKET_UPDATED);
                 \DB::commit();
-                \Auth::user()->notify(new TicketNotification($this->ticket,TypeNotification::UpdateTicket,"Reactivation de ticket","Vous avez reactiver le ticket avec success"));
                 return to_route('ticket.show-ticket',['ticket' => $this->ticket])
                     ->with('success',"Votre Ticket a bien ete modifier");
             }
             else{
                 \DB::rollback();
             }
-
-
-
-
         }
         catch (\Exception $e){
             \DB::rollback();
             \Session::now("error","Une erreur est survenue");
-
         }
         return false;
 
     }
 
-    public function handlerDateOnChange(): void
+    private function updateHeure(): \Illuminate\Database\Eloquent\Builder|VoyageInstance
     {
+        $voyageInstances = VoyageInstance::query()
+            ->whereHas("voyage", function($query){
+                $query->where('trajet_id',$this->ticket->voyageInstance->voyage->trajet->id)
+                ->where('classe_id',$this->ticket->voyageInstance->classe->id ?? $this->ticket->voyageInstance->voyage->classe->id)
+                ->where('compagnie_id',$this->ticket->voyageInstance->voyage->compagnie->id);
+            });
 
-        $allVoyagesOfDaySelected = VoyageHelper::getVoyagesByDay($this->dates[$this->dateIndex]);
-        if($allVoyagesOfDaySelected->isNotEmpty()){
-            $this->voyages = $allVoyagesOfDaySelected
-                ->where('compagnie_id',$this->ticket->voyage->compagnie->id)
-                ->where('trajet_id',$this->ticket->voyage->trajet->id)
-                ->where('classe_id',$this->ticket->voyage->classe->id);
-            $this->chaiseDispo = $this->getChaiseDisponibles();
-        }
-
-       // TODO: je doit revoir comment je gere les heures. le system qui est la presentemnet ne permet pas de prendre en compte les date care les heures peuvent etre diferent les differente jours
-    }
-
-    public function handlerHeureOnChange(): void
-    {
-        $this->chaiseDispo = $this->getChaiseDisponibles();
-        // TODO: je doit revoir comment je gere les heures. le system qui est la presentemnet ne permet pas de prendre en compte les date care les heures peuvent etre diferent les differente jours
-    }
-
-
-    private function updateHeure(): \Illuminate\Database\Eloquent\Builder|Voyage
-    {
-        $voy = Voyage::find($this->voyageId) ?? $this->ticket->voyage;
-        $voyages = Voyage::query()
-            ->whereBelongsTo($this->ticket->voyage->compagnie)
-            ->whereBelongsTo($this->ticket->voyage->trajet)
-            ->whereBelongsTo($this->ticket->voyage->classe);
-
-
-        return $voyages;
-    }
-
-    private function getDateDisponibles()
-    {
-        $res = VoyageHelper::getDateDisponiblesWithTicket($this->ticket);
-        $this->dateDispo = $res['datesDisponiblesAndDays'];
-        $this->dates = $res['datesDisponibles'];
+        return $voyageInstances;
     }
 
 
     private function getChaiseDisponibles(): array|Collection
     {
-        if ($this->dateIndex === null) {
-            return [];
-        }
-        return VoyageHelper::getChaiseDisponibles(Voyage::findOrFail($this->voyageId),$this->dates[$this->dateIndex]);
-
+        return VoyageHelper::getChaiseDisponiblesWithVoyageInstances($this->voyageInstanceId ?? $this->updateHeure()->get()->first()->id);
     }
 
     private function verificationVoyage(Voyage $voyage) : array

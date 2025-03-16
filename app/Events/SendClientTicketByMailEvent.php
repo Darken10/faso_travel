@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Enums\TypeNotification;
 use App\Models\Ticket\Ticket;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -15,10 +16,12 @@ class SendClientTicketByMailEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+
+
     /**
      * Create a new event instance.
      */
-    public function __construct(public Ticket $ticket)
+    public function __construct(public Ticket $ticket,public TypeNotification $type )
     {
         //
     }

@@ -4,12 +4,15 @@ namespace App\Http\Controllers\Ticket;
 
 use App\Enums\StatutTicket;
 use App\Enums\StatutUser;
+use App\Enums\TypeNotification;
 use App\Enums\TypeTicket;
 use App\Events\PayementEffectuerEvent;
 use App\Events\SendClientTicketByMailEvent;
 use App\Events\TranfererTicketToOtherUserEvent;
 use App\Models\Ticket\AutrePersonne;
 use App\Models\User;
+use App\Models\Voyage\VoyageInstance;
+use App\Services\Voyage\TicketService;
 use Exception;
 use Illuminate\Http\Request;
 use App\Helper\TicketHelpers;
@@ -22,6 +25,10 @@ use Illuminate\Support\Facades\Auth;
 class TicketController extends Controller
 {
     private string $storage_public_dir = 'app/public/';
+
+    public function __construct(private TicketService $ticketService)
+    {
+    }
 
     public function createTicket(CreateTicketRequest $request, Voyage $voyage,Ticket $ticket=null)
     {
@@ -44,11 +51,14 @@ class TicketController extends Controller
                 ->where('type',$data['type'])
                 ->get();
 
+
        if($tickets->count()===0){
            if (array_key_exists('autre_personne_id', $data)){
                $data['is_my_ticket']= false;
                $autre = AutrePersonne::find($data['autre_personne_id']);
+
            }
+
            $ticket = Ticket::create($data);
            return view('ticket.ticket.choix-moyen-payment',[
                'ticket' => $ticket,
@@ -61,6 +71,13 @@ class TicketController extends Controller
            ])->with("success","Un ticket non payer existe deja a votre nom pour le meme trajet a la meme date");
        }
 
+    }
+
+    function createTicketWithVoyageInstance(CreateTicketRequest $request, VoyageInstance $voyage_instance,Ticket $ticket=null)
+    {
+        $data = $request->validated();
+        dd($voyage_instance);
+        $this->ticketService->createTicket($voyage->id,$data);
     }
 
 
@@ -99,7 +116,7 @@ class TicketController extends Controller
 
         if ($ticket->statut === StatutTicket::Payer or $ticket->statut === StatutTicket::EnAttente or $ticket->statut === StatutTicket::Pause){
             PayementEffectuerEvent::dispatch($ticket);
-            SendClientTicketByMailEvent::dispatch($ticket);
+            SendClientTicketByMailEvent::dispatch($ticket,TypeNotification::TICKET_REDELIVERED);
         }
         else{
             return back()->with('error', 'Desole votre ticket est invalide');
@@ -113,7 +130,7 @@ class TicketController extends Controller
             if ($ticket->statut === StatutTicket::Payer  or $ticket->statut === StatutTicket::Pause){
                 try {
                     PayementEffectuerEvent::dispatch($ticket);
-                    SendClientTicketByMailEvent::dispatch($ticket);
+                    SendClientTicketByMailEvent::dispatch($ticket,TypeNotification::TICKET_REGENERATED);
 
                 }catch (Exception $e){
                     return back()->with('error', 'Une erreur inconnu est survenue');

@@ -30,6 +30,8 @@ class AcheterTicketForm extends Component
 
     public function mount(Voyage $voyage, $autre_personne=null): void
     {
+        $voyage_instances = $voyage->voyage_instances;
+
         $this->items = [['selectedOption' => null, 'number' => null]];
         $this->voyage = $voyage;
         $this->autre_personne = $autre_personne;
@@ -39,8 +41,6 @@ class AcheterTicketForm extends Component
         $this->date= $this->dates[0];
         $this->handlerDateOnChange();
     }
-
-
 
     public function addItem(): void
     {
@@ -63,9 +63,6 @@ class AcheterTicketForm extends Component
     {
         $this->chaiseDispo = VoyageHelper::getChaiseDisponibles($this->voyage,$this->date);
     }
-
-
-
 
 
     public function render(): \Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View

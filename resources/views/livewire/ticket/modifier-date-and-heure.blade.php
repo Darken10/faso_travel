@@ -1,24 +1,15 @@
 <form wire:submit="save">
     <div class=" grid grid-cols-12  gap-4 mb-4 ">
-        <div class="sm:col-span-6 col-span-12 ">
-            <x-label for="dateIndex" value="{{ __('Date Depart') }}" />
-            <x-select wire:change="handlerDateOnChange" wire:model="dateIndex" id="dateIndex" type="text" class="mt-1 block w-full" autofocus  >
-                @foreach($dateDispo as $key=>$date)
-                    <option value="{{ $key }}">{{ $date }}</option>
-                @endforeach
-            </x-select>
-            <x-input-error for="dateIndex" class="mt-2" />
-        </div>
-        <div class="sm:col-span-6 col-span-12 ">
-            <x-label for="voyageId" value="{{ __('Heure Depart') }}" />
-           {{-- <x-input id="heure_depart" wire:model="heure_depart" type="time" class="mt-1 block w-full" autofocus  />--}}
-            <x-select id="statut" type="text" class="mt-1 block w-full" autofocus  wire:model="voyageId" wire:change="handlerHeureOnChange">
+        <div class=" col-span-12 ">
+            <x-label for="voyageInstanceId" value="{{ __('Date Depart') }}" />
+            <x-select  wire:model="voyageInstanceId" id="voyageInstanceId" class="mt-1 block w-full" autofocus  >
+                @foreach($voyageInstances as $voyageInstance)
 
-                @foreach($voyages as $voyage)
-                    <option value="{{ $voyage->id }}">{{ $voyage->heure->format('h\h i\m\n')}}</option>
+
+                    <option value="{{ $voyageInstance->id }}">{{ $voyageInstance->date->format('D d M Y') }} à {{$voyageInstance->heure->format('H\h i')}}</option>
                 @endforeach
             </x-select>
-            <x-input-error for="voyageId" class="mt-2" />
+            <x-input-error for="voyageInstanceId" class="mt-2" />
         </div>
 
     </div>
@@ -28,7 +19,7 @@
         <div class="sm:col-span-6 col-span-12">
             <x-label for="numero_chaise" value="{{ __('Numero de la chaise') }}" />
             <x-select  wire:model="numero_chaise" id="statut" type="text" class="mt-1 block w-full" autofocus  >
-                @foreach($chaiseDispo as $key=>$numero)
+                @foreach($chaiseDispo as $numero)
                     <option value="{{ $numero }}">Chaise N°{{ $numero }}</option>
                 @endforeach
             </x-select>

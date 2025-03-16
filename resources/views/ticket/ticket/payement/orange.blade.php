@@ -12,7 +12,7 @@
         <div>
             tapez ce code et fournisser l'otp obtenue par SMS :
             <div class="text-xl text-red-600 font-bold flex justify-center items-center">
-                code *146*4*6*{{$ticket->voyage->getPrix($ticket->type)}}#
+                code *146*4*6*{{$ticket->voyageInstance->getPrix($ticket->type)}}#
             </div>
         </div>
 

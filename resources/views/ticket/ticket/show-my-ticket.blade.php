@@ -10,7 +10,6 @@
                     <img class="w-10 h-10 rounded-full " src="{{ asset(Auth::user()->profileUrl ?Auth::user()->profileUrl: 'icon/user1.png') }}" alt="User">
                     <div class="ml-4">
                         <div class="text-sm font-medium text-gray-900 dark:text-gray-300">
-
                             @if($ticket?->is_my_ticket or $ticket?->transferer_a_user_id=== auth()->user()->id)
                                 {{$ticket?->user?->name}}
                             @else

@@ -6,6 +6,7 @@ namespace App\Helper;
 use App\Enums\StatutTicket;
 use App\Models\Ticket\Ticket;
 use App\Models\Voyage\Voyage;
+use App\Models\Voyage\VoyageInstance;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 
@@ -31,6 +32,23 @@ class VoyageHelper
             ->pluck('numero_chaise')->toArray();
 
         $allPlace = range(1, $voyage->nb_pace);
+
+        // Exclure les éléments de $toExclude de $allPlace
+        return array_diff($allPlace, $tkOccuper);
+
+
+    }
+
+    public static function getChaiseDisponiblesWithVoyageInstances(string $voyageinstanceId): array|Collection
+    {
+
+        $voyageInstance = VoyageInstance::query()->findOrFail($voyageinstanceId);
+        $tkOccuper = $voyageInstance->tickets()
+            ->where('statut',StatutTicket::Payer)
+            ->pluck('numero_chaise')->toArray();
+
+
+        $allPlace = range(1, $voyageInstance->nb_place);
 
         // Exclure les éléments de $toExclude de $allPlace
         return array_diff($allPlace, $tkOccuper);

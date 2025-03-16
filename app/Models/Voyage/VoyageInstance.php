@@ -2,9 +2,12 @@
 
 namespace App\Models\Voyage;
 
+use App\Enums\StatutVoyageInstance;
+use App\Enums\TypeTicket;
 use App\Models\Compagnie\Care;
 use App\Models\Compagnie\Chauffer;
 use App\Models\Ticket\Ticket;
+use App\Models\Ville\Ville;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -28,6 +31,9 @@ class VoyageInstance extends Model
         "heure",
         "nb_place",
         "chauffer_id",
+        'statut',
+        'prix',
+        'classe_id'
     ];
 
     public function voyage(): BelongsTo
@@ -46,6 +52,11 @@ class VoyageInstance extends Model
         return $this->belongsTo(Chauffer::class);
     }
 
+    public function cares(): \Illuminate\Database\Eloquent\Builder|HasMany|VoyageInstance
+    {
+        return $this->hasMany(Care::class);
+    }
+
     /**
      * Get the attributes that should be cast.
      *
@@ -55,11 +66,38 @@ class VoyageInstance extends Model
     {
         return [
             "date" => "datetime",
+            'heure' => 'datetime',
+            'statut' => StatutVoyageInstance::class,
         ];
     }
 
     public function tickets(): HasMany
     {
         return $this->hasMany(Ticket::class);
+    }
+
+    /*---------------------------------------------------------*/
+
+    public function villeDepart()
+    {
+        return $this->voyage->trajet->depart;
+    }
+
+    public function villeArrive(){
+        return $this->voyage->trajet->arriver;
+    }
+
+    public function gareDepart()
+    {
+        return $this->voyage->gareDepart;
+    }
+
+    public function gareArrive(){
+        return $this->voyage->gareArriver;
+    }
+
+    public function getPrix(TypeTicket $type)
+    {
+        return $type===TypeTicket::AllerSimple && $this->prix ? $this->prix : $this->voyage->getPrix($type);
     }
 }

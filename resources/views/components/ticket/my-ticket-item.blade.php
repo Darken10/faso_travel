@@ -43,7 +43,7 @@
                                 <div class="flex-row justify-center ">
                                     <span class=" text-sm text-gray-600 capitalize font-semibold italic">Le {{ $ticket?->date?->format('d M Y') }} </span>
                                     <br>
-                                    <span class=" text-sm text-gray-600 capitalize font-semibold italic"> à {{ $ticket?->voyage?->heure?->format('H\h i') }} </span>
+                                    <span class=" text-sm text-gray-600 capitalize font-semibold italic"> à {{ $ticket?->voyageInstance?->heure?->format('H\h i') }} </span>
                                 </div>
                             </td>
                         </tr>

@@ -165,4 +165,9 @@ class Voyage extends Model
         return $type ==TypeTicket::AllerRetour ? $this->prix_aller_retour : $this->prix;
     }
 
+    public function voyage_instances(): HasMany
+    {
+        return $this->hasMany(VoyageInstance::class);
+    }
+
 }

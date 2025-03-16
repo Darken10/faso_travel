@@ -51,7 +51,7 @@ class Ticket extends Model
     protected $with = [
         'user',
         'payements',
-        'voyage',
+        'voyageInstance',
     ];
 
     protected static function booted(): void
@@ -62,8 +62,13 @@ class Ticket extends Model
                     $companyId = Auth::user()->compagnie_id;
 
                     // Filtrer les tickets dont le voyage est rattaché à la compagnie de l'utilisateur
-                    $builder->whereHas('voyage', function ($query) use ($companyId) {
+                    /*$builder->whereHas('voyageInstance.voyage', function ($query) use ($companyId) {
                         $query->where('compagnie_id', $companyId);
+                    });*/
+                    $builder->whereHas('voyageInstance', function ($query) use ($companyId) {
+                        $query->whereHas('voyage', function ($subQuery) use ($companyId) {
+                            $subQuery->where('compagnie_id', $companyId);
+                        });
                     });
                 }
             }
@@ -95,52 +100,52 @@ class Ticket extends Model
         return $this->belongsTo(User::class);
     }
 
-    function voyage():BelongsTo{
+   /* function voyage():BelongsTo{
         return $this->belongsTo(Voyage::class);
-    }
+    }*/
 
     #----------------------------------------------------------------
 
     function villeDepart(){
-        return $this->voyage->trajet->depart;
+        return $this->voyageInstance->voyage->trajet->depart;
     }
 
     function villeArriver(){
-        return $this->voyage->trajet->arriver;
+        return $this->voyageInstance->voyage->trajet->arriver;
     }
 
     function compagnie():Compagnie{
-        return $this->voyage->compagnie;
+        return $this->voyageInstance->voyage->compagnie;
     }
 
     function heureDepart(){
-        return $this->voyage->heure;
+        return $this->voyageInstance->heure;
     }
 
     /**
      * @return Carbon
      */
     function heureArriver():Carbon{
-        $temps = $this->voyage->temps;
-        return $this->voyage->heure->addHours($temps->hour)
+        $temps = $this->voyageInstance->voyage->temps;
+        return $this->voyageInstance->heure->addHours($temps->hour)
                     ->addMinutes($temps->minute)
                     ->addSeconds($temps->second);
     }
 
     function gareDepart():Gare{
-        return $this->voyage->gareDepart;
+        return $this->voyageInstance->voyage->gareDepart;
     }
 
     function gareArriver():Gare{
-        return $this->voyage->gareArriver;
+        return $this->voyageInstance->voyage->gareArriver;
     }
 
     function conforts(){
-        return $this->voyage->conforts;
+        return $this->voyageInstance->voyage->conforts;
     }
 
     function classe(){
-        return $this->voyage->classe;
+        return $this->voyageInstance->voyage->classe;
     }
 
     function autre_personne(): BelongsTo
@@ -150,17 +155,17 @@ class Ticket extends Model
 
     function trajet()
     {
-        return $this->voyage->trajet;
+        return $this->voyageInstance->voyage->trajet;
     }
 
     public function prix(): float
     {
-        return $this->voyage->getPrix($this->type);
+        return $this->voyageInstance->voyage->getPrix($this->type);
     }
 
     public function heureRdv():Carbon
     {
-        return $this->voyage->heure->subMinutes(10);
+        return $this->voyageInstance->voyage->heure->subMinutes(10);
     }
 
     public function voyageInstance():BelongsTo

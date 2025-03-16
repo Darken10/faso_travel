@@ -23,7 +23,8 @@
         "ligdicash/ligdicash": "^1.0",
         "livewire/livewire": "^3.5",
         "pusher/pusher-php-server": "^7.2",
-        "spatie/browsershot": "^4.3"
+        "spatie/browsershot": "^4.3",
+        "twilio/sdk": "^8.4"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.14",

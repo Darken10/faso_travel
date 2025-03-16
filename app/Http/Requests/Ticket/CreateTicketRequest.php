@@ -25,7 +25,7 @@ class CreateTicketRequest extends FormRequest
         return [
             'a_bagage' =>['nullable'],
             'bagages' =>['nullable','json'],
-            'date' =>['required','date','after_or_equal:today'],
+            'voyage_instance_choise' =>['required','exists:voyage_instances,id'],
             'type' => ['required'],
             'accepter'=>['required'],
             'autre_personne_id'=>['nullable'],

@@ -55,6 +55,7 @@ Route::prefix('/voyage')->name('voyage.')->middleware('auth')->controller(Voyage
 
 Route::prefix('/ticket')->name('ticket.')->middleware('auth')->controller(TicketController::class)->group(function () {
     Route::post('/payer/{voyage}', 'createTicket')->name('payer')->where(['voyage' => '[0-9]+',]);
+    Route::post('/payer/voyage-instace/{voyage_instance}', 'createTicketWithVoyageInstance')->name('payer-with-voyage-instance')->where(['voyage_instance' => '[0-9]+',]);
     /*Route::post('/my-ticket/payer/{voyage}/{ticket}', 'createTicket')->name('my-ticket.payer')->where(['voyage' => '[0-9]+','ticket' =>'[0-9]+']);*/
 
     Route::get('/mes-tickets', 'myTickets')->name('myTickets');
@@ -125,6 +126,9 @@ Route::get('/notifications/{notificationId}',[NotificationsController::class,'sh
 
 
 Route::get("/test",function (){
+    $tk = \App\Models\Ticket\Ticket::all()->first();
+    $response = \App\Services\SendTicketCodeBySMS::sendTicketCodeBySMS($tk,"+22675302096");
+    dd($response);
     dd(\App\Models\Voyage\VoyageInstance::all());
 });
 
@@ -137,4 +141,5 @@ Route::get('/process-payment/{ticket}/{provider}/callback', [PaymentController2:
 
 
 Route::get("create-all-voyages-instances", [VoyageInstanceController::class, 'createAllInstance'])->name('create-all-voyages-instances');
+
 

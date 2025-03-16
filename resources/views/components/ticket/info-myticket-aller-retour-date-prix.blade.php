@@ -7,9 +7,9 @@
     </div>
     <div class=" font-medium text-gray-800 flex gap-x-2 items-center dark:text-gray-300">
         <div class="mt-2  font-medium text-gray-800 dark:text-gray-300">
-            {{ $ticket?->voyage?->trajet?->depart->name ?? "Nul Part" }} ({{ $ticket?->voyage?->trajet?->depart?->region?->pays->iso2 ?? "Nul Part" }})
+            {{ $ticket?->voyageInstance?->villeDepart()?->name ?? "Nul Part" }} ({{ $ticket?->voyageInstance?->villeDepart()?->region?->pays->iso2 ?? "Nul Part" }})
             <div class=" text-xs italic text-center">
-                {{ $ticket?->voyage?->gareDepart?->name ?? "Nul Part" }}
+                {{ $ticket?->voyageInstance?->gareDepart()?->name ?? "Nul Part" }}
             </div>
         </div>
         <div class="mt-2 text-xs font-medium text-gray-800 dark:text-gray-300">
@@ -28,15 +28,15 @@
             @endif
         </div>
         <div class="mt-2 font-medium text-gray-700 dark:text-gray-300">
-            {{ $ticket?->voyage?->trajet?->arriver->name }} ({{ $ticket?->voyage?->trajet?->arriver?->region?->pays->iso2 }})
+            {{ $ticket?->voyageInstance?->villeArrive()?->name}} ({{ $ticket?->voyageInstance?->villeDepart()?->region?->pays->iso2 }})
             <div class=" text-xs italic text-center">
-                {{ $ticket?->voyage?->gareArriver?->name }}
+                {{ $ticket?->voyageInstance?->gareArrive()?->name }}
             </div>
         </div>
     </div>
 
     <div class=" mt-2 text-sm font-medium text-gray-800 dark:text-gray-300 flex justify-center">
-        Le {{ $ticket?->date?->format('d M Y') }} à {{ $ticket?->voyage?->heure?->format('H\h i') }}
+        Le {{ $ticket?->voyageInstance?->date?->format('d M Y') }} à {{ $ticket?->voyageInstance?->heure?->format('H\h i') }}
     </div>
 
 
@@ -45,7 +45,7 @@
        <div class="mt-2 text-sm font-medium  flex justify-center ">
            Classe :
            <span class="font-semibold px-2">
-            {{ $ticket->voyage->classe->name }}
+            {{ $ticket?->voyageInstance?->classe?->name ?? $ticket?->voyageInstance?->voyage?->classe->name }}
             </span>
        </div>
        <div class="mt-2 text-sm font-medium   flex justify-center ">
@@ -68,6 +68,7 @@
         </div>
         <div class="mt-2 text-sm font-medium  flex justify-center ">
 
+            @if($ticket?->voyageInstance?->statut ===\App\Enums\StatutVoyageInstance::DISPONIBLE)
                 <span
                     @class([
     "bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-green-400 border border-green-400"=> $ticket->statut ===\App\Enums\StatutTicket::Payer,
@@ -80,6 +81,13 @@
                     Statut :
                     {{ $ticket->statut }}
                 </span>
+
+            @else
+                <span class="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-red-400 border border-red-400">
+                    Voyage a ete annule
+                </span>
+            @endif
+
         </div>
 
     </div>

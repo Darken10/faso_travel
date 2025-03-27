@@ -7,6 +7,7 @@ use App\Http\Requests\Voyage\IsMyTicketBooleanFormRequest;
 use App\Models\Ticket\AutrePersonne;
 use App\Models\Ticket\Ticket;
 use App\Models\Voyage\Voyage;
+use App\Models\Voyage\VoyageInstance;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -26,6 +27,20 @@ class VoyageController extends Controller
         ]);
     }
 
+    function showVoyageInstance(VoyageInstance $voyageInstance)
+    {
+
+        return view('ticket.voyageInstance.show',[
+            'voyageInstance'=>$voyageInstance,
+        ]);
+    }
+
+    function acheterVoyageInstance(VoyageInstance $voyageInstance){
+        return view('ticket.voyageInstance.acheter',[
+            'voyageInstance'=>$voyageInstance,
+        ]);
+    }
+
     function acheter(Voyage $voyage)
     {
         return view('ticket.voyage.achaterTicket',[
@@ -42,9 +57,9 @@ class VoyageController extends Controller
         ]);
     }
 
-    function is_my_ticket(Voyage $voyage): \Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+    function is_my_ticket(VoyageInstance $voyageInstance): \Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
-        return view('ticket.voyage.is-my-ticket',['voyage'=>$voyage]);
+        return view('ticket.voyage.is-my-ticket',['voyageInstance'=>$voyageInstance]);
     }
 
     function is_my_ticket_traitement(Voyage $voyage,IsMyTicketBooleanFormRequest $request): \Illuminate\Http\RedirectResponse

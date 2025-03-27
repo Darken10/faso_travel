@@ -10,16 +10,20 @@
             <div class="p-5">
                 <a href="#" class=" flex justify-center mx-3 mt-4">
                     <div class="block">
-                        <h5 class=" text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $voyage->compagnie->name }}</h5>
-                        <p class="mb-3 font-normal text-gray-400 dark:text-gray-400 flex justify-center italic text-sm " >'{{ $voyage->compagnie->slogant }}</p>
+                        <h5 class=" text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $voyageInstance->compagnie()->name }}</h5>
+                        <p class="mb-3 font-normal text-gray-400 dark:text-gray-400 flex justify-center italic text-sm " >'{{ $voyageInstance->compagnie()->slogant }}</p>
                     </div>
                 </a>
 
                 <div>
-                    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400 text-sm italic">{{ \Str::limit($voyage->compagnie->description,150) }}</p>
+                    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400 text-sm italic">{{ \Str::limit($voyageInstance->compagnie()->description,150) }}</p>
                 </div>
 
-                <form  method="post">
+
+
+                @livewire("voyage-instance.info-supplementaire-pour-achat-ticket",['voyageInstance'=>$voyageInstance])
+
+              {{--  <form  method="post">
                     @csrf
                     <div class="mb-4">
                         <div class="md:flex gap-4 items-center">
@@ -48,7 +52,9 @@
                         </button>
                     </div>
 
-                    {{--
+
+
+                    --}}{{--
                     <div class="flex justify-end">
                         <a href="{{ route('voyage.acheter',$voyage) }}"
                            class="inline-flex  items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
@@ -60,8 +66,8 @@
                             </svg>
                         </a>
                     </div>
-                    --}}
-                </form>
+                    --}}{{--
+                </form>--}}
             </div>
         </div>
     </div>

@@ -2,6 +2,7 @@
 
 namespace App\Models\Voyage;
 
+use App\Enums\StatutTicket;
 use App\Enums\StatutVoyageInstance;
 use App\Enums\TypeTicket;
 use App\Models\Compagnie\Care;
@@ -100,4 +101,33 @@ class VoyageInstance extends Model
     {
         return $type===TypeTicket::AllerSimple && $this->prix ? $this->prix : $this->voyage->getPrix($type);
     }
+
+    public function conforts(){
+        return $this->voyage->conforts;
+    }
+
+    public function compagnie(){
+        return $this->voyage->compagnie;
+    }
+
+    public function nb_place_disponible()
+    {
+        return $this->voyage->nb_place ;
+    }
+    public function classe()
+    {
+        return $this->voyage->classe;
+    }
+
+    public function chaiseDispo(): array
+    {
+        $tkOccuper = $this->tickets()
+            ->where('statut',StatutTicket::Payer)
+            ->pluck('numero_chaise')->toArray();
+
+        $allPlace = range(1, $this->nb_place);
+
+        return array_diff($allPlace, $tkOccuper);
+    }
+
 }

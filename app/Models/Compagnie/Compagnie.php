@@ -14,6 +14,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Support\Facades\Auth;
 
+use Illuminate\Database\Eloquent\Builder;
+
 class Compagnie extends Model
 {
     use HasFactory;
@@ -69,6 +71,11 @@ class Compagnie extends Model
     function chauffeurs():HasMany
     {
         return $this->hasMany(Chauffer::class);
+    }
+
+    function scopeActives(Builder $query)
+    {
+        return $query;
     }
 
 }

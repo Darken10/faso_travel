@@ -109,6 +109,7 @@ namespace App\Models\Compagnie{
  * @property-read int|null $users_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Voyage\Voyage> $voyages
  * @property-read int|null $voyages_count
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Compagnie actives()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Compagnie newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Compagnie newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Compagnie query()
@@ -425,6 +426,8 @@ namespace App\Models\Ticket{
  * @property int|null $user_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
+ * @property-read int|null $notifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Ticket\Ticket> $tickets
  * @property-read int|null $tickets_count
  * @property-read \App\Models\User|null $user
@@ -517,7 +520,6 @@ namespace App\Models\Ticket{
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Ticket\Payement> $payements
  * @property-read int|null $payements_count
  * @property-read \App\Models\User|null $user
- * @property-read \App\Models\Voyage\Voyage|null $voyage
  * @property-read \App\Models\Voyage\VoyageInstance|null $voyageInstance
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Ticket newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Ticket newQuery()
@@ -893,8 +895,12 @@ namespace App\Models\Voyage{
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property string $statut
+ * @property \App\Enums\StatutVoyageInstance $statut
+ * @property int|null $classe_id
+ * @property int $prix
  * @property-read \App\Models\Compagnie\Care|null $care
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Compagnie\Care> $cares
+ * @property-read int|null $cares_count
  * @property-read \App\Models\Compagnie\Chauffer|null $chauffer
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Ticket\Ticket> $tickets
  * @property-read int|null $tickets_count
@@ -905,12 +911,14 @@ namespace App\Models\Voyage{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|VoyageInstance query()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|VoyageInstance whereCareId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|VoyageInstance whereChaufferId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|VoyageInstance whereClasseId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|VoyageInstance whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|VoyageInstance whereDate($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|VoyageInstance whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|VoyageInstance whereHeure($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|VoyageInstance whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|VoyageInstance whereNbPlace($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|VoyageInstance wherePrix($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|VoyageInstance whereStatut($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|VoyageInstance whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|VoyageInstance whereVoyageId($value)

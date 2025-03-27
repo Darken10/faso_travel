@@ -9,7 +9,8 @@ export default {
         './vendor/laravel/jetstream/**/*.blade.php',
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
-        "./node_modules/flowbite/**/*.js"
+        "./node_modules/flowbite/**/*.js",
+        './node_modules/flyonui/dist/js/*.js',
     ],
 
     theme: {
@@ -23,6 +24,7 @@ export default {
     plugins: [
         forms,
         typography,
-        require('flowbite/plugin')
+        require('flowbite/plugin'),
+        require('flyonui/plugin')
     ],
 };

@@ -43,7 +43,7 @@ class TicketNotification extends Notification
      */
     public function toMail(object $notifiable): TicketNotificationMail
     {
-        return new TicketNotificationMail($this->ticket, $this->type, $this->title, $notifiable->email);
+        return new TicketNotificationMail($this->ticket, $this->type, $notifiable->email,$this->title);
     }
 
     /**

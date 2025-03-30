@@ -77,10 +77,10 @@ class ModifierDateAndHeure extends Component
 
     private function updateHeure(): \Illuminate\Database\Eloquent\Builder|VoyageInstance
     {
-        $voyageInstances = VoyageInstance::query()
+        $voyageInstances = VoyageInstance::query()->avenir()
             ->whereHas("voyage", function($query){
                 $query->where('trajet_id',$this->ticket->voyageInstance->voyage->trajet->id)
-                ->where('classe_id',$this->ticket->voyageInstance->classe->id ?? $this->ticket->voyageInstance->voyage->classe->id)
+                ->where('classe_id',$this->ticket->voyageInstance->classe()->id ?? $this->ticket->voyageInstance->voyage->classe->id)
                 ->where('compagnie_id',$this->ticket->voyageInstance->voyage->compagnie->id);
             });
 
@@ -124,6 +124,10 @@ class ModifierDateAndHeure extends Component
             'verify' => $verify,
             "message" => $message
         ];
+    }
+
+    public function updateChaiseDispo(){
+        $this->chaiseDispo = $this->getChaiseDisponibles();
     }
 
 

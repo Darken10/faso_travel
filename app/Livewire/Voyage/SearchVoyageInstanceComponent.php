@@ -19,7 +19,7 @@ class SearchVoyageInstanceComponent extends Component
     public function mount(): void
     {
         $this->allCompagnies = Compagnie::actives()->get();
-        $this->voyageInstances = VoyageInstance::with('voyage')->get();
+        $this->voyageInstances = VoyageInstance::avenir()->with('voyage')->get();
     }
     public function render(): Factory|Application|View|\Illuminate\View\View
     {

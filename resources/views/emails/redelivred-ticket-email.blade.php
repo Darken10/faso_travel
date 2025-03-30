@@ -44,6 +44,12 @@
             border-radius: 5px;
             margin-top: 10px;
         }
+        .center{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
     </style>
 </head>
 <body>
@@ -52,22 +58,31 @@
         <h2>Ticket de Voyage - Réenvoi</h2>
     </div>
     <div class="content">
-        <p>Bonjour <strong>[Nom de l'utilisateur]</strong>,</p>
+        <p>Bonjour <strong>{{auth()->user()->name}}</strong>,</p>
         <p>Vous avez demandé un réenvoi de votre ticket de voyage. Veuillez trouver les détails ci-dessous :</p>
         <p><strong>Détails du Voyage :</strong></p>
         <ul>
-            <li><strong>Numéro du ticket :</strong> [Numéro du ticket]</li>
-            <li><strong>Départ :</strong> [Ville de départ] - [Date et heure]</li>
-            <li><strong>Destination :</strong> [Ville d'arrivée]</li>
-            <li><strong>Siège :</strong> [Numéro du siège]</li>
-            <li><strong>Classe :</strong> [Classe de voyage]</li>
+            <li><strong>Numéro du ticket :</strong> {{$ticket->numero_ticket}}</li>
+            <li><strong>Départ :</strong> {{$ticket->voyageInstance->villeDepart()->name}}</li>
+            <li><strong>Destination :</strong> {{$ticket->voyageInstance->villeArrive()->name}}</li>
+            <li><strong>Date et Heure :</strong> {{$ticket->voyageInstance->date->format("d/m/y")}} a {{$ticket->voyageInstance->heure->format("H\h i")}}</li>
+            <li><strong>Siège :</strong> Chaise n°{{$ticket->numero_chaise }}</li>
+            <li><strong>Prix :</strong> {{$ticket->prix()}} XOF</li>
         </ul>
-        <p>Votre ticket est joint à cet email en format PDF.</p>
-        <p>Si vous avez des questions, n'hésitez pas à nous contacter :</p>
-        <p><a href="[Lien support]" class="button">Contacter le support</a></p>
+        <div class=" center">
+            <img src="{{ asset(\Illuminate\Support\Facades\Storage::url($ticket->code_qr_uri))  }}"   alt="Le code QR">
+        </div>
+        <div class=" center">
+            {{$ticket->code_sms}}
+        </div>
+
+        <p>Vous trouverez en pièce jointe votre ticket en format PDF.</p>
+        <p>Vous pouvez également visualiser votre ticket en cliquant sur le bouton ci-dessous :</p>
+        <p class="center"><a href="{{route('ticket.show-ticket',$ticket)}}" class="button">voir mon ticket</a></p>
+        <p>Bon voyage et merci d'avoir choisi notre service !</p>
     </div>
     <div class="footer">
-        <p>&copy; 2025 Votre Compagnie de Voyage. Tous droits réservés.</p>
+        <p>&copy; 2025 Votre Liptra SARL. Tous droits réservés.</p>
     </div>
 </div>
 </body>

@@ -40,12 +40,11 @@
     </div>
 
 
-
    <div class=" md:flex md:justify-between text-gray-800">
        <div class="mt-2 text-sm font-medium  flex justify-center ">
            Classe :
            <span class="font-semibold px-2">
-            {{ $ticket?->voyageInstance?->classe?->name ?? $ticket?->voyageInstance?->voyage?->classe->name }}
+            {{ $ticket?->voyageInstance?->classe()?->name ?? $ticket?->voyageInstance?->voyage?->classe->name }}
             </span>
        </div>
        <div class="mt-2 text-sm font-medium   flex justify-center ">

@@ -52,13 +52,19 @@
         <h2>Ticket de Voyage - Transfert</h2>
     </div>
     <div class="content">
-        <p>Bonjour <strong>[Nom de l'expéditeur]</strong>,</p>
-        <p>Vous avez transféré votre ticket de voyage avec succès à <strong>[Nom du destinataire]</strong>.</p>
+        @php
+            $trans = \App\Models\User::find($ticket->transferer_a_user_id)
+        @endphp
+        <p>Bonjour <strong>{{auth()->user()->name}}</strong>,</p>
+        <p>Vous avez transféré votre ticket de voyage avec succès à <strong>{{$trans->name}}</strong>.</p>
         <p><strong>Détails du Ticket Transféré :</strong></p>
         <ul>
-            <li><strong>Numéro du ticket :</strong> [Numéro du ticket]</li>
-            <li><strong>Départ :</strong> [Ville de départ]</li>
-            <li><strong>Destination :</strong> [Ville d'arrivée]</li>
+            <li><strong>Numéro du ticket :</strong> {{$ticket->numero_ticket}}</li>
+            <li><strong>Départ :</strong> {{$ticket->voyageInstance->villeDepart()->name}}</li>
+            <li><strong>Destination :</strong> {{$ticket->voyageInstance->villeArrive()->name}}</li>
+            <li><strong>Date et Heure :</strong> {{$ticket->voyageInstance->date->format("d/m/y")}} a {{$ticket->voyageInstance->heure->format("H\h i")}}</li>
+            <li><strong>Siège :</strong> Chaise n°{{$ticket->numero_chaise }}</li>
+            <li><strong>Prix :</strong> {{$ticket->prix()}} XOF</li>
             <li><strong>Statut :</strong> Transféré</li>
         </ul>
         <p>Si vous avez des questions, n'hésitez pas à nous contacter :</p>

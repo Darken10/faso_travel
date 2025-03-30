@@ -2,10 +2,8 @@
     <div class=" grid grid-cols-12  gap-4 mb-4 ">
         <div class=" col-span-12 ">
             <x-label for="voyageInstanceId" value="{{ __('Date Depart') }}" />
-            <x-select  wire:model="voyageInstanceId" id="voyageInstanceId" class="mt-1 block w-full" autofocus  >
+            <x-select  wire:model="voyageInstanceId" id="voyageInstanceId" wire:change="updateChaiseDispo" class="mt-1 block w-full" autofocus  >
                 @foreach($voyageInstances as $voyageInstance)
-
-
                     <option value="{{ $voyageInstance->id }}">{{ $voyageInstance->date->format('D d M Y') }} à {{$voyageInstance->heure->format('H\h i')}}</option>
                 @endforeach
             </x-select>

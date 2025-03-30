@@ -44,6 +44,12 @@
             border-radius: 5px;
             margin-top: 10px;
         }
+        .center{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
     </style>
 </head>
 <body>
@@ -52,16 +58,23 @@
         <h2>Ticket de Voyage - Modification</h2>
     </div>
     <div class="content">
-        <p>Bonjour <strong>[Nom de l'utilisateur]</strong>,</p>
+        <p>Bonjour <strong>{{$ticket->user->name}}</strong>,</p>
         <p>Nous vous informons que votre ticket de voyage a été modifié. Voici les nouvelles informations :</p>
         <p><strong>Nouveaux Détails du Voyage :</strong></p>
         <ul>
-            <li><strong>Numéro du ticket :</strong> [Numéro du ticket]</li>
-            <li><strong>Départ :</strong> [Nouvelle ville de départ] - [Nouvelle date et heure]</li>
-            <li><strong>Destination :</strong> [Nouvelle ville d'arrivée]</li>
-            <li><strong>Siège :</strong> [Nouveau numéro du siège]</li>
-            <li><strong>Classe :</strong> [Nouvelle classe de voyage]</li>
+            <li><strong>Numéro du ticket :</strong> {{$ticket->numero_ticket}}</li>
+            <li><strong>Départ :</strong> {{$ticket->voyageInstance->villeDepart()->name}}</li>
+            <li><strong>Destination :</strong> {{$ticket->voyageInstance->villeArrive()->name}}</li>
+            <li><strong>Date et Heure :</strong> {{$ticket->voyageInstance->date->format("d/m/y")}} a {{$ticket->voyageInstance->heure->format("H\h i")}}</li>
+            <li><strong>Siège :</strong> Chaise n°{{$ticket->numero_chaise }}</li>
+            <li><strong>Prix :</strong> {{$ticket->prix()}} XOF</li>
         </ul>
+        <div class=" center">
+            <img src="{{ asset(\Illuminate\Support\Facades\Storage::url($ticket->code_qr_uri))  }}"   alt="Le code QR">
+        </div>
+        <div class=" center">
+            {{$ticket->code_sms}}
+        </div>
         <p>Si vous avez des questions, n'hésitez pas à nous contacter :</p>
         <p><a href="[Lien support]" class="button">Contacter le support</a></p>
     </div>

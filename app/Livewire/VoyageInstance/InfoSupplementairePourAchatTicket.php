@@ -4,6 +4,7 @@ namespace App\Livewire\VoyageInstance;
 
 use App\Helper\VoyageHelper;
 use App\Models\Voyage\VoyageInstance;
+use App\Services\ticket\TicketService;
 use Illuminate\Support\Collection;
 use Livewire\Component;
 
@@ -27,6 +28,8 @@ class InfoSupplementairePourAchatTicket extends Component
         'accepter' => false,
     ];
 
+
+
     protected function rules()
     {
         return [
@@ -44,11 +47,19 @@ class InfoSupplementairePourAchatTicket extends Component
         ];
     }
 
-    public function submit(): void
+
+
+    public function submit()
     {
+
+        $this->ticketService = resolve(TicketService::class);
         $data = $this->validate();
-        dd($data);
-        session()->flash('message', 'Achat validé avec succès !');
+        $isMine = $this->buyFor === 'self';
+            $tk = $this->ticketService->create($this->voyageInstance->id,$data,$isMine);
+        if ($tk){
+            return to_route('ticket.goto-payment',$tk);
+        }
+        session()->flash('error', 'Une erreur au survenu lors de la reservation');
     }
 
 

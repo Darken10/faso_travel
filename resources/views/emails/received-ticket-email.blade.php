@@ -45,6 +45,12 @@
             border-radius: 5px;
             margin-top: 10px;
         }
+        .center{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
     </style>
 </head>
 <body>
@@ -55,6 +61,7 @@
     <div class="content">
         <p>Bonjour <strong>[Nom du destinataire]</strong>,</p>
         <p>Vous avez reçu un ticket de voyage de la part de <strong>[Nom de l'expéditeur]</strong>.</p>
+        <p><strong>Détails du Voyage :</strong></p>
         <p><strong>Détails du Voyage :</strong></p>
         <ul>
             <li><strong>Numéro du ticket :</strong> {{$ticket->numero_ticket}}</li>
@@ -67,7 +74,9 @@
         <div class=" center">
             <img src="{{ asset(\Illuminate\Support\Facades\Storage::url($ticket->code_qr_uri))  }}"   alt="Le code QR">
         </div>
-
+        <div class=" center">
+            {{$ticket->code_sms}}
+        </div>
         <p>Vous trouverez en pièce jointe votre ticket en format PDF.</p>
         <p>Vous pouvez également visualiser votre ticket en cliquant sur le bouton ci-dessous :</p>
         <p class="center"><a href="{{route('ticket.show-ticket',$ticket)}}" class="button">voir mon ticket</a></p>

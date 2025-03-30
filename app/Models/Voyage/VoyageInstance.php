@@ -9,6 +9,8 @@ use App\Models\Compagnie\Care;
 use App\Models\Compagnie\Chauffer;
 use App\Models\Ticket\Ticket;
 use App\Models\Ville\Ville;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -36,6 +38,14 @@ class VoyageInstance extends Model
         'prix',
         'classe_id'
     ];
+
+    public function scopeAvenir(Builder $query)
+    {
+        return $query->whereRaw(
+            "STR_TO_DATE(CONCAT(date, ' ', heure), '%Y-%m-%d %H:%i:%s') >= ?",
+            [Carbon::now()]
+        );
+    }
 
     public function voyage(): BelongsTo
     {

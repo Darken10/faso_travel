@@ -23,7 +23,7 @@ class PdfGeneratorHelper{
         $pdf = Pdf::loadView('ticket.ticket.pdf.ticket',[
             'qrCodePath' => $qrCodePath,
             'ticket' => $ticket,
-        ]);
+        ])->setPaper('a4', 'landscape');
         $pdf->save($path);
         if(file_exists($path)){
             return $uri;

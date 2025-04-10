@@ -144,4 +144,6 @@ class VoyageInstance extends Model
         return array_diff($allPlace, $tkOccuper);
     }
 
+
+
 }

@@ -84,7 +84,7 @@ class TicketApiController extends Controller
                     'message' => [
                         'success' => 'Ticket Valider avec success'
                     ]
-                ]);
+                ],200);
             }
             return response()->json([
                 'success' => false,
@@ -93,7 +93,7 @@ class TicketApiController extends Controller
                 'message' => [
                     'error' => 'Le numero de ticket est incorrect'
                 ]
-            ]);
+            ],200);
         }
 
         return response()->json([

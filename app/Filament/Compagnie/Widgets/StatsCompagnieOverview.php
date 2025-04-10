@@ -23,8 +23,8 @@ class StatsCompagnieOverview extends BaseWidget
             Stat::make('Ticket Valider',QueryHelpers::AllTicketOfMyCompagnie(StatutTicket::Valider)->count()),
             Stat::make('Budget',QueryHelpers::AllPaymentsOfMyCompagnie(StatutPayement::Complete,StatutTicket::Valider)->sum('montant').' F CFA'),
 
-            Stat::make('Ticket Valider',QueryHelpers::AllTicketOfMyCompagnie(StatutTicket::Bloquer)->count()),
-            Stat::make('Budget',QueryHelpers::AllPaymentsOfMyCompagnie(StatutPayement::Complete,StatutTicket::Bloquer)->sum('montant').' F CFA'),
+            Stat::make('Ticket Inactifs',QueryHelpers::AllTicketOfMyCompagnie(StatutTicket::Bloquer)->count()),
+            Stat::make('Budget des ticket inactif',QueryHelpers::AllPaymentsOfMyCompagnie(StatutPayement::Complete,StatutTicket::Bloquer)->sum('montant').' F CFA'),
         ];
     }
 }

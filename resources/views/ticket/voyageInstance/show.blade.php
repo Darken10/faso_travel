@@ -76,7 +76,7 @@
         <!-- Section Réservation -->
         <section class="bg-indigo-600 p-6 rounded-lg shadow text-white text-center">
             <h2 class="text-2xl font-bold mb-4">Payer un Ticket</h2>
-            <a href="{{route('voyage.is_my_ticket',$voyageInstance)}}" class="bg-white text-indigo-600 px-6 py-3 rounded-full font-semibold hover:bg-gray-100 transition">Commencer la reservation</a>
+            <a href="{{route('voyage.is_my_ticket',$voyageInstance)}}" class="bg-white text-indigo-600 px-6 py-3 rounded-full font-semibold hover:bg-gray-100 transition">Commencer</a>
         </section>
     </main>
 

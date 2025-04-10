@@ -7,9 +7,6 @@ use App\Enums\TypeTicket;
 use App\Enums\StatutTicket;
 use App\Models\Compagnie\Compagnie;
 use App\Models\Compagnie\Gare;
-use App\Models\Ville\Ville;
-use App\Models\Voyage\Confort;
-use App\Models\Voyage\Voyage;
 use App\Models\Voyage\VoyageInstance;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
@@ -60,11 +57,6 @@ class Ticket extends Model
             if (Auth::check() && request()->is('compagnie/ticket*')) {
                 if (Auth::user()->compagnie_id) {
                     $companyId = Auth::user()->compagnie_id;
-
-                    // Filtrer les tickets dont le voyage est rattaché à la compagnie de l'utilisateur
-                    /*$builder->whereHas('voyageInstance.voyage', function ($query) use ($companyId) {
-                        $query->where('compagnie_id', $companyId);
-                    });*/
                     $builder->whereHas('voyageInstance', function ($query) use ($companyId) {
                         $query->whereHas('voyage', function ($subQuery) use ($companyId) {
                             $subQuery->where('compagnie_id', $companyId);
@@ -72,6 +64,7 @@ class Ticket extends Model
                     });
                 }
             }
+
         });
     }
 
@@ -100,9 +93,7 @@ class Ticket extends Model
         return $this->belongsTo(User::class);
     }
 
-   /* function voyage():BelongsTo{
-        return $this->belongsTo(Voyage::class);
-    }*/
+
 
     #----------------------------------------------------------------
 

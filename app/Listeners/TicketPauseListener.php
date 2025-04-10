@@ -18,11 +18,9 @@ class TicketPauseListener
 
     public function handle(TicketPauseEvent $event): void
     {
-        $email = TicketHelpers::getEmailToSendMail($event->ticket);
-        Mail::to($email)->send(new TicketMail($event->ticket));
         $title = "Le Ticket n° {$event->ticket->numero_ticket}  a ete mis en pause ";
         $message = "Le Ticket n° {$event->ticket->numero_ticket} ({$event->ticket->villeDepart()->name} - {$event->ticket->villeArriver()->name})  a ete mise en pause et vous pouvez l'active en cas de besoin";
-        $event->ticket->user->notify(new TicketNotification($event->ticket,TypeNotification::UpdateTicket,$title,$message));
+        $event->ticket->user->notify(new TicketNotification($event->ticket,TypeNotification::TICKET_MISE_PAUSE,$title,$message));
 
     }
 }

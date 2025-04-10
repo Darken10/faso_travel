@@ -100,7 +100,8 @@
                                         @if(!$ticket?->is_my_ticket and $ticket->autre_personne instanceof \App\Models\Ticket\AutrePersonne)
                                             {{ route('voyage.payerAutrePersonneTicket',$ticket) }}
                                         @else
-                                            {{ route('voyage.acheter',$ticket->voyage) }}
+                                            {{ route('voyage.instance.acheter',$ticket->voyageInstance) }}
+
                                         @endif
                                         " data-modal-target="popup-modal-ractive" data-modal-toggle="popup-modal-ractive" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                                     <div class="flex gap-2 text-orange-400">

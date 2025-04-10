@@ -39,6 +39,10 @@ class VoyageInstance extends Model
         'classe_id'
     ];
 
+    protected $with = [
+        'voyage',
+    ];
+
     public function scopeAvenir(Builder $query)
     {
         return $query->whereRaw(

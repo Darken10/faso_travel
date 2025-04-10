@@ -132,9 +132,7 @@ Route::get('/notifications/{notificationId}',[NotificationsController::class,'sh
 
 Route::get("/test",function (){
     $tk = \App\Models\Ticket\Ticket::all()->first();
-    $response = \App\Services\SendTicketCodeBySMS::sendTicketCodeBySMS($tk,"+22675302096");
-    dd($response);
-    dd(\App\Models\Voyage\VoyageInstance::all());
+    return view('test.test');
 });
 
 Route::post('/process-payment2/{ticket}/{provider}', [PaymentController2::class, 'processPayment'])->name("controller2-payment.payment-process")->where(['ticket' => '[0-9]+','provider' => '[a-zA-Z]+']);

@@ -22,7 +22,7 @@ class NotificationsController extends Controller
     {
         $notification = \Auth::user()->notifications()->whereId($notificationId)->get()->last();
         $notification->markAsRead();
-        $ticket = Ticket::findOrFail($notification->data['ticket']['id']);
+        $ticket = Ticket::findOrFail($notification->data['ticket_id']);
         return to_route('ticket.show-ticket', $ticket);
     }
 }

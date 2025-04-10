@@ -31,14 +31,14 @@ class AcheterTicketFormWithVoyageInstance extends Component
 
 
 
-    public function mount(Voyage $voyage, $autre_personne=null): void
+    public function mount(Voyage $voyage, $autre_personne = null): void
     {
         $this->voyage = $voyage;
         if ($autre_personne ) {
             $this->autre_personne = $autre_personne;
             $this->is_my_ticket = false;
         }
-        $this->voyage_instance_choise = $voyage->voyage_instances->first()->id;
+        $this->voyage_instance_choise = $voyage->voyage_instances->first()->id ;
 
         $this->handlerDateOnChange();
 

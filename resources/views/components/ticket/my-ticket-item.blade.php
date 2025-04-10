@@ -1,6 +1,14 @@
 @props(['ticket'])
-<a href="{{ route('ticket.show-ticket',$ticket) }}">
-    <div class="card m-auto my-4 ">
+<a href="{{ route('ticket.show-ticket',$ticket) }}" >
+    <div
+    @class([
+        "card m-auto my-4 border-t-4 ",
+        "border-red-500 " => $ticket->statut ===\App\Enums\StatutTicket::Bloquer or $ticket->statut ===\App\Enums\StatutTicket::Suspendre,
+        "border-yellow-500 " => $ticket->statut ===\App\Enums\StatutTicket::Pause,
+        "border-green-500 " => $ticket->statut ===\App\Enums\StatutTicket::Payer,
+        "border-blue-500 " => $ticket->statut ===\App\Enums\StatutTicket::EnAttente,
+    ])
+    >
         <div class=" grid grid-cols-12 items-center  ">
             <div class="w-full border-r-2 border-gray-600 col-span-9 ">
                 <div class=" flex gap-2">
@@ -42,8 +50,10 @@
                             <td  colspan="3">
                                 <div class="flex-row justify-center ">
                                     <span class=" text-sm text-gray-600 capitalize font-semibold italic">Le {{ $ticket?->date?->format('d M Y') }} </span>
-                                    <br>
+
                                     <span class=" text-sm text-gray-600 capitalize font-semibold italic"> à {{ $ticket?->voyageInstance?->heure?->format('H\h i') }} </span>
+                                    <br>
+                                    <x-ticket.badge-statut :statut="$ticket->statut"></x-ticket.badge-statut>
                                 </div>
                             </td>
                         </tr>

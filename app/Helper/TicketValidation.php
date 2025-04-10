@@ -7,6 +7,7 @@ use App\Enums\TypeTicket;
 use App\Events\Admin\TicketValiderEvent;
 use App\Events\Ticket\TicketActiveEvent;
 use App\Events\Ticket\TicketBlockerEvent;
+use App\Events\Ticket\TicketPauseEvent;
 use App\Models\Ticket\Ticket;
 use App\Models\User;
 use Illuminate\Support\Collection;
@@ -111,7 +112,7 @@ class TicketValidation
         DB::commit();
 
         if ($ticket->statut === StatutTicket::Pause){
-            TicketBlockerEvent::dispatch($ticket);
+            TicketPauseEvent::dispatch($ticket);
             return true;
         }else{
             return false;

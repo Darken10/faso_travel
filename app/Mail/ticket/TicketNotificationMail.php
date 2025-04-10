@@ -16,10 +16,10 @@ class TicketNotificationMail extends Mailable
 
 
     public function __construct(
-        public Ticket $ticket,
+        public Ticket           $ticket,
         public TypeNotification $type,
-        public string $recipient,
-        public string $title ="",
+        public string           $recipient,
+        public string           $title ="",
     )
     {
     }
@@ -47,7 +47,7 @@ class TicketNotificationMail extends Mailable
                     ->attach(storage_path(getenv("STORAGE_DIR") . $this->ticket->pdf_uri), [
                         'mime' => 'application/pdf',
                         'as'   => 'ticket.pdf',
-                    ]);;
+                    ]);
             case TypeNotification::TICKET_VALIDATED:
                 return $this->view('emails.validated-ticket-email', ['ticket' => $this->ticket]);
             case TypeNotification::TICKET_REPORTED:
@@ -57,13 +57,13 @@ class TicketNotificationMail extends Mailable
                     ->attach(storage_path(getenv("STORAGE_DIR") . $this->ticket->pdf_uri), [
                         'mime' => 'application/pdf',
                         'as'   => 'ticket.pdf',
-                    ]);;
+                    ]);
             case TypeNotification::TICKET_PAYER:
                 return $this->view('mail.ticket.ticket-mail', ['ticket' => $this->ticket])
                     ->attach(storage_path(getenv("STORAGE_DIR") . $this->ticket->pdf_uri), [
                         'mime' => 'application/pdf',
                         'as'   => 'ticket.pdf',
-                    ]);;
+                    ]);
             case TypeNotification::TICKET_REDELIVERED:
                 return $this->view('emails.redelivred-ticket-email', ['ticket' => $this->ticket])
                     ->attach(storage_path(getenv("STORAGE_DIR") . $this->ticket->pdf_uri), [
@@ -78,13 +78,12 @@ class TicketNotificationMail extends Mailable
                     ]);
             }
 
-
             case TypeNotification::PayerTicket:
             case TypeNotification::UpdateTicket:
             case TypeNotification::TransactionTicket:
             case TypeNotification::RecevoirTicket:
             case TypeNotification::CreationPost:
-                throw new \Exception('To be implemented');
+                throw new \Exception('notification de non implementer');
         }
     }
 

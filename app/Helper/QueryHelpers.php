@@ -17,7 +17,6 @@ class QueryHelpers
     public static function AllUsersOfMyCompagnie()
     {
         return auth()->user()->compagnie->users();
-
     }
 
     public static function AllPostsOfMyCompagnie()
@@ -36,10 +35,13 @@ class QueryHelpers
 
     }
 
-    public static function AllTicketOfMyCompagnie(?StatutTicket $statutTicket=null): Ticket|\Illuminate\Database\Eloquent\Builder|Builder
+    public static function AllTicketOfMyCompagnie(?StatutTicket $statutTicket=null): \Illuminate\Database\Eloquent\Collection|Ticket|\Illuminate\Database\Eloquent\Builder|\LaravelIdea\Helper\App\Models\Ticket\_IH_Ticket_QB|Builder
     {
         if ($statutTicket !== null ){
-            return Ticket::whereStatut($statutTicket)->whereIn('voyage_id',self::AllVoyagesOfMyCompagnie()->get()->pluck(['id'])->toArray());
+            /*return Ticket::whereStatut($statutTicket)->whereHas("voyageInstance.voyage",function (Builder $query) {
+                return $query->whereCompagnieId(auth()->user()->compagnie->id);
+            })->get();*/
+            return Ticket::whereStatut($statutTicket)->whereIn('voyage_instance_id',self::AllVoyagesOfMyCompagnie()->get()->pluck(['id'])->toArray());
         }
         return Ticket::whereIn('voyage_id',self::AllVoyagesOfMyCompagnie()->get()->pluck(['id'])->toArray());
 

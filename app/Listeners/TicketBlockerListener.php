@@ -17,11 +17,9 @@ class TicketBlockerListener
 
     public function handle(TicketBlockerEvent $event): void
     {
-        $email = TicketHelpers::getEmailToSendMail($event->ticket);
-        Mail::to($email)->send(new TicketMail($event->ticket));
         $title = "Le Ticket n° {$event->ticket->numero_ticket}  a ete Bloquer ";
         $message = "Le Ticket n° {$event->ticket->numero_ticket} ({$event->ticket->villeDepart()->name} - {$event->ticket->villeArriver()->name})  a ete Bloquer bien vouloir contacter l'administrateur pour plus d'informations.";
-        $event->ticket->user->notify(new TicketNotification($event->ticket,TypeNotification::UpdateTicket,$title,$message));
+        $event->ticket->user->notify(new TicketNotification($event->ticket,TypeNotification::TICKET_CLOSED,$title,$message));
 
     }
 }

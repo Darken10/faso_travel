@@ -52,14 +52,14 @@
         <h2>Ticket de Voyage - Blocage</h2>
     </div>
     <div class="content">
-        <p>Bonjour <strong>[Nom de l'utilisateur]</strong>,</p>
+        <p>Bonjour <strong>{{auth()->user()->name}}</strong>,</p>
         <p>Nous vous informons que votre ticket a été bloqué et ne peut plus être utilisé pour le moment.</p>
         <p><strong>Détails du Ticket :</strong></p>
         <ul>
-            <li><strong>Numéro du ticket :</strong> [Numéro du ticket]</li>
-            <li><strong>Départ :</strong> [Ville de départ]</li>
-            <li><strong>Destination :</strong> [Ville d'arrivée]</li>
-            <li><strong>Statut :</strong> Bloqué</li>
+            <li><strong>Numéro du ticket :</strong> {{$ticket->numero_ticket}}</li>
+            <li><strong>Départ :</strong> {{$ticket->voyageInstance->villeDepart()->name}}</li>
+            <li><strong>Destination :</strong> {{$ticket->voyageInstance->villeArrive()->name}}</li>
+            <li><strong>Statut :</strong> <x-ticket.badge-statut :statut="$ticket->statut"></x-ticket.badge-statut></li>
         </ul>
         <p>Pour toute question ou demande de réactivation, veuillez contacter notre support :</p>
         <p><a href="[Lien support]" class="button">Contacter le support</a></p>

@@ -38,6 +38,7 @@ class VoyageController extends Controller
     function acheterVoyageInstance(VoyageInstance $voyageInstance){
         return view('ticket.voyageInstance.acheter',[
             'voyageInstance'=>$voyageInstance,
+            'autre_personne' => null,
         ]);
     }
 

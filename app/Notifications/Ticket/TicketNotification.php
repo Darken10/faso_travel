@@ -54,8 +54,8 @@ class TicketNotification extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'user'=>$notifiable,
-            'ticket'=> $this->ticket,
+            'user'=>$notifiable->only(['id']),
+            'ticket_id'=> $this->ticket->only(['id']),
             'type'=> $this->type,
             'title'=> $this->title,
             'message'=> $this->message,

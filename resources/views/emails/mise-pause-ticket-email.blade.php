@@ -52,14 +52,16 @@
         <h2>Ticket de Voyage - Mise en Pause</h2>
     </div>
     <div class="content">
-        <p>Bonjour <strong>[Nom de l'utilisateur]</strong>,</p>
+        <p>Bonjour <strong>{{auth()->user()->name}}</strong>,</p>
         <p>Votre ticket a été mis en pause avec succès. Vous pouvez l'activer à tout moment lorsque vous souhaitez voyager.</p>
         <p><strong>Détails du Ticket :</strong></p>
         <ul>
-            <li><strong>Numéro du ticket :</strong> [Numéro du ticket]</li>
-            <li><strong>Départ :</strong> [Ville de départ]</li>
-            <li><strong>Destination :</strong> [Ville d'arrivée]</li>
-            <li><strong>Statut :</strong> En pause</li>
+            <ul>
+                <li><strong>Numéro du ticket :</strong> {{$ticket->numero_ticket}}</li>
+                <li><strong>Départ :</strong> {{$ticket->voyageInstance->villeDepart()->name}}</li>
+                <li><strong>Destination :</strong> {{$ticket->voyageInstance->villeArrive()->name}}</li>
+                <li><strong>Statut :</strong> Transféré</li>
+            </ul>
         </ul>
         <p>Pour réactiver votre ticket et réserver un nouveau départ, cliquez sur le bouton ci-dessous :</p>
         <p><a href="[Lien d'activation]" class="button">Réactiver mon ticket</a></p>

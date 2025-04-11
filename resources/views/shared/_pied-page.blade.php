@@ -8,22 +8,31 @@
               <div>
                   <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Resources</h2>
                   <ul class="text-gray-500 dark:text-gray-400 font-medium">
-                      <li class="mb-4">
-                          <a href="https://flowbite.com/" class="hover:underline">Flowbite</a>
+                      <li class="mb-2">
+                          <a href="https://flowbite.com/" class="hover:underline">LIPTRA</a>
                       </li>
-                      <li>
-                          <a href="https://tailwindcss.com/" class="hover:underline">Tailwind CSS</a>
+                      <li class="mb-2">
+                          <a href="https://tailwindcss.com/" class="hover:underline">TSR</a>
+                      </li>
+                      <li class="mb-2">
+                          <a href="https://tailwindcss.com/" class="hover:underline">STAF</a>
+                      </li>
+                      <li class="mb-2">
+                          <a href="https://tailwindcss.com/" class="hover:underline">SARAMAYA</a>
                       </li>
                   </ul>
               </div>
               <div>
-                  <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Follow us</h2>
+                  <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Suivez nous</h2>
                   <ul class="text-gray-500 dark:text-gray-400 font-medium">
                       <li class="mb-4">
-                          <a href="https://github.com/themesberg/flowbite" class="hover:underline ">Github</a>
+                          <a href="https://github.com/themesberg/flowbite" class="hover:underline ">Facebook</a>
+                      </li>
+                      <li class="mb-4">
+                          <a href="https://github.com/themesberg/flowbite" class="hover:underline ">Instagram</a>
                       </li>
                       <li>
-                          <a href="https://discord.gg/4eeurUVvTy" class="hover:underline">Discord</a>
+                          <a href="https://discord.gg/4eeurUVvTy" class="hover:underline">Linkdin</a>
                       </li>
                   </ul>
               </div>
@@ -31,11 +40,22 @@
                   <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Legal</h2>
                   <ul class="text-gray-500 dark:text-gray-400 font-medium">
                       <li class="mb-4">
-                          <a href="#" class="hover:underline">Privacy Policy</a>
+                          <a href="{{ route('divers.about-us') }}" class="hover:underline">
+                              A propos de nous
+                          </a>
+                      </li>
+                      <li class="mb-4">
+                          <a href="{{ route('divers.politique-confidentialite') }}" class="hover:underline">
+                              Politique de confidentialité
+                          </a>
                       </li>
                       <li>
-                          <a href="#" class="hover:underline">Terms &amp; Conditions</a>
+                          <a href="{{ route('divers.termes-et-conditions') }}" class="hover:underline">
+                              Termes et conditions
+                          </a>
                       </li>
+
+
                   </ul>
               </div>
           </div>

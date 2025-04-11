@@ -2,6 +2,8 @@
 
 use App\Enums\JoursSemain;
 use App\Http\Controllers\Auth\MyRegisterController;
+use App\Http\Controllers\Compagnie\CompagnieController;
+use App\Http\Controllers\Divers\ConditionConfidentialiteController;
 use App\Http\Controllers\Divers\NotificationsController;
 use App\Http\Controllers\Ticket\Payement\PayementTest;
 use App\Http\Controllers\Ticket\Payement\PaymentController2;
@@ -145,4 +147,13 @@ Route::get('/process-payment/{ticket}/{provider}/callback', [PaymentController2:
 
 Route::get("create-all-voyages-instances", [VoyageInstanceController::class, 'createAllInstance'])->name('create-all-voyages-instances');
 
+Route::get("client/compagnies",[CompagnieController::class,'index'])->name('client.compagnies.index');
+Route::get('client/compagnies/{compagnie}',[CompagnieController::class,'show'])->name('client.compagnie.show')->where([
+    'compagnie'=>'[0-9]+',
+]);
 
+
+Route::get('politique-de-confidentialite',[ConditionConfidentialiteController::class,'confidentialite'])->name('divers.politique-confidentialite');
+Route::get('termes-et-conditions',[ConditionConfidentialiteController::class,'condition'])->name('divers.termes-et-conditions');
+Route::get('about-us',[ConditionConfidentialiteController::class,'about'])->name('divers.about-us');
+Route::get('contact',[ConditionConfidentialiteController::class,'contact'])->name('divers.contact');

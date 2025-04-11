@@ -80,6 +80,14 @@
               Mes Tickets
             </a>
           </li>
+            <li class="py-2 lg:py-0 ">
+                <a
+                    class="text-blue-600 font-bold no-underline hover:pb-2 hover:border-b-4 hover:border-blue-400"
+                    href="{{ route('client.compagnies.index') }}"
+                >
+                    Compagnies
+                </a>
+            </li>
           <li class="py-2 lg:py-0 ">
             <a
               class="text-blue-600 font-bold no-underline hover:pb-2 hover:border-b-4 hover:border-blue-400"
@@ -91,15 +99,7 @@
           <li class="py-2 lg:py-0 ">
             <a
               class="text-blue-600 font-bold no-underline hover:pb-2 hover:border-b-4 hover:border-blue-400"
-              href="#"
-            >
-              My Journey
-            </a>
-          </li>
-          <li class="py-2 lg:py-0 ">
-            <a
-              class="text-blue-600 font-bold no-underline hover:pb-2 hover:border-b-4 hover:border-blue-400"
-              href="#"
+              href="{{ route('divers.about-us') }}"
             >
               About
             </a>

@@ -1,8 +1,8 @@
 deploy:
-	ssh o2switch 'cd ~//sites/faso_travel  && git pull origin main && make install'
+	ssh o2switch 'cd ~/sites/faso_travel  && git pull origin main && make install'
 
 
-install: .env public/storage vendor/autoload.php public/build/manifest.json
+install: vendor/autoload.php .env public/storage public/build/manifest.json
 	php artisan optimize
 	php artisan migrate
 

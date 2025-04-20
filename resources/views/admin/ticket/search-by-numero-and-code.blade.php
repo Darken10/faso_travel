@@ -6,7 +6,7 @@
 
     <div class="card m-auto">
         <div class="text-center text-gray-600 text-xl font-bold ">Validation</div>
-        <form action="{{ route('admin.validation.search-by-tel-and-code-page') }}" method="post">
+        <form action="{{ route('admin.validation.search-by-tel-and-code-page-post') }}" method="post">
             @csrf
             <div class="mt-4">
                 <x-label for="numero" value="{{ __('Numero') }}" />

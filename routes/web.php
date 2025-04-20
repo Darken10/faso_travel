@@ -92,7 +92,7 @@ Route::prefix('/validation')->name('admin.')->middleware('auth')->group(function
         Route::get('/verification/{ticket}', 'verification')->name('verification')->where(['ticket' => '[0-9]+']);
         Route::post('/validation/{ticket}', 'valider')->name('valider')->where(['ticket' => '[0-9]+']);
         Route::get('/verification-by-numero-code', 'searchByTelAndCodePage')->name('search-by-tel-and-code-page');
-        Route::post('/verification-by-numero-code', 'searchByTelAndCode')->name('search-by-tel-and-code-page');
+        Route::post('/verification-by-numero-code', 'searchByTelAndCode')->name('search-by-tel-and-code-page-post');
     });
 });
 

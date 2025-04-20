@@ -52,7 +52,7 @@ Route::prefix('/voyage')->name('voyage.')->middleware('auth')->controller(Voyage
     Route::get('/achete/{voyage}', 'acheter')->name('acheter')->where(['voyage' => '[0-9]+',]);
     Route::get('/my-ticket/achete/{ticket}', 'payerAutrePersonneTicket')->name('payerAutrePersonneTicket')->where(['ticket' => '[0-9]+',]);
 
-    Route::post('/is-my-ticket/{voyage}', 'is_my_ticket_traitement')->name('is_my_ticket_traitement')->where(['voyage' => '[0-9]+',]);
+    Route::post('/is-my-ticket/{voyage}', 'is_my_ticket_traitement')->name('is_my_ticket_traitement-old')->where(['voyage' => '[0-9]+',]);
 
     Route::get('/is-my-ticket/autre-ticket-info/{voyage}', 'autre_ticket_info')->name('autre-ticket-info')->where(['voyage' => '[0-9]+',]);
     Route::post('/is-my-ticket/autre-ticket-info/{voyage}', 'register_autre_personne')->name('register-autre-personne')->where(['voyage' => '[0-9]+',]);

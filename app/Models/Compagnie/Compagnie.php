@@ -2,6 +2,7 @@
 
 namespace App\Models\Compagnie;
 
+use App\Models\CompagnieSetting;
 use App\Models\User;
 use App\Models\Statut;
 use App\Models\Voyage\Classe;
@@ -77,5 +78,22 @@ class Compagnie extends Model
     {
         return $query;
     }
+
+    public function settings(): Compagnie|Builder|HasMany
+    {
+        return $this->hasMany(CompagnieSetting::class);
+    }
+
+    /*public function getSetting(string $key, $default = null)
+    {
+        return optional($this->settings->firstWhere('key', $key))->value ?? $default;
+    }*/
+
+    public function getSetting(string $key, $default = null): mixed
+    {
+        $setting = $this->settings->firstWhere('key', $key);
+        return $setting ? $setting->getCastedValue() : $default;
+    }
+
 
 }

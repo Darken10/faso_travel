@@ -3,9 +3,11 @@
 use App\Http\Controllers\api\admin\ticket\TicketApiController;
 use App\Http\Controllers\api\admin\voyage\VoyageController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\Voyage\VoyageApiContoller;
 use App\Http\Controllers\Ticket\Payement\PaymentController2;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\PostController;
 
 Route::prefix('/ticket')->name('api.ticket.')
     ->controller(TicketApiController::class)->middleware('auth:sanctum')
@@ -28,7 +30,27 @@ Route::prefix('/compagnie/voyages')->name('api.compagnie.voyage.')
 Route::prefix('/auth')->controller(UserController::class)->group(function (){
     Route::post('/register','register');
     Route::post('/login','login');
+
 });
+
+Route::prefix('/auth')->group(function () {
+    Route::get('/me', function (Request $request) {
+        return $request->user();
+    })->middleware('auth:sanctum');
+});
+
+
+Route::middleware('auth:sanctum')->prefix("voyages")->controller(VoyageApiContoller::class)->name('api.')->group(function () {
+
+    Route::get('/', 'index')->name('voyages.index');
+});
+
+
+Route::middleware('auth:sanctum')->prefix('posts')->group(function () {
+    Route::get('/', [PostController::class, 'index']);
+    Route::get('/{id}', [PostController::class, 'show']);
+});
+
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -38,4 +60,6 @@ Route::get('/user', function (Request $request) {
 
 
 Route::post('/process-payment/{provider}', [PaymentController2::class, 'processPayment']);
+
+
 

@@ -146,4 +146,23 @@ class VoyageInstance extends Model
 
 
 
+
+    public function scopeDisponibles(Builder $query): Builder
+    {
+        return $query->whereHas('voyage', function ($q) {
+            $q->whereNotNull('heure'); // facultatif, pour éviter les erreurs
+        })->where(function ($q) {
+            $now = Carbon::now();
+
+            // Concaténation de date_depart (dans VoyageInstance) et heure_depart (depuis relation Voyage)
+            $q->whereRaw("
+                STR_TO_DATE(CONCAT(date, ' ', (SELECT heure FROM voyages WHERE voyages.id = voyage_instances.voyage_id)), '%Y-%m-%d %H:%i:%s') > ?
+            ", [$now]);
+        });
+    }
+
+
+
+
+
 }

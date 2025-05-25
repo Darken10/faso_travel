@@ -49,15 +49,6 @@ export interface Post {
     updated_at: string;
 }
 
-
-
-export interface Comment {
-    id: number;
-    content: string | null;
-    user: UserMini;
-    created_at: string;
-}
-
 export interface Like {
     id: number;
     user: UserMini;
@@ -75,6 +66,16 @@ export interface LikeOrDislikeResponse {
     message: string;
     like_count?: Like | null;
 }
+
+
+
+export interface Comment {
+  id: number;
+  content: string;
+  user: UserMini;
+  created_at: string;
+}
+
 
 
 // auth.ts

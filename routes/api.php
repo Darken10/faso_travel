@@ -51,6 +51,12 @@ Route::middleware('auth:sanctum')->prefix('posts')->name("api.posts")->group(fun
     Route::get('/{id}', [PostController::class, 'show'])->name('show');
     Route::post('/{post}/like', [PostController::class, 'LikePost'])->name('like');
     Route::post('/{post}/dislike', [PostController::class, 'disLikePost'])->name('dislike');
+
+    Route::post('/{post}/comment', [PostController::class, 'addComment'])->name('add-comment');
+    Route::get('/{post}/comments', [PostController::class, 'getComments'])->name('get-comments');
+    Route::get('/{post}/likes', [PostController::class, 'getPostLikes'])->name('get-likes');
+
+
 });
 
 

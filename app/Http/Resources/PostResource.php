@@ -14,7 +14,7 @@ class PostResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'content' => $this->content,
-            'user' => $this->user,
+            'user' => MiniUserResource::make($this->user),
             'comments' => CommentResource::collection($this->comments),
             'likes_count' => $this->likes()->count(),
             'likes' => LikeResource::collection($this->likes),

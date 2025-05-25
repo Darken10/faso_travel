@@ -46,18 +46,17 @@ Route::middleware('auth:sanctum')->prefix("voyages")->controller(VoyageApiContol
 });
 
 
-Route::middleware('auth:sanctum')->prefix('posts')->group(function () {
-    Route::get('/', [PostController::class, 'index']);
-    Route::get('/{id}', [PostController::class, 'show']);
+Route::middleware('auth:sanctum')->prefix('posts')->name("api.posts")->group(function () {
+    Route::get('/', [PostController::class, 'index'])->name('index');
+    Route::get('/{id}', [PostController::class, 'show'])->name('show');
+    Route::post('/{post}/like', [PostController::class, 'LikePost'])->name('like');
+    Route::post('/{post}/dislike', [PostController::class, 'disLikePost'])->name('dislike');
 });
 
 
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
-
-
-
 
 Route::post('/process-payment/{provider}', [PaymentController2::class, 'processPayment']);
 

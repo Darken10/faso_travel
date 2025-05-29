@@ -74,7 +74,7 @@
                </div>
                <div class="ml-4  flex-row justify-center">
                    <div>
-                       cliquer
+                       Cliquez
                    </div>
                    <div class="ml-3">
                        ici

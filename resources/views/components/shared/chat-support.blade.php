@@ -1,4 +1,3 @@
-
 <div>
     <div class="h-screen overflow-hidden flex items-center justify-center" style="background: #edf2f7;">
         <style>
@@ -12,18 +11,18 @@
         .message {
           max-width: 250px;
         }
-    
+
         .chat-modal{
           transition: .5s;
           opacity: 0;
           transform: translateX(500px);
         }
-    
+
         .chat-modal.show{
           opacity: 1;
           transform: translateX(0);
         }
-    
+
         @keyframes animateModal {
           from{
             transform: translateX(200px) opacity(0);
@@ -33,7 +32,7 @@
           }
         }
       </style>
-    
+
     <div class="fixed bottom-0 right-0 flex flex-col items-end ml-6 w-2">
         <div class="chat-modal   mr-5 flex flex-col mb-5 shadow-lg sm:w-1/2 md:w-1/3 lg:w-1/4">
           <!-- close button -->
@@ -57,7 +56,7 @@
           <!-- chats -->
           <div class="flex flex-col bg-gray-200 px-2 chat-services expand overflow-auto">
             <div class="chat bg-white text-gray-700 p-2 self-start my-2 rounded-md shadow mr-3">
-              apa ada yang bisa saya bantu ?
+                Comment puis-je vous aider ?
             </div>
             <div class="message bg-green-500 text-white p-2 self-end my-2 rounded-md shadow ml-3">
               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti, ratione!
@@ -74,14 +73,14 @@
             <div class="message bg-white text-gray-700 p-2 self-start my-2 rounded-md shadow mr-3">
               Lorem, ipsum dolor.
             </div>
-            
+
           </div>
           <!-- send message -->
           <div class="relative bg-white">
             <form action="#" method="post">
-              <input type="text" name="message" placeholder="ketik pesan anda"
-                  class="pl-4 pr-16 py-2 border border-green-500 focus:outline-none w-full">
-              <button class="absolute right-0 bottom-0 text-green-600 bg-white  hover:text-green-500 m-1 px-3 py-1 w-auto transistion-color duration-100 focus:outline-none">Send</button>
+                <input type="text" name="message" placeholder="Écrivez votre message"
+                    class="pl-4 pr-16 py-2 border border-green-500 focus:outline-none w-full">
+                <button class="absolute right-0 bottom-0 text-green-600 bg-white hover:text-green-500 m-1 px-3 py-1 w-auto transistion-color duration-100 focus:outline-none">Envoyer</button>
             </form>
           </div>
         </div>
@@ -91,14 +90,14 @@
           </svg>
         </div>
       </div>
-    
+
       <script>
         const chatModal = document.querySelector('.chat-modal');
         const chatServices = document.querySelector('.chat-services');
-    
+
         const showChat = document.querySelector('.show-chat');
         const closeChat = document.querySelector('.close-chat');
-        
+
         showChat.addEventListener('click', function (){
           chatModal.classList.add('show')
           showChat.classList.add('hidden')

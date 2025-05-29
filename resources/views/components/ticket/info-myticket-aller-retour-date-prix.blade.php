@@ -39,18 +39,17 @@
         Le {{ $ticket?->voyageInstance?->date?->format('d M Y') }} à {{ $ticket?->voyageInstance?->heure?->format('H\h i') }}
     </div>
 
-
-   <div class=" md:flex md:justify-between text-gray-800">
-       <div class="mt-2 text-sm font-medium  flex justify-center ">
-           Classe :
-           <span class="font-semibold px-2">
+    <div class=" md:flex md:justify-between text-gray-800">
+        <div class="mt-2 text-sm font-medium  flex justify-center ">
+            Classe :
+            <span class="font-semibold px-2">
             {{ $ticket?->voyageInstance?->classe()?->name ?? $ticket?->voyageInstance?->voyage?->classe->name }}
             </span>
-       </div>
-       <div class="mt-2 text-sm font-medium   flex justify-center ">
-           Chaise N° {{ $ticket->numero_chaise ?? "Non Définie"}}
-       </div>
-   </div>
+        </div>
+        <div class="mt-2 text-sm font-medium flex justify-center ">
+            Siège N° {{ $ticket->numero_chaise ?? "Non défini"}}
+        </div>
+    </div>
 
     <div class=" md:flex md:justify-between text-gray-800">
         <div class="mt-2 text-sm font-medium   flex justify-center ">
@@ -83,7 +82,7 @@
 
             @else
                 <span class="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-red-400 border border-red-400">
-                    Voyage a ete annule
+                    Le voyage a été annulé
                 </span>
             @endif
 

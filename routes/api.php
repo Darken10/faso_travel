@@ -24,6 +24,7 @@ Route::prefix('/compagnie/voyages')->name('api.compagnie.voyage.')
     ->group(function (){
         Route::get('/','index')->name('index');
         Route::get('/{voyage}','showWithPassagers')->name('show-with-passagers');
+        Route::get('/instance/{voyageInstance}','getVoyageInstanceDetails')->name('instance-details');
     });
 
 

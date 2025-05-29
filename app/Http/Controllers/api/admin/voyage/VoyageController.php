@@ -4,16 +4,20 @@ namespace App\Http\Controllers\api\admin\voyage;
 
 use App\Filament\Compagnie\Resources\Ticket\TicketResource;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\VoyageInstanceDetailResource;
 use App\Models\Voyage\Voyage;
+use App\Models\Voyage\VoyageInstance;
 use App\resources\PassagerResource;
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class VoyageController extends Controller
 {
     public function index()
     {
-        $user = auth()->user();
+        $user = Auth::user();
         $voyages = Voyage::whereCompagnieId($user->compagnie_id)->get();
         return response()->json($voyages);
     }
@@ -29,5 +33,17 @@ class VoyageController extends Controller
         }
 
         return response()->json($tickets->map(function($ticket){return new PassagerResource($ticket);})->toArray());
+    }
+
+    public function getVoyageInstanceDetails(VoyageInstance $voyageInstance): JsonResponse
+    {
+        $voyageInstance->load([
+            'tickets',
+            'voyage',
+            'chauffer',
+            'care'
+        ]);
+
+        return response()->json(new VoyageInstanceDetailResource($voyageInstance), 200);
     }
 }

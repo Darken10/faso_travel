@@ -17,7 +17,7 @@ class LikeResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'user' => new MiniUserResource($this->user),
+            'user' => new UserUltraMiniRessource($this->user),
         ];
     }
 }

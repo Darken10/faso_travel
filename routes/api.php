@@ -8,6 +8,7 @@ use App\Http\Controllers\Ticket\Payement\PaymentController2;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\PostController;
+use App\Http\Controllers\Api\TicketController;
 
 Route::prefix('/ticket')->name('api.ticket.')
     ->controller(TicketApiController::class)->middleware('auth:sanctum')
@@ -46,17 +47,14 @@ Route::middleware('auth:sanctum')->prefix("voyages")->controller(VoyageApiContol
 });
 
 
-Route::middleware('auth:sanctum')->prefix('posts')->name("api.posts")->group(function () {
+Route::middleware('auth:sanctum')->prefix('posts')->group(function () {
     Route::get('/', [PostController::class, 'index'])->name('index');
-    Route::get('/{id}', [PostController::class, 'show'])->name('show');
-    Route::post('/{post}/like', [PostController::class, 'LikePost'])->name('like');
-    Route::post('/{post}/dislike', [PostController::class, 'disLikePost'])->name('dislike');
-
-    Route::post('/{post}/comment', [PostController::class, 'addComment'])->name('add-comment');
-    Route::get('/{post}/comments', [PostController::class, 'getComments'])->name('get-comments');
-    Route::get('/{post}/likes', [PostController::class, 'getPostLikes'])->name('get-likes');
-
-
+    Route::post('/{post}/like', [PostController::class, 'likePost']);
+    Route::delete('/{post}/like', [PostController::class, 'unlikePost']);
+    Route::post('/{post}/addcomment', [PostController::class, 'addComment']);
+    Route::get('/{post}/likes', [PostController::class, 'getPostLikes'])->name('post.likes');
+    Route::get('/{post}/comments', [PostController::class, 'getPostComments'])->name('post.comments');
+    Route::get('/{id}', [PostController::class, 'show'])->name('show')->where('id', '[0-9]+');
 });
 
 
@@ -65,6 +63,15 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::post('/process-payment/{provider}', [PaymentController2::class, 'processPayment']);
+
+Route::name("api.tickets.")->middleware('auth:sanctum')->group(function () {
+    Route::get('/tickets/today-paid', [TicketController::class, 'todaysPaidPassengers'])->name('todays-paid-passengers');
+    Route::get('/tickets/today-validated', [TicketController::class, 'todaysValidatedTickets'])->name('todays-validated-tickets');
+    Route::get('/voyages/today', [TicketController::class, 'todayVoyageInstances'])->name('today-voyage-instances');
+    Route::get('/voyages/{voyageInstanceId}/tickets', [TicketController::class, 'ticketsByVoyageInstance'])->name('voyage-instance-tickets');
+    Route::get('/tickets/validated', [TicketController::class, 'allValidatedTickets'])->name('all-validated-tickets');
+
+});
 
 
 

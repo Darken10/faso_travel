@@ -6,6 +6,8 @@ use App\Models\Compagnie\Compagnie;
 use App\Models\Post\Post;
 use App\Models\User;
 use Illuminate\Pagination\LengthAwarePaginator;
+use App\Models\Post\Comment;
+use Illuminate\Support\Facades\Auth;
 
 class PostService
 {
@@ -24,21 +26,31 @@ class PostService
 
     public function likePost(Post $post): bool
     {
-        return (bool)$post->likes()->create(['user_id' => auth()->id()]);
+        return $post->likes()->create([
+            'user_id' => Auth::id()
+        ]) !== null;
     }
     public function dislikePost(Post $post): bool
     {
-        return $post->likes()->where('user_id', auth()->id())->delete() > 0;
+        return $post->likes()
+            ->where('user_id', Auth::id())
+            ->delete() > 0;
     }
 
     public function isLikedByUser(Post $post): bool
     {
-        return $post->likes()->where('user_id', auth()->id())->exists();
+        return $post->likes()
+            ->where('user_id', Auth::id())
+            ->exists();
     }
 
-    public function getPostLikes(Post $post): LengthAwarePaginator
+    public function getPostLikes(Post $post)
     {
-        return $post->likes()->with(['user','post'])->paginate(10);
+        return $post->likes()
+            ->with('user')
+            ->latest()
+            ->get()
+            ->pluck('user');
     }
 
     public function getPostComments(Post $post): LengthAwarePaginator
@@ -111,15 +123,11 @@ class PostService
     }
 
 
-    public function addComment(Post $post,array $data)
+    public function addComment(Post $post, array $data)
     {
-        $data = request()->validate([
-            'message' => 'required|string|max:255',
-        ]);
         return $post->comments()->create([
             'message' => $data['message'],
-            'user_id' => auth()->id(),
+            'user_id' => auth()->id()
         ]);
     }
-
 }

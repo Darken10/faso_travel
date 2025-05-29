@@ -3,9 +3,9 @@
 namespace App\Models\Post;
 
 use App\Models\User;
-use App\Models\Post\Post;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,7 +14,12 @@ class Comment extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['message'];
+    protected $fillable = [
+        'message',
+        'user_id',
+        'commentable_id',
+        'commentable_type'
+    ];
 
     protected static function boot()
     {
@@ -24,11 +29,13 @@ class Comment extends Model
             $comment->user()->associate(Auth::user());
         });
     }
-    function user():BelongsTo{
+    public function user(): BelongsTo
+    {
         return $this->belongsTo(User::class);
     }
 
-    function post():BelongsTo{
-        return $this->belongsTo(Post::class);
+    public function commentable(): MorphTo
+    {
+        return $this->morphTo();
     }
 }

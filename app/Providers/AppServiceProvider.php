@@ -2,8 +2,9 @@
 
 namespace App\Providers;
 
-use App\features\payement\PaymentGatewayFactory2;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Http\Resources\Json\JsonResource;
+use App\features\payement\PaymentGatewayFactory2;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -22,6 +23,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        JsonResource::withoutWrapping();
     }
 }

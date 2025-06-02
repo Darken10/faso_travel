@@ -12,43 +12,42 @@ class TicketDetailResource extends JsonResource
         return [
             'id' => $this->id,
             'numero_ticket' => $this->numero_ticket,
-            'numero_chaise' => $this->numero_chaise,
-            'type' => $this->type,
-            'statut' => $this->statut,
-            'a_bagage' => $this->a_bagage,
-            'bagages_data' => $this->bagages_data,
             'code_qr' => $this->code_qr,
-            'code_qr_uri' => $this->code_qr_uri,
-            'passager' => [
-                'type' => $this->is_my_ticket ? 'client' : 'autre_personne',
-                'donnees' => $this->is_my_ticket ? [
-                    'id' => $this->user->id,
-                    'nom' => $this->user->name,
-                    'email' => $this->user->email,
-                    'contact' => $this->user->numero,
-                ] : [
-                    'id' => $this->autre_personne->id,
-                    'nom' => $this->autre_personne->nom,
-                    'contact' => $this->autre_personne->contact,
+            'code_sms' => $this->code_sms,
+            'statut' => $this->statut,
+            'type' => $this->type,
+            'numero_chaise' => $this->numero_chaise,
+            'date' => $this->date->format('Y-m-d'),
+            'passager' => $this->is_my_ticket ? [
+                'type' => 'client',
+                'nom' => $this->user->name,
+                'telephone' => $this->user->numero,
+                'email' => $this->user->email,
+            ] : [
+                'type' => 'autre',
+                'nom' => $this->autre_personne->nom,
+                'telephone' => $this->autre_personne->contact,
+            ],
+            'voyage' => [
+                'depart' => [
+                    'ville' => $this->villeDepart()->nom,
+                    'gare' => $this->gareDepart()->nom,
                 ],
+                'destination' => [
+                    'ville' => $this->villeArriver()->nom,
+                    'gare' => $this->gareArriver()->nom,
+                ],
+                'heure_depart' => $this->heureDepart()->format('H:i'),
+                'heure_arrivee' => $this->heureArriver()->format('H:i'),
+                'heure_rdv' => $this->heureRdv()->format('H:i'),
             ],
-            'paiements' => $this->payements->map(fn($paiement) => [
-                'id' => $paiement->id,
-                'montant' => $paiement->montant,
-                'methode' => $paiement->methode,
-                'status' => $paiement->status,
-                'reference' => $paiement->reference,
-                'date' => $paiement->created_at->format('Y-m-d H:i:s'),
-            ]),
             'validation' => [
-                'valide_par' => $this->valider_by_id ? [
-                    'id' => $this->validerBy->id,
-                    'nom' => $this->validerBy->name,
-                ] : null,
-                'date_validation' => $this->valider_at,
+                'valide' => $this->valider_at !== null,
+                'date_validation' => $this->valider_at?->format('Y-m-d H:i:s'),
+                'valide_par' => $this->validerBy?->name,
             ],
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'prix' => $this->prix(),
+            'created_at' => $this->created_at->format('Y-m-d H:i:s'),
         ];
     }
 }

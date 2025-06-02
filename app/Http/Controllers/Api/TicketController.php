@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\TicketDetailResource;
 use App\Http\Resources\TicketResource;
 use App\Http\Resources\VoyageInstanceResource;
 use App\Services\TicketService;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -56,5 +58,34 @@ class TicketController extends Controller
         $this->checkCompagnieAccess();
         $tickets = $this->ticketService->getAllValidatedTickets();
         return TicketResource::collection($tickets);
+    }
+
+    public function show(string $id)
+    {
+        $this->checkCompagnieAccess();
+        $ticket = $this->ticketService->findTicketById($id);
+        return new TicketDetailResource($ticket);
+    }
+
+    public function findByQrCode(string $code)
+    {
+        $this->checkCompagnieAccess();
+        $ticket = $this->ticketService->findTicketByQrCode($code);
+        return new TicketDetailResource($ticket);
+    }
+
+    public function findByPhoneAndCode(Request $request)
+    {
+        $this->checkCompagnieAccess();
+        $validated = $request->validate([
+            'phone' => 'required|string',
+            'code' => 'required|string'
+        ]);
+
+        $ticket = $this->ticketService->findTicketByPhoneAndCode(
+            $validated['phone'],
+            $validated['code']
+        );
+        return new TicketDetailResource($ticket);
     }
 }

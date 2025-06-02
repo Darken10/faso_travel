@@ -76,4 +76,32 @@ class TicketService
             ->orderBy('valider_at', 'desc')
             ->get();
     }
+
+    public function findTicketById(string $id)
+    {
+        return Ticket::with(['user', 'autre_personne', 'voyageInstance.voyage.trajet'])
+            ->findOrFail($id);
+    }
+
+    public function findTicketByQrCode(string $qrCode)
+    {
+        return Ticket::with(['user', 'autre_personne', 'voyageInstance.voyage.trajet'])
+            ->where('code_qr', $qrCode)
+            ->firstOrFail();
+    }
+
+    public function findTicketByPhoneAndCode(string $phone, string $code)
+    {
+        return Ticket::with(['user', 'autre_personne', 'voyageInstance.voyage.trajet'])
+            ->where(function($query) use ($phone, $code) {
+                $query->whereHas('user', function($q) use ($phone) {
+                    $q->where('numero', $phone);
+                })
+                ->orWhereHas('autre_personne', function($q) use ($phone) {
+                    $q->where('contact', $phone);
+                });
+            })
+            ->where('code_sms', $code)
+            ->firstOrFail();
+    }
 }

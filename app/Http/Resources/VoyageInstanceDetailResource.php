@@ -61,7 +61,7 @@ class VoyageInstanceDetailResource extends JsonResource
                 'places_disponibles' => $this->chaiseDispo(),
                 'places_occupees' => array_diff(range(1, $this->nb_place), $this->chaiseDispo()),
                 'total_tickets' => $this->tickets->count(),
-                'montant_total' => $this->tickets->sum('prix'),
+                'montant_total' => null, // Assuming you will calculate this based on tickets
             ],
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

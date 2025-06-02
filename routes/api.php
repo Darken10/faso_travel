@@ -71,7 +71,9 @@ Route::name("api.tickets.")->middleware('auth:sanctum')->group(function () {
     Route::get('/voyages/today', [TicketController::class, 'todayVoyageInstances'])->name('today-voyage-instances');
     Route::get('/voyages/{voyageInstanceId}/tickets', [TicketController::class, 'ticketsByVoyageInstance'])->name('voyage-instance-tickets');
     Route::get('/tickets/validated', [TicketController::class, 'allValidatedTickets'])->name('all-validated-tickets');
-
+    Route::get('/tickets/qr/{code}', [TicketController::class, 'findByQrCode'])->name('find-by-qr');
+    Route::get('/tickets/search', [TicketController::class, 'findByPhoneAndCode'])->name('find-by-phone-code');
+    Route::get('/tickets/{ticket}', [TicketController::class, 'show'])->name('show');
 });
 
 

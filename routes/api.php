@@ -58,6 +58,28 @@ Route::middleware('auth:sanctum')->prefix('posts')->group(function () {
     Route::get('/{id}', [PostController::class, 'show'])->name('show')->where('id', '[0-9]+');
 });
 
+Route::middleware('auth:sanctum')->prefix('voyages')->name('api.user.')->group(function () {
+    Route::get('/', [VoyageApiContoller::class, 'index'])->name('index');
+    Route::get('/{voyageInstanceId}/details', [VoyageApiContoller::class, 'details'])->name('details')->where('voyageInstanceId', '[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}');
+    Route::get('/{voyageInstanceId}/tickets', [VoyageApiContoller::class, 'tickets'])->name('tickets')->where('voyageInstanceId', '[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}');
+    Route::post('/{voyageInstanceId}/book', [VoyageApiContoller::class, 'book'])->name('book')->where('voyageInstanceId', '[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}');
+    Route::post('/{voyageInstanceId}/cancel', [VoyageApiContoller::class, 'cancel'])->name('cancel')->where('voyageInstanceId', '[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}');
+    Route::get('/{voyageInstanceId}/available-seats', [VoyageApiContoller::class, 'availableSeats'])->name('available-seats')->where('voyageInstanceId', '[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}');
+    Route::get('/{voyageInstanceId}/passengers', [VoyageApiContoller::class, 'passengers'])->name('passengers')->where('voyageInstanceId', '[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}');
+    Route::get('/{voyageInstanceId}/status', [VoyageApiContoller::class, 'status'])->name('status')->where('voyageInstanceId', '[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}');
+    Route::get('/{voyageInstanceId}', [VoyageApiContoller::class, 'show'])->name('show')->whereUuid('voyageInstanceId', '[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}');
+
+});
+
+
+Route::middleware('auth:sanctum')->prefix('tickets')->name('api.ticket.')->group(function () {
+    Route::post('/{voyageInstance}', [TicketApiController::class, 'debutAchat'])->name('debut-achat')->where('voyageInstance', '[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}');
+
+
+});
+
+
+
 
 Route::get('/user', function (Request $request) {
     return $request->user();

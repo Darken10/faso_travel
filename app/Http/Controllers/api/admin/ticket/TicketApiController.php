@@ -2,22 +2,27 @@
 
 namespace App\Http\Controllers\api\admin\ticket;
 
-use App\Enums\StatutPayement;
-use App\Enums\StatutTicket;
-use App\Events\Admin\TicketValiderEvent;
-use App\Helper\Payement\Payement;
-use App\Helper\TicketValidation;
-use App\Http\Controllers\Controller;
-use App\Models\Ticket\Ticket;
-use App\Notifications\Ticket\ValiderTicketDeUserNotification;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Throwable;
+use Illuminate\Http\Request;
+use App\Models\Ticket\Ticket;
+use App\Helper\TicketValidation;
+use App\Helper\Payement\Payement;
+use Illuminate\Http\JsonResponse;
+use App\Http\Controllers\Controller;
+use App\Models\Voyage\VoyageInstance;
+use App\Services\ticket\TicketService;
+use App\Events\Admin\TicketValiderEvent;
 
-use function Ramsey\Uuid\v1;
+use Illuminate\Support\Facades\Validator;
+use App\Notifications\Ticket\ValiderTicketDeUserNotification;
+use Illuminate\Support\Facades\Auth as FacadesAuth;
 
 class TicketApiController extends Controller
 {
+
+    public function __construct(private TicketService $ticketService)
+    {
+    }
 
 
     /**
@@ -133,5 +138,106 @@ class TicketApiController extends Controller
         ]);
     }
 
+
+    public function debutAchat(Request $request,VoyageInstance $voyage_instance): JsonResponse
+    {
+
+        $user = FacadesAuth::user();
+
+        if (!$user) {
+            return response()->json([
+                'success' => false,
+                'message' => [
+                    'error' => 'Vous devez être connecté pour acheter un ticket'
+                ]
+            ], 401);
+        }
+
+        $validator = Validator::make($request->all(),[
+            'numero_chaise' => ['required', 'integer'],
+            'type' => ['required', 'string', 'in:aller_simple,aller_retour'],
+            'is_my_ticket' => ['required', 'boolean'],
+            'autre_personne' => ['required_if:is_my_ticket,false', 'array'],
+            'a_bagage' => ['boolean'],
+            'bagages_data' => ['array']
+        ],
+            [
+                'numero_chaise.required' => 'Le numéro de chaise est requis.',
+                'type.required' => 'Le type de ticket est requis.',
+                'is_my_ticket.required' => 'Le statut du ticket est requis.',
+                'autre_personne.required_if' => 'Les informations de l\'autre personne sont requises si le ticket n\'est pas pour vous.',
+            ],
+            [
+                'numero_chaise' => 'Le numéro de chaise doit être un entier.',
+                'type' => 'Le type de ticket doit être soit "aller_simple" soit "aller_retour".',
+                'is_my_ticket' => 'Le statut du ticket doit être un booléen.',
+                'autre_personne' => 'Les informations de l\'autre personne doivent être un tableau.'
+            ]
+        );
+
+        $data = $request->all();
+
+        if ($data['is_my_ticket']) {
+            $request->validate([
+                'autre_personne' => 'nullable',
+                'autre_personne.first_name' => 'nullable|string|max:255',
+                'autre_personne.last_name' => 'nullable|string|max:20',
+                'autre_personne.sexe' => 'nullable|string|max:20',
+                'autre_personne.numero_identifiant' => 'nullable|string|max:20',
+                'autre_personne.numero' => 'nullable|string|max:100',
+                'autre_personne.email' => 'nullable|email|max:255',
+                'autre_personne.lien_relation' => 'nullable|string|max:100',
+
+            ], [
+                'autre_personne.first_name.string' => 'Le prénom doit être une chaîne de caractères.',
+                'autre_personne.last_name.string' => 'Le nom doit être une chaîne de caractères.',
+                'autre_personne.sexe.string' => 'Le sexe doit être une chaîne de caractères.',
+                'autre_personne.numero_identifiant.string' => 'Le numéro d\'identifiant doit être une chaîne de caractères.',
+                'autre_personne.numero.string' => 'Le numéro de téléphone doit être une chaîne de caractères.',
+                'autre_personne.email.email' => 'L\'email doit être une adresse email valide.',
+                'autre_personne.lien_relation.string' => 'La relation doit être une chaîne de caractères.'
+            ],[
+                'autre_personne' => 'Les informations de l\'autre personne doivent être un tableau.',
+                'autre_personne.first_name' => 'Le prénom de l\'autre personne doit être une chaîne de caractères.',
+                'autre_personne.last_name' => 'Le nom de l\'autre personne doit être une chaîne de caractères.',
+                'autre_personne.sexe' => 'Le sexe de l\'autre personne doit être une chaîne de caractères.',
+                'autre_personne.numero_identifiant' => 'Le numéro d\'identifiant de l\'autre personne doit être une chaîne de caractères.',
+                'autre_personne.numero' => 'Le numéro de téléphone de l\'autre personne doit être une chaîne de caractères.',
+            ]);
+        }
+
+
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Validation échouée',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+
+        $data['user_id'] = FacadesAuth::user()->id();
+
+        $data['voyage_instance_id'] = $voyage_instance->id;
+
+        $ticket = $this->ticketService->createTicket($data);
+
+        if (!$ticket) {
+            return response()->json([
+                'success' => false,
+                'message' => [
+                    'error' => 'Une erreur est survenue lors de la création du ticket'
+                ]
+            ], 500);
+        }
+
+        return response()->json([
+            'success' => true,
+            'ticket' => $ticket,
+            'message' => [
+                'success' => 'Ticket créé avec succès'
+            ]
+        ]);
+    }
 
 }

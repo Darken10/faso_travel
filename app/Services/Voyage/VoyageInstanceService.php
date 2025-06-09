@@ -6,6 +6,7 @@ use App\Enums\JoursSemain;
 use App\Helper\VoyagesInstanceHelpers;
 use App\Models\Voyage\Voyage;
 use App\Models\Voyage\VoyageInstance;
+use Illuminate\Database\Eloquent\Builder;
 
 class VoyageInstanceService
 {
@@ -38,5 +39,43 @@ class VoyageInstanceService
             });
         }
 
+    }
+
+    public function getVoyageInstanceWithBasicRelations(string $id)
+    {
+        return VoyageInstance::with([
+            'voyage.trajet.depart',
+            'voyage.trajet.arriver',
+            'voyage.compagnie',
+            'chauffer',
+            'care'
+        ])->findOrFail($id);
+    }
+
+    public function getVoyageInstanceWithFullDetails(string $id)
+    {
+        return VoyageInstance::with([
+            'voyage.trajet.depart',
+            'voyage.trajet.arriver',
+            'voyage.compagnie',
+            'voyage.classe',
+            'voyage.conforts',
+            'chauffer',
+            'care',
+            'tickets' => function($query) {
+                $query->with(['user', 'autre_personne', 'payements']);
+            }
+        ])->findOrFail($id);
+    }
+
+    public function getAvailableVoyages(): Builder
+    {
+        return VoyageInstance::disponibles()
+            ->with([
+                'voyage.trajet.depart',
+                'voyage.trajet.arriver',
+                'voyage.compagnie',
+                'voyage.classe'
+            ]);
     }
 }

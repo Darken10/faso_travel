@@ -3,9 +3,9 @@
 namespace App\Services;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Notifications\DatabaseNotification;
-use Illuminate\Support\Facades\Auth;
 
 class NotificationService
 {

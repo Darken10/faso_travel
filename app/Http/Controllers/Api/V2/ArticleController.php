@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers\Api\V2;
 
-use App\Http\Controllers\Controller;
-use App\Services\V2\ArticleService;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use App\Services\V2\ArticleService;
+use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\CommentResource;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Resources\V2\PostResource\PostResource;
 
 class ArticleController extends Controller
 {
@@ -22,7 +26,7 @@ class ArticleController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    public function index(Request $request): JsonResponse
+    public function index(Request $request)
     {
         try {
             $perPage = $request->get('per_page', 15);
@@ -30,18 +34,14 @@ class ArticleController extends Controller
                 'category_id' => $request->get('category_id'),
                 'search' => $request->get('search'),
             ];
-
             $articles = $this->articleService->getAllArticles($perPage, $filters);
-
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Articles récupérés avec succès',
-                'data' => $articles
-            ]);
+            // Succès : retourne la collection paginée via ArticleCollection
+            return $articles;
         } catch (\Exception $e) {
             return response()->json([
-                'status' => 'error',
-                'message' => $e->getMessage()
+                'error' => true,
+                'message' => $e->getMessage(),
+                'status' => 500
             ], 500);
         }
     }
@@ -52,117 +52,21 @@ class ArticleController extends Controller
      * @param int $id
      * @return JsonResponse
      */
-    public function show(int $id): JsonResponse
+    public function show(int $id)
     {
         try {
             $article = $this->articleService->getArticleById($id);
-
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Article récupéré avec succès',
-                'data' => $article
-            ]);
+            // Succès : retourne directement la ressource
+            return new PostResource($article);
         } catch (\Exception $e) {
             return response()->json([
-                'status' => 'error',
-                'message' => $e->getMessage()
+                'error' => true,
+                'message' => $e->getMessage(),
+                'status' => 404
             ], 404);
         }
     }
 
-    /**
-     * Create a new article
-     *
-     * @param Request $request
-     * @return JsonResponse
-     */
-    public function store(Request $request): JsonResponse
-    {
-        try {
-            $validated = $request->validate([
-                'title' => 'required|string|max:255',
-                'content' => 'required|string',
-                'category_id' => 'required|exists:post_categories,id',
-                'image' => 'nullable|image|max:2048',
-            ]);
-
-            $article = $this->articleService->createArticle(
-                $validated,
-                $request->hasFile('image') ? $request->file('image') : null
-            );
-
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Article créé avec succès',
-                'data' => $article
-            ], 201);
-        } catch (\Exception $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => $e->getMessage()
-            ], 400);
-        }
-    }
-
-    /**
-     * Update an article
-     *
-     * @param Request $request
-     * @param int $id
-     * @return JsonResponse
-     */
-    public function update(Request $request, int $id): JsonResponse
-    {
-        try {
-            $validated = $request->validate([
-                'title' => 'sometimes|string|max:255',
-                'content' => 'sometimes|string',
-                'category_id' => 'sometimes|exists:post_categories,id',
-                'image' => 'nullable|image|max:2048',
-            ]);
-
-            $article = $this->articleService->updateArticle(
-                $id,
-                $validated,
-                $request->hasFile('image') ? $request->file('image') : null
-            );
-
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Article mis à jour avec succès',
-                'data' => $article
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => $e->getMessage()
-            ], 400);
-        }
-    }
-
-    /**
-     * Delete an article
-     *
-     * @param int $id
-     * @return JsonResponse
-     */
-    public function destroy(int $id): JsonResponse
-    {
-        try {
-            $result = $this->articleService->deleteArticle($id);
-
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Article supprimé avec succès',
-                'data' => ['deleted' => $result]
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => $e->getMessage()
-            ], 400);
-        }
-    }
 
     /**
      * Toggle like on an article
@@ -189,6 +93,40 @@ class ArticleController extends Controller
     }
 
     /**
+     * Get all comments for an article
+     *
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function getAllComments(int $id): JsonResponse
+    {
+        try {
+            $article = $this->articleService->getArticleById($id);
+            
+            return response()->json(
+                $article->comments()
+                    ->with('user:id,name,profile_photo_path')
+                    ->orderBy('created_at', 'desc')
+                    ->get()
+                    ->map(function ($comment) {
+                        return [
+                            'id' => $comment->id,
+                            'content' => $comment->message,
+                            'created_at' => $comment->created_at->format('Y-m-d H:i:s'),
+                            'author' => [
+                                'id' => $comment->user->id,
+                                'name' => $comment->user->name,
+                                'avatar' => $comment->user->profile_photo_path
+                            ]
+                        ];
+                    })
+            );
+        } catch (\Exception $e) {
+            return response()->json([], 404);
+        }
+    }
+
+    /**
      * Add comment to an article
      *
      * @param Request $request
@@ -197,24 +135,23 @@ class ArticleController extends Controller
      */
     public function addComment(Request $request, int $id): JsonResponse
     {
-        try {
-            $validated = $request->validate([
-                'content' => 'required|string',
-            ]);
-
-            $comment = $this->articleService->addComment($id, $validated['content']);
-
+        $validator = Validator::make($request->all(), [
+            'content' => 'required|string',
+        ], [
+            'content.required' => 'Le champ contenu est obligatoire.',
+            'content.string' => 'Le champ contenu doit être une chaîne de caractères.',
+        ]);
+    
+        if ($validator->fails()) {
             return response()->json([
-                'status' => 'success',
-                'message' => 'Commentaire ajouté avec succès',
-                'data' => $comment
-            ], 201);
-        } catch (\Exception $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => $e->getMessage()
-            ], 400);
+                'message' => 'Erreur de validation.',
+                'errors' => $validator->errors(),
+            ], 422);
         }
+
+        $comment = $this->articleService->addComment($id, $request->content);
+
+        return response()->json(CommentResource::make($comment), 201);
     }
 
     /**
@@ -225,7 +162,9 @@ class ArticleController extends Controller
      */
     public function deleteComment(int $commentId): JsonResponse
     {
+        Log::info("Attempting to delete comment with ID: $commentId");
         try {
+
             $result = $this->articleService->deleteComment($commentId);
 
             return response()->json([
@@ -251,11 +190,7 @@ class ArticleController extends Controller
         try {
             $categories = $this->articleService->getCategories();
 
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Catégories récupérées avec succès',
-                'data' => $categories
-            ]);
+            return response()->json($categories);
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'error',
@@ -263,4 +198,5 @@ class ArticleController extends Controller
             ], 500);
         }
     }
+
 }

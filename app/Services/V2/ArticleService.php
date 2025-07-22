@@ -2,15 +2,18 @@
 
 namespace App\Services\V2;
 
+use PgSql\Lob;
 use App\Models\Post\Like;
 use App\Models\Post\Post;
 use App\Models\Post\Comment;
 use App\Models\Post\Category;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
+use App\Http\Resources\V2\PostResource\PostResource;
 
 class ArticleService
 {
@@ -23,7 +26,7 @@ class ArticleService
      */
     public function getAllArticles(int $perPage = 15, array $filters = []): LengthAwarePaginator
     {
-        $query = Post::with(['user', 'category', 'comments', 'likes']);
+        $query = Post::with(['user', 'category', 'comments', 'likes', 'tags']);
         
         // Appliquer les filtres
         if (isset($filters['category_id'])) {
@@ -37,7 +40,11 @@ class ArticleService
             });
         }
         
-        return $query->orderBy('created_at', 'desc')->paginate($perPage);
+        $paginator = $query->orderBy('created_at', 'desc')->paginate($perPage);
+        $paginator->getCollection()->transform(function ($article) {
+            return PostResource::make($article);
+        });
+        return $paginator;
     }
     
     /**
@@ -46,99 +53,12 @@ class ArticleService
      * @param int $id
      * @return Post
      */
-    public function getArticleById(int $id): Post
+    public function getArticleById(int $id)
     {
-        return Post::with(['user', 'category', 'comments.user', 'likes.user'])
+        return Post::with(['user', 'category', 'comments.user', 'likes.user', 'tags'])
             ->findOrFail($id);
     }
-    
-    /**
-     * Create a new article
-     *
-     * @param array $data
-     * @param UploadedFile|null $image
-     * @return Post
-     */
-    public function createArticle(array $data, ?UploadedFile $image = null): Post
-    {
-        $article = new Post();
-        $article->title = $data['title'];
-        $article->content = $data['content'];
-        $article->category_id = $data['category_id'];
-        $article->user_id = Auth::id();
-        
-        if ($image) {
-            $path = $image->store('articles', 'public');
-            $article->image = $path;
-        }
-        
-        $article->save();
-        
-        return $article;
-    }
-    
-    /**
-     * Update an article
-     *
-     * @param int $id
-     * @param array $data
-     * @param UploadedFile|null $image
-     * @return Post
-     */
-    public function updateArticle(int $id, array $data, ?UploadedFile $image = null): Post
-    {
-        $article = Post::findOrFail($id);
-        
-        // Vérifier que l'utilisateur est le propriétaire
-        if ($article->user_id !== Auth::id()) {
-            throw new \Exception('Vous n\'êtes pas autorisé à modifier cet article');
-        }
-        
-        $article->title = $data['title'] ?? $article->title;
-        $article->content = $data['content'] ?? $article->content;
-        $article->category_id = $data['category_id'] ?? $article->category_id;
-        
-        if ($image) {
-            // Supprimer l'ancienne image si elle existe
-            if ($article->image && Storage::disk('public')->exists($article->image)) {
-                Storage::disk('public')->delete($article->image);
-            }
-            
-            $path = $image->store('articles', 'public');
-            $article->image = $path;
-        }
-        
-        $article->save();
-        
-        return $article;
-    }
-    
-    /**
-     * Delete an article
-     *
-     * @param int $id
-     * @return bool
-     */
-    public function deleteArticle(int $id): bool
-    {
-        $article = Post::findOrFail($id);
-        
-        // Vérifier que l'utilisateur est le propriétaire
-        if ($article->user_id !== Auth::id()) {
-            throw new \Exception('Vous n\'êtes pas autorisé à supprimer cet article');
-        }
-        
-        // Supprimer l'image si elle existe
-        if ($article->image && Storage::disk('public')->exists($article->image)) {
-            Storage::disk('public')->delete($article->image);
-        }
-        
-        // Supprimer les commentaires et likes associés
-        $article->comments()->delete();
-        $article->likes()->delete();
-        
-        return $article->delete();
-    }
+
     
     /**
      * Toggle like on an article
@@ -184,13 +104,11 @@ class ArticleService
     public function addComment(int $articleId, string $content): Comment
     {
         $article = Post::findOrFail($articleId);
-        
-        $comment = new Comment();
-        $comment->post_id = $articleId;
-        $comment->user_id = Auth::id();
-        $comment->content = $content;
-        $comment->save();
-        
+        $comment = new Comment([
+            'user_id' => Auth::id(),
+            'message' => $content,
+        ]);
+        $article->comments()->save($comment);
         return $comment->load('user');
     }
     
@@ -205,11 +123,15 @@ class ArticleService
         $comment = Comment::findOrFail($commentId);
         
         // Vérifier que l'utilisateur est le propriétaire du commentaire ou de l'article
-        $article = Post::findOrFail($comment->post_id);
+        $article = Post::findOrFail($comment->commentable_id);
+        if (!$article) {
+            throw new \Exception('Article not found');
+        }
         
         if ($comment->user_id !== Auth::id() && $article->user_id !== Auth::id()) {
             throw new \Exception('Vous n\'êtes pas autorisé à supprimer ce commentaire');
         }
+        Log::info("Comment with ID: $commentId deleted successfully by user ID: " . Auth::id());
         
         return $comment->delete();
     }
@@ -223,4 +145,7 @@ class ArticleService
     {
         return Category::all();
     }
+    
+    
+
 }

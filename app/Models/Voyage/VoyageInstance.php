@@ -2,20 +2,20 @@
 
 namespace App\Models\Voyage;
 
-use App\Enums\StatutTicket;
-use App\Enums\StatutVoyageInstance;
+use Carbon\Carbon;
 use App\Enums\TypeTicket;
+use App\Enums\StatutTicket;
+use App\Models\Ville\Ville;
+use App\Models\Ticket\Ticket;
 use App\Models\Compagnie\Care;
 use App\Models\Compagnie\Chauffer;
-use App\Models\Ticket\Ticket;
-use App\Models\Ville\Ville;
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use App\Enums\StatutVoyageInstance;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class VoyageInstance extends Model
 {
@@ -163,6 +163,22 @@ class VoyageInstance extends Model
 
 
 
+    public function availableSeats(): int
+    {
+        return $this->nb_place - $this->tickets()->count();
+    }
 
+    public function getHeureDepart()
+    {
+        $heureDepart = Carbon::parse($this->heure);
+        return Carbon::parse($this->date)->addMinutes($heureDepart->hour * 60 + $heureDepart->minute);
+    }
+
+    public function getHeureArrive()
+    {
+        $heureDepart = Carbon::parse($this->heure);
+        $temps = Carbon::parse($this->voyage->temps);
+        return Carbon::parse($this->date)->addMinutes($heureDepart->hour * 60 + $heureDepart->minute + $temps->hour * 60 + $temps->minute);
+    }
 
 }

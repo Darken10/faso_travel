@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Api\V2;
 
-use App\Http\Controllers\Controller;
-use App\Services\V2\NotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use App\Http\Controllers\Controller;
+use App\Services\V2\NotificationService;
 
 class NotificationController extends Controller
 {
@@ -18,120 +18,47 @@ class NotificationController extends Controller
 
     /**
      * Get all notifications for the authenticated user
-     *
-     * @param Request $request
-     * @return JsonResponse
      */
     public function index(Request $request): JsonResponse
     {
-        try {
-            $perPage = $request->get('per_page', 15);
-            $notifications = $this->notificationService->getUserNotifications($perPage);
-
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Notifications récupérées avec succès',
-                'data' => $notifications
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => $e->getMessage()
-            ], 500);
-        }
+        $perPage = $request->get('per_page', 15);
+        $notifications = $this->notificationService->getUserNotifications($perPage);
+        return response()->json($notifications);
     }
 
     /**
      * Mark a notification as read
-     *
-     * @param int $id
-     * @return JsonResponse
      */
     public function markAsRead(int $id): JsonResponse
     {
-        try {
-            $notification = $this->notificationService->markAsRead($id);
-
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Notification marquée comme lue',
-                'data' => $notification
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => $e->getMessage()
-            ], 404);
-        }
+        $notification = $this->notificationService->markAsRead($id);
+        return response()->json($notification);
     }
 
     /**
      * Mark all notifications as read
-     *
-     * @return JsonResponse
      */
     public function markAllAsRead(): JsonResponse
     {
-        try {
-            $count = $this->notificationService->markAllAsRead();
-
-            return response()->json([
-                'status' => 'success',
-                'message' => $count . ' notifications marquées comme lues',
-                'data' => ['count' => $count]
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => $e->getMessage()
-            ], 500);
-        }
+        $count = $this->notificationService->markAllAsRead();
+        return response()->json(['count' => $count]);
     }
 
     /**
      * Delete a notification
-     *
-     * @param int $id
-     * @return JsonResponse
      */
     public function destroy(int $id): JsonResponse
     {
-        try {
-            $result = $this->notificationService->deleteNotification($id);
-
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Notification supprimée avec succès',
-                'data' => ['deleted' => $result]
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => $e->getMessage()
-            ], 404);
-        }
+        $result = $this->notificationService->deleteNotification($id);
+        return response()->json(['deleted' => $result]);
     }
 
     /**
      * Delete all notifications for the authenticated user
-     *
-     * @return JsonResponse
      */
     public function destroyAll(): JsonResponse
     {
-        try {
-            $count = $this->notificationService->deleteAllNotifications();
-
-            return response()->json([
-                'status' => 'success',
-                'message' => $count . ' notifications supprimées',
-                'data' => ['count' => $count]
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => $e->getMessage()
-            ], 500);
-        }
+        $count = $this->notificationService->deleteAllNotifications();
+        return response()->json(['count' => $count]);
     }
 }

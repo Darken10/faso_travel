@@ -3,11 +3,11 @@
 namespace App\Models\Compagnie;
 
 use App\Models\Voyage\VoyageInstance;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Chauffer extends Model
 {
@@ -48,5 +48,10 @@ class Chauffer extends Model
         return [
             "date_naissance" => "date",
         ];
+    }
+
+    function fullName(): string
+    {
+        return $this->first_name . ' ' . $this->last_name;
     }
 }

@@ -2,14 +2,14 @@
 
 namespace App\Services\V2;
 
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Ticket\Ticket;
 use App\Models\Voyage\Trajet;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Http\UploadedFile;
-use Carbon\Carbon;
 
 class UserService
 {
@@ -20,7 +20,7 @@ class UserService
      */
     public function getProfile(): User
     {
-        return Auth::user()->load(['favoris', 'tickets']);
+        return Auth::user();
     }
 
     /**

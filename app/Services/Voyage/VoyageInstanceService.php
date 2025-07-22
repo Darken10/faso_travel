@@ -3,9 +3,9 @@
 namespace App\Services\Voyage;
 
 use App\Enums\JoursSemain;
-use App\Helper\VoyagesInstanceHelpers;
 use App\Models\Voyage\Voyage;
 use App\Models\Voyage\VoyageInstance;
+use App\Helper\VoyagesInstanceHelpers;
 use Illuminate\Database\Eloquent\Builder;
 
 class VoyageInstanceService

@@ -2,11 +2,13 @@
 
 namespace App\Services\V2;
 
+
+use Carbon\Carbon;
 use App\Models\Notification;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
+use App\Models\User;
 
 class NotificationService
 {
@@ -18,7 +20,8 @@ class NotificationService
      */
     public function getUserNotifications(int $perPage = 15): LengthAwarePaginator
     {
-        return Notification::where('user_id', Auth::id())
+        return Notification::where('notifiable_id', Auth::id())
+            ->where('notifiable_type', User::class)
             ->orderBy('created_at', 'desc')
             ->paginate($perPage);
     }
@@ -32,7 +35,8 @@ class NotificationService
     public function markAsRead(int $notificationId): Notification
     {
         $notification = Notification::where('id', $notificationId)
-            ->where('user_id', Auth::id())
+            ->where('notifiable_id', Auth::id())
+            ->where('notifiable_type', User::class)
             ->firstOrFail();
             
         $notification->read_at = Carbon::now();
@@ -48,7 +52,8 @@ class NotificationService
      */
     public function markAllAsRead(): int
     {
-        return Notification::where('user_id', Auth::id())
+        return Notification::where('notifiable_id', Auth::id())
+            ->where('notifiable_type', User::class)
             ->whereNull('read_at')
             ->update(['read_at' => Carbon::now()]);
     }
@@ -62,7 +67,8 @@ class NotificationService
     public function deleteNotification(int $notificationId): bool
     {
         $notification = Notification::where('id', $notificationId)
-            ->where('user_id', Auth::id())
+            ->where('notifiable_id', Auth::id())
+            ->where('notifiable_type', User::class)
             ->firstOrFail();
             
         return $notification->delete();
@@ -75,7 +81,9 @@ class NotificationService
      */
     public function deleteAllNotifications(): int
     {
-        return Notification::where('user_id', Auth::id())->delete();
+        return Notification::where('notifiable_id', Auth::id())
+            ->where('notifiable_type', User::class)
+            ->delete();
     }
     
     /**

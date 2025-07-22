@@ -5,17 +5,18 @@ namespace App\Models\Post;
 use App\Models\User;
 use App\Models\Post\Tag;
 use App\Models\Post\Like;
+use Illuminate\Support\Str;
 use App\Models\Post\Comment;
 use App\Models\Post\Category;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 
 class Post extends Model
 {
@@ -97,7 +98,10 @@ class Post extends Model
 
     function getImageUrl():string
     {
-        return Storage::url($this->images_uri);
+        return url(Storage::url($this->images_uri));
     }
 
+    function getSummary():string{
+        return Str::limit($this->content, 100);
+    }
 }

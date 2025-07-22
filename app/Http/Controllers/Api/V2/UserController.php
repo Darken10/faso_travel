@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Api\V2;
 
-use App\Http\Controllers\Controller;
-use App\Services\V2\UserService;
 use Illuminate\Http\Request;
-use Illuminate\Http\JsonResponse;
+use App\Services\V2\UserService;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\V2\AuthResource\UserResource;
 
 class UserController extends Controller
 {
@@ -18,152 +19,64 @@ class UserController extends Controller
 
     /**
      * Get authenticated user profile
-     *
-     * @return JsonResponse
      */
-    public function getProfile(): JsonResponse
+    public function getProfile()
     {
-        try {
-            $user = $this->userService->getProfile();
-
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Profil utilisateur récupéré avec succès',
-                'data' => $user
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => $e->getMessage()
-            ], 500);
-        }
+        $user = $this->userService->getProfile();
+        return new UserResource($user);
     }
 
     /**
      * Update user profile
-     *
-     * @param Request $request
-     * @return JsonResponse
      */
-    public function updateProfile(Request $request): JsonResponse
+    public function updateProfile(Request $request)
     {
-        try {
-            $validated = $request->validate([
-                'name' => 'sometimes|string|max:255',
-                'email' => 'sometimes|string|email|max:255|unique:users,email,' . auth()->id(),
-                'phone' => 'sometimes|string|max:20',
-                'password' => 'sometimes|string|min:8',
-            ]);
-
-            $user = $this->userService->updateProfile($validated);
-
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Profil mis à jour avec succès',
-                'data' => $user
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => $e->getMessage()
-            ], 400);
-        }
+        $validated = $request->validate([
+            'name' => 'sometimes|string|max:255',
+            'email' => 'sometimes|string|email|max:255|unique:users,email,' . (Auth::check() ? Auth::id() : ''),
+            'phone' => 'sometimes|string|max:20',
+            'password' => 'sometimes|string|min:8',
+        ]);
+        $user = $this->userService->updateProfile($validated);
+        return new UserResource($user);
     }
 
     /**
      * Update user profile picture
-     *
-     * @param Request $request
-     * @return JsonResponse
      */
-    public function updateProfilePicture(Request $request): JsonResponse
+    public function updateProfilePicture(Request $request)
     {
-        try {
-            $request->validate([
-                'photo' => 'required|image|max:2048',
-            ]);
-
-            $user = $this->userService->updateProfilePicture($request->file('photo'));
-
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Photo de profil mise à jour avec succès',
-                'data' => $user
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => $e->getMessage()
-            ], 400);
-        }
+        $request->validate([
+            'photo' => 'required|image|max:2048',
+        ]);
+        $user = $this->userService->updateProfilePicture($request->file('photo'));
+        return new UserResource($user);
     }
 
     /**
      * Get user travel history
-     *
-     * @return JsonResponse
      */
-    public function getTravelHistory(): JsonResponse
+    public function getTravelHistory()
     {
-        try {
-            $history = $this->userService->getTravelHistory();
-
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Historique de voyage récupéré avec succès',
-                'data' => $history
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => $e->getMessage()
-            ], 500);
-        }
+        $history = $this->userService->getTravelHistory();
+        return response()->json($history);
     }
 
     /**
      * Get user favorite routes
-     *
-     * @return JsonResponse
      */
-    public function getFavoriteRoutes(): JsonResponse
+    public function getFavoriteRoutes()
     {
-        try {
-            $favorites = $this->userService->getFavoriteRoutes();
-
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Trajets favoris récupérés avec succès',
-                'data' => $favorites
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => $e->getMessage()
-            ], 500);
-        }
+        $favorites = $this->userService->getFavoriteRoutes();
+        return response()->json($favorites);
     }
 
     /**
      * Get user statistics
-     *
-     * @return JsonResponse
      */
-    public function getUserStats(): JsonResponse
+    public function getUserStats()
     {
-        try {
-            $stats = $this->userService->getUserStats();
-
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Statistiques utilisateur récupérées avec succès',
-                'data' => $stats
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => $e->getMessage()
-            ], 500);
-        }
+        $stats = $this->userService->getUserStats();
+        return response()->json($stats);
     }
 }

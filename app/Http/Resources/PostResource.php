@@ -2,8 +2,8 @@
 
 namespace App\Http\Resources;
 
-use App\resources\MiniUserResource;
 use Illuminate\Http\Request;
+use App\resources\MiniUserResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class PostResource extends JsonResource
@@ -14,11 +14,15 @@ class PostResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'content' => $this->content,
-            'user' => UserUltraMiniRessource::make($this->user),
+            'user' => [
+                'name' => $this->user?->name,
+                'compagnie' => $this->user?->compagnie?->name,
+                'avatarUrl' => $this->user?->profile_photo_url,
+            ],
             'comments_count' => $this->comments()->count(),
             'likes_count' => $this->likes()->count(),
-            'tags' => TagResource::collection($this->tags),
-            'images_uri' => $this->images_uri,
+            'tags' => $this->tags->pluck('name')->toArray(),
+            'image' => $this->getImageUrl(),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

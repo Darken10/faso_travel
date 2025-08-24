@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\V2\UserController as UserControllerV2;
 use App\Http\Controllers\Api\V2\TicketController as TicketControllerV2;
 use App\Http\Controllers\Api\V2\VoyageController as VoyageControllerV2;
 use App\Http\Controllers\Api\V2\ArticleController as ArticleControllerV2;
+use App\Http\Controllers\Api\V2\BuyVoyageController as BuyVoyageControllerV2;
 use App\Http\Controllers\Api\V2\NotificationController as NotificationControllerV2;
 
  // API V2 - Nouvelle version avec rétrocompatibilité
@@ -71,6 +72,11 @@ Route::prefix('v2')->group(function () {
         Route::get('/{id}', 'getTripDetails')->name('show');
         Route::get('/{id}/seats', 'getTripSeats')->name('seats');
         Route::post('/search', 'searchTrips')->name('search');
+    });
+
+    // Routes acheter V2
+    Route::prefix('/trips')->middleware('auth:sanctum')->controller(BuyVoyageControllerV2::class)->name('api.v2.buy.')->group(function () {
+        Route::post('/reservation/{id}', 'reservation')->name('reservation');
     });
 
     Route::get('/payement/mode-list', [VoyageControllerV2::class, 'getPaymentModesList'])->name('api.v2.payment.modes.list');

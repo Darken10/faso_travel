@@ -2,11 +2,10 @@
 
 namespace App\Services\V2;
 
-use App\Models\Notification;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class NotificationService
 {
@@ -18,7 +17,7 @@ class NotificationService
      */
     public function getUserNotifications(int $perPage = 15): LengthAwarePaginator
     {
-        return Notification::where('user_id', Auth::id())
+        return  Auth::user()->notifications()
             ->orderBy('created_at', 'desc')
             ->paginate($perPage);
     }
@@ -29,10 +28,10 @@ class NotificationService
      * @param int $notificationId
      * @return Notification
      */
-    public function markAsRead(int $notificationId): Notification
+    public function markAsRead(int $notificationId)
     {
-        $notification = Notification::where('id', $notificationId)
-            ->where('user_id', Auth::id())
+        $notification = Auth::user()->notifications()
+            ->where('id', $notificationId)
             ->firstOrFail();
             
         $notification->read_at = Carbon::now();
@@ -48,7 +47,7 @@ class NotificationService
      */
     public function markAllAsRead(): int
     {
-        return Notification::where('user_id', Auth::id())
+        return Auth::user()->notifications()
             ->whereNull('read_at')
             ->update(['read_at' => Carbon::now()]);
     }
@@ -61,8 +60,8 @@ class NotificationService
      */
     public function deleteNotification(int $notificationId): bool
     {
-        $notification = Notification::where('id', $notificationId)
-            ->where('user_id', Auth::id())
+        $notification = Auth::user()->notifications()
+            ->where('id', $notificationId)
             ->firstOrFail();
             
         return $notification->delete();
@@ -75,19 +74,18 @@ class NotificationService
      */
     public function deleteAllNotifications(): int
     {
-        return Notification::where('user_id', Auth::id())->delete();
+        return Auth::user()->notifications()->delete();
     }
     
-    /**
+  /*   /* *
      * Create a notification
      *
      * @param int $userId
      * @param string $type
      * @param string $message
      * @param array $data
-     * @return Notification
-     */
-    public function createNotification(int $userId, string $type, string $message, array $data = []): Notification
+     
+    public function createNotification(int $userId, string $type, string $message, array $data = [])
     {
         $notification = new Notification();
         $notification->user_id = $userId;
@@ -97,5 +95,5 @@ class NotificationService
         $notification->save();
         
         return $notification;
-    }
+    } */
 }

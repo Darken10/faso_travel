@@ -2,20 +2,20 @@
 
 namespace App\Models\Compagnie;
 
-use App\Models\CompagnieSetting;
 use App\Models\User;
 use App\Models\Statut;
 use App\Models\Voyage\Classe;
 use App\Models\Voyage\Voyage;
 use App\Models\Compagnie\Gare;
+use App\Models\CompagnieSetting;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasManyThrough;
-use Illuminate\Support\Facades\Auth;
 
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Compagnie extends Model
 {
@@ -95,5 +95,20 @@ class Compagnie extends Model
         return $setting ? $setting->getCastedValue() : $default;
     }
 
+
+    public function getDevise(): string
+    {
+        return $this->getSetting('devise', 'XOF');
+    }
+
+    public function getDevisePosition(): string
+    {
+        return $this->getSetting('devise_position', 'right');
+    }
+
+    public function getDevisePriceToUSD(): float
+    {
+        return $this->getSetting("devise_price_to_usd", 650);
+    }
 
 }

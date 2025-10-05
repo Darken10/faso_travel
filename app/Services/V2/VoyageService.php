@@ -3,15 +3,14 @@
 namespace App\Services\V2;
 
 use Carbon\Carbon;
-use App\Models\Voyage\Voyage;
-use App\Models\Voyage\VoyageInstance;
-use App\Models\Voyage\Trajet;
-use App\Models\Ville\Ville;
-use App\Models\Compagnie\Compagnie;
+use App\Models\Ville;
+use App\Models\Compagnie;
 use App\Models\Ticket\Ticket;
+use App\Models\Voyage\Voyage;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Pagination\LengthAwarePaginator;
+use App\Models\Voyage\VoyageInstance;
+use App\Http\Resources\ApiV2\TripResource;
 
 class VoyageService
 {
@@ -19,16 +18,17 @@ class VoyageService
      * Get all available trips with optional filters
      *
      * @param array $filters
-     * @return Collection
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
-    public function getTrips(array $filters = []): Collection
+    public function getTrips(array $filters = [])
     {
         $query = VoyageInstance::query()
             ->with([
                 'voyage.trajet.depart',
                 'voyage.trajet.arriver',
                 'voyage.compagnie',
-                'voyage.classe'
+                'voyage.classe',
+                'care'
             ])
             ->whereHas('voyage', function ($q) {
                 $q->where('is_quotidient', true);
@@ -64,90 +64,61 @@ class VoyageService
             });
         }
 
-        // Get results
-        $voyageInstances = $query->get();
+        // Filter by minimum seats if needed
+        if (isset($filters['passengers']) && is_numeric($filters['passengers'])) {
+            $query->whereHas('voyage.bus', function($q) use ($filters) {
+                $q->where('nombre_place', '>=', $filters['passengers']);
+            });
+        }
 
-        // Transform to API format
-        return $voyageInstances->map(function ($instance) use ($filters) {
-            $voyage = $instance->voyage;
-            $trajet = $voyage->trajet;
-            $depart = $trajet->depart;
-            $arriver = $trajet->arriver;
-            $compagnie = $voyage->compagnie;
-            
-            // Calculate available seats
-            $totalSeats = $voyage->bus->nombre_place ?? 50;
-            $occupiedSeats = Ticket::where('voyage_instance_id', $instance->id)
-                ->where('statut', '!=', 'annuler')
-                ->count();
-            $availableSeats = $totalSeats - $occupiedSeats;
-            
-            // Filter by available seats if needed
-            if (isset($filters['passengers']) && $availableSeats < $filters['passengers']) {
-                return null;
-            }
-            
-            // Calculate estimated arrival time
-            $departureTime = Carbon::parse($instance->date . ' ' . $voyage->heure);
-            $duration = $voyage->temps ?? '02:00:00'; // Default 2 hours if not set
-            $arrivalTime = (clone $departureTime)->addMinutes(Carbon::parse($duration)->diffInMinutes(Carbon::today()));
-            
-            return [
-                'id' => $instance->id,
-                'departure' => [
-                    'city' => $depart->nom,
-                    'station' => $compagnie->nom,
-                    'time' => $departureTime->format('Y-m-d H:i:s')
-                ],
-                'arrival' => [
-                    'city' => $arriver->nom,
-                    'station' => $compagnie->nom,
-                    'time' => $arrivalTime->format('Y-m-d H:i:s')
-                ],
-                'company' => $compagnie->nom,
-                'price' => $voyage->prix,
-                'duration' => $duration,
-                'availableSeats' => $availableSeats,
-                'vehicleType' => 'bus',
-                'popularity' => rand(1, 5) // Placeholder for popularity
-            ];
-        })->filter()->values();
+        // Order by departure time
+        $query->orderBy('date')
+              ->orderBy(DB::raw("TIME(heure)"));
+
+        // Get results and apply resource transformation
+        $voyageInstances = $query->paginate(20);
+
+        return $voyageInstances;
     }
 
     /**
      * Get trip details by ID
      *
-     * @param int $tripId
-     * @return array
+     * @param string $tripId
      */
-    public function getTripDetails(int $tripId): array
+    public function getTripDetails(string $tripId) :VoyageInstance
     {
         $instance = VoyageInstance::with([
             'voyage.trajet.depart',
             'voyage.trajet.arriver',
             'voyage.compagnie',
             'voyage.classe',
-            'voyage.bus'
+            'care'
         ])->findOrFail($tripId);
+
+        return $instance;
+    }
+
+    /**
+     * Get seats availability for a specific trip
+     *
+     * @param string $tripId
+     * @return array
+     */
+    public function getTripSeats(string $tripId): array
+    {
+        $instance = VoyageInstance::with('voyage.bus')->findOrFail($tripId);
+        $totalSeats = $instance->voyage->bus->nombre_place ?? 50;
         
         $voyage = $instance->voyage;
-        $trajet = $voyage->trajet;
-        $depart = $trajet->depart;
-        $arriver = $trajet->arriver;
-        $compagnie = $voyage->compagnie;
         $bus = $voyage->bus;
         
         // Calculate available seats
         $totalSeats = $bus->nombre_place ?? 50;
-        $occupiedSeats = Ticket::where('voyage_instance_id', $instance->id)
+        $occupiedSeats = Ticket::where('voyage_instance_id', $tripId)
             ->where('statut', '!=', 'annuler')
             ->get();
         $availableSeats = $totalSeats - $occupiedSeats->count();
-        
-        // Calculate estimated arrival time
-        $departureTime = Carbon::parse($instance->date . ' ' . $voyage->heure);
-        $duration = $voyage->temps ?? '02:00:00'; // Default 2 hours if not set
-        $arrivalTime = (clone $departureTime)->addMinutes(Carbon::parse($duration)->diffInMinutes(Carbon::today()));
         
         // Generate seats information
         $seats = [];
@@ -165,66 +136,21 @@ class VoyageService
         }
         
         return [
-            'id' => $instance->id,
-            'departure' => [
-                'city' => $depart->nom,
-                'station' => $compagnie->nom,
-                'time' => $departureTime->format('Y-m-d H:i:s')
-            ],
-            'arrival' => [
-                'city' => $arriver->nom,
-                'station' => $compagnie->nom,
-                'time' => $arrivalTime->format('Y-m-d H:i:s')
-            ],
-            'company' => $compagnie->nom,
-            'price' => $voyage->prix,
-            'duration' => $duration,
-            'availableSeats' => $availableSeats,
-            'vehicleType' => 'bus',
-            'popularity' => rand(1, 5), // Placeholder for popularity
+            'total_seats' => $totalSeats,
+            'available_seats' => $availableSeats,
+            'occupied_seats' => $occupiedSeats->count(),
             'seats' => $seats
         ];
     }
 
-    /**
-     * Get seats availability for a specific trip
-     *
-     * @param int $tripId
-     * @return array
-     */
-    public function getTripSeats(int $tripId): array
-    {
-        $instance = VoyageInstance::with(['voyage.bus'])->findOrFail($tripId);
-        
-        $totalSeats = $instance->voyage->bus->nombre_place ?? 50;
-        $occupiedSeats = Ticket::where('voyage_instance_id', $instance->id)
-            ->where('statut', '!=', 'annuler')
-            ->get();
-        
-        $seats = [];
-        for ($i = 1; $i <= $totalSeats; $i++) {
-            $occupiedSeat = $occupiedSeats->firstWhere('numero_place', $i);
-            $status = $occupiedSeat ? 'occupied' : 'available';
-            
-            $seats[] = [
-                'id' => $i,
-                'number' => (string) $i,
-                'status' => $status,
-                'price' => $instance->voyage->prix,
-                'type' => 'standard' // Default to standard, can be enhanced later
-            ];
-        }
-        
-        return ['seats' => $seats];
-    }
 
     /**
      * Search for trips with advanced filters
      *
      * @param array $filters
-     * @return Collection
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
-    public function searchTrips(array $filters): Collection
+    public function searchTrips(array $filters)
     {
         return $this->getTrips($filters);
     }

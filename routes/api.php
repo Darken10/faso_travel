@@ -1,22 +1,22 @@
 <?php
 
-use App\Http\Controllers\api\admin\ticket\TicketApiController;
-use App\Http\Controllers\api\admin\voyage\VoyageController;
-use App\Http\Controllers\Api\UserController;
-use App\Http\Controllers\Api\Voyage\VoyageApiContoller;
-use App\Http\Controllers\Ticket\Payement\PaymentController2;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\PostController;
+use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\TicketController;
+use App\Http\Controllers\Api\Voyage\VoyageApiContoller;
+use App\Http\Controllers\api\admin\voyage\VoyageController;
+use App\Http\Controllers\Ticket\Payement\PaymentController2;
+use App\Http\Controllers\api\admin\ticket\TicketApiController;
 
 // Imports pour l'API V2
 use App\Http\Controllers\Api\V2\AuthController as AuthControllerV2;
 use App\Http\Controllers\Api\V2\UserController as UserControllerV2;
-use App\Http\Controllers\Api\V2\ArticleController as ArticleControllerV2;
-use App\Http\Controllers\Api\V2\NotificationController as NotificationControllerV2;
 use App\Http\Controllers\Api\V2\TicketController as TicketControllerV2;
 use App\Http\Controllers\Api\V2\VoyageController as VoyageControllerV2;
+use App\Http\Controllers\Api\V2\ArticleController as ArticleControllerV2;
+use App\Http\Controllers\Api\V2\NotificationController as NotificationControllerV2;
 
 Route::prefix('/ticket')->name('api.ticket.')
     ->controller(TicketApiController::class)->middleware('auth:sanctum')

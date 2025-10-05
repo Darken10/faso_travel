@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Api\V2;
 
-use App\Http\Controllers\Controller;
-use App\Services\V2\VoyageService;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use App\Services\V2\VoyageService;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\ApiV2\TripResource;
 
 class VoyageController extends Controller
 {
@@ -20,9 +21,8 @@ class VoyageController extends Controller
      * Get all available trips with optional filters
      *
      * @param Request $request
-     * @return JsonResponse
      */
-    public function getTrips(Request $request): JsonResponse
+    public function getTrips(Request $request)
     {
         try {
             $filters = [
@@ -35,10 +35,7 @@ class VoyageController extends Controller
 
             $trips = $this->voyageService->getTrips($filters);
 
-            return response()->json([
-                'status' => 'success',
-                'trips' => $trips
-            ]);
+            return TripResource::collection($trips);
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'error',
@@ -50,15 +47,14 @@ class VoyageController extends Controller
     /**
      * Get trip details by ID
      *
-     * @param int $id
-     * @return JsonResponse
+     * @param string $id
      */
-    public function getTripDetails(int $id): JsonResponse
+    public function getTripDetails(string $id)
     {
         try {
             $trip = $this->voyageService->getTripDetails($id);
 
-            return response()->json($trip);
+            return TripResource::make($trip);
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'error',
@@ -70,10 +66,9 @@ class VoyageController extends Controller
     /**
      * Get seats availability for a specific trip
      *
-     * @param int $id
-     * @return JsonResponse
+     * @param string $id
      */
-    public function getTripSeats(int $id): JsonResponse
+    public function getTripSeats(string $id)
     {
         try {
             $seats = $this->voyageService->getTripSeats($id);

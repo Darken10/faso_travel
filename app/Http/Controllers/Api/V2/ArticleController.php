@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers\Api\V2;
 
-use App\Http\Controllers\Controller;
-use App\Services\V2\ArticleService;
 use Illuminate\Http\Request;
+use App\Models\Post\Category;
 use Illuminate\Http\JsonResponse;
+use App\Services\V2\ArticleService;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\CategoryResource;
+use App\Http\Resources\ApiV2\PostListResource;
+use App\Http\Resources\ApiV2\PostShowResource;
 
 class ArticleController extends Controller
 {
@@ -20,9 +24,8 @@ class ArticleController extends Controller
      * Get all articles
      *
      * @param Request $request
-     * @return JsonResponse
      */
-    public function index(Request $request): JsonResponse
+    public function index(Request $request)
     {
         try {
             $perPage = $request->get('per_page', 15);
@@ -33,11 +36,7 @@ class ArticleController extends Controller
 
             $articles = $this->articleService->getAllArticles($perPage, $filters);
 
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Articles récupérés avec succès',
-                'data' => $articles
-            ]);
+            return PostListResource::collection($articles);
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'error',
@@ -50,18 +49,13 @@ class ArticleController extends Controller
      * Get article by ID
      *
      * @param int $id
-     * @return JsonResponse
      */
-    public function show(int $id): JsonResponse
+    public function show(int $id)
     {
         try {
             $article = $this->articleService->getArticleById($id);
 
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Article récupéré avec succès',
-                'data' => $article
-            ]);
+            return PostShowResource::make($article);
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'error',
@@ -74,9 +68,8 @@ class ArticleController extends Controller
      * Create a new article
      *
      * @param Request $request
-     * @return JsonResponse
      */
-    public function store(Request $request): JsonResponse
+    public function store(Request $request)
     {
         try {
             $validated = $request->validate([
@@ -91,11 +84,7 @@ class ArticleController extends Controller
                 $request->hasFile('image') ? $request->file('image') : null
             );
 
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Article créé avec succès',
-                'data' => $article
-            ], 201);
+            return PostShowResource::make($article);
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'error',
@@ -109,9 +98,8 @@ class ArticleController extends Controller
      *
      * @param Request $request
      * @param int $id
-     * @return JsonResponse
      */
-    public function update(Request $request, int $id): JsonResponse
+    public function update(Request $request, int $id)
     {
         try {
             $validated = $request->validate([
@@ -127,11 +115,7 @@ class ArticleController extends Controller
                 $request->hasFile('image') ? $request->file('image') : null
             );
 
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Article mis à jour avec succès',
-                'data' => $article
-            ]);
+            return PostShowResource::make($article);
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'error',
@@ -144,9 +128,8 @@ class ArticleController extends Controller
      * Delete an article
      *
      * @param int $id
-     * @return JsonResponse
      */
-    public function destroy(int $id): JsonResponse
+    public function destroy(int $id)
     {
         try {
             $result = $this->articleService->deleteArticle($id);
@@ -154,8 +137,7 @@ class ArticleController extends Controller
             return response()->json([
                 'status' => 'success',
                 'message' => 'Article supprimé avec succès',
-                'data' => ['deleted' => $result]
-            ]);
+            ], 200);
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'error',
@@ -168,9 +150,8 @@ class ArticleController extends Controller
      * Toggle like on an article
      *
      * @param int $id
-     * @return JsonResponse
      */
-    public function toggleLike(int $id): JsonResponse
+    public function toggleLike(int $id)
     {
         try {
             $result = $this->articleService->toggleLike($id);
@@ -178,8 +159,7 @@ class ArticleController extends Controller
             return response()->json([
                 'status' => 'success',
                 'message' => $result['action'] === 'liked' ? 'Article aimé' : 'Article plus aimé',
-                'data' => $result
-            ]);
+            ], 200);
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'error',
@@ -231,8 +211,7 @@ class ArticleController extends Controller
             return response()->json([
                 'status' => 'success',
                 'message' => 'Commentaire supprimé avec succès',
-                'data' => ['deleted' => $result]
-            ]);
+            ], 200);
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'error',
@@ -244,18 +223,13 @@ class ArticleController extends Controller
     /**
      * Get all article categories
      *
-     * @return JsonResponse
      */
-    public function getCategories(): JsonResponse
+    public function getCategories()
     {
         try {
             $categories = $this->articleService->getCategories();
 
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Catégories récupérées avec succès',
-                'data' => $categories
-            ]);
+            return CategoryResource::collection($categories);
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'error',

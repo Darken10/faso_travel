@@ -2,11 +2,11 @@
 
 namespace App\Http\Resources;
 
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Http\Resources\UserUltraMiniRessource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class LikeResource extends JsonResource
+class CategoryResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,7 +17,8 @@ class LikeResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'user' => UserUltraMiniRessource::make($this->user),
+            'name' => $this->name,
+            'slug' => Str::slug($this->name),
         ];
     }
 }

@@ -14,8 +14,8 @@ use App\Services\ticket\TicketService;
 use App\Events\Admin\TicketValiderEvent;
 
 use Illuminate\Support\Facades\Validator;
-use App\Notifications\Ticket\ValiderTicketDeUserNotification;
 use Illuminate\Support\Facades\Auth as FacadesAuth;
+use App\Notifications\Ticket\ValiderTicketDeUserNotification;
 
 class TicketApiController extends Controller
 {
@@ -46,7 +46,8 @@ class TicketApiController extends Controller
                 'is_exist' => true,
                 'ticket' => $tickets->last(),
                 'message' => [
-                    'error' => 'Le code QR du ticket est invalide'
+                    'error' => 'Le code QR du ticket est valide',
+                    'status_payement' => $verificationStatusPayement,
                 ]
             ]);
         }
@@ -85,7 +86,7 @@ class TicketApiController extends Controller
                 return response()->json([
                     'success' => true,
                     'error' => false,
-                    'ticket' => $ticket->load(["user",'payements','voyage']),
+                    'ticket' => $ticket->load(["user",'payements']),
                     'message' => [
                         'success' => 'Ticket Valider avec success'
                     ]
@@ -236,6 +237,32 @@ class TicketApiController extends Controller
             'ticket' => $ticket,
             'message' => [
                 'success' => 'Ticket créé avec succès'
+            ]
+        ]);
+    }
+
+
+
+    public function changeStatus(Request $request,Ticket $ticket): JsonResponse
+    {
+        $data = $request->validate([
+            'status' => ['required', 'string', 'in:validé,non_validé,annulé'],
+        ]);
+
+        if (!$this->ticketService->changeStatus($ticket,$data['status'])) {
+            return response()->json([
+                'success' => false,
+                'message' => [
+                    'error' => 'Une erreur est survenue lors du changement de statut du ticket'
+                ]
+            ], 500);
+        }
+
+        return response()->json([
+            'success' => true,
+            'ticket' => $ticket,
+            'message' => [
+                'success' => 'Statut du ticket mis à jour avec succès'
             ]
         ]);
     }

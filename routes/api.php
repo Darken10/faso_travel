@@ -19,6 +19,7 @@ Route::prefix('/ticket')->name('api.ticket.')
         Route::get('/verification/{ticket_code}','verificationByQrCode')->name('verification-by-QrCode');
         //les informations a fournir en post (ticket_id,numero_ticket)
         Route::post('/valider','validerTicket')->name('valider-ticket');
+        Route::post('/{ticket}/change-status','changeStatus')->name('change-status');
     });
 
 Route::prefix('/compagnie/voyages')->name('api.compagnie.voyage.')

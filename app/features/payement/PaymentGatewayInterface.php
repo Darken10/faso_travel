@@ -1,6 +1,6 @@
 <?php
 
-namespace App\features\payement;
+namespace App\Features\Payement;
 
 use App\Enums\StatutPayement;
 use App\Models\Ticket\Ticket;

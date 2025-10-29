@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Api\V2;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use App\Services\V2\VoyageService;
 use App\Http\Controllers\Controller;
-use App\Models\Voyage\VoyageInstance;
+use App\Http\Resources\ApiV2\TripResource;
 
 class VoyageController extends Controller
 {
@@ -18,36 +19,54 @@ class VoyageController extends Controller
 
     /**
      * Get all available trips with optional filters
+     *
+     * @param Request $request
      */
     public function getTrips(Request $request)
     {
-        $filters = [
-            'departureCity' => $request->query('departureCity'),
-            'arrivalCity' => $request->query('arrivalCity'),
-            'date' => $request->query('date'),
-            'company' => $request->query('company'),
-            'passengers' => $request->query('passengers'),
-        ];
-        $trips = $this->voyageService->getTrips($filters);
-        return response()->json($trips);
+        try {
+            $filters = [
+                'departureCity' => $request->query('departureCity'),
+                'arrivalCity' => $request->query('arrivalCity'),
+                'date' => $request->query('date'),
+                'company' => $request->query('company'),
+                'passengers' => $request->query('passengers'),
+            ];
+
+            $trips = $this->voyageService->getTrips($filters);
+
+            return TripResource::collection($trips);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ], 500);
+        }
     }
 
     /**
      * Get trip details by ID
+     *
+     * @param string $id
      */
     public function getTripDetails(string $id)
     {
+        try {
+            $trip = $this->voyageService->getTripDetails($id);
 
-        $voyage = VoyageInstance::find($id);
-        if (!$voyage) {
-            return response()->json(['message' => 'Voyage '.$id.' non trouvé'], 404);
+            return TripResource::make($trip);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ], 404);
         }
-        $trip = $this->voyageService->getTripDetails($id);
-        return response()->json($trip);
     }
 
     /**
      * Get seats availability for a specific trip
+     *
+     * @param string $id
      */
     public function getTripSeats(string $id)
     {

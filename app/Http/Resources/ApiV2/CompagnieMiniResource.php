@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\ApiV2;
 
 use Illuminate\Http\Request;
-use App\Http\Resources\UserUltraMiniRessource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class LikeResource extends JsonResource
+class CompagnieMiniResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,7 +16,9 @@ class LikeResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'user' => UserUltraMiniRessource::make($this->user),
+            'name' => $this->name,
+            'logo' => $this->logo,
+            'statut' => $this->statut->name,
         ];
     }
 }

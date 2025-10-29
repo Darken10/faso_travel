@@ -1,10 +1,9 @@
 <?php
 
-namespace App\features\payement;
+namespace App\Features\Payement;
 
-use App\Enums\MoyenPayment;
 use App\Enums\StatutPayement;
-use App\features\payement\PaymentGatewayInterface;
+use App\Features\Payement\PaymentGatewayInterface;
 use App\Models\Ticket\Payement;
 use App\Models\Ticket\Ticket;
 use App\Models\User;
@@ -12,7 +11,6 @@ use Ligdicash\Ligdicash;
 
 class LigdiCashPaymentGateway implements PaymentGatewayInterface
 {
-
     protected Ligdicash $ligdiCash;
 
     public function __construct()

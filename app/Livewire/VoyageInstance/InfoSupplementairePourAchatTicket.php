@@ -2,11 +2,11 @@
 
 namespace App\Livewire\VoyageInstance;
 
+use Livewire\Component;
 use App\Helper\VoyageHelper;
+use Illuminate\Support\Collection;
 use App\Models\Voyage\VoyageInstance;
 use App\Services\ticket\TicketService;
-use Illuminate\Support\Collection;
-use Livewire\Component;
 
 class InfoSupplementairePourAchatTicket extends Component
 {
@@ -52,10 +52,10 @@ class InfoSupplementairePourAchatTicket extends Component
     public function submit()
     {
 
-        $this->ticketService = resolve(TicketService::class);
+        $ticketService = resolve(TicketService::class);
         $data = $this->validate();
         $isMine = $this->buyFor === 'self';
-            $tk = $this->ticketService->create($this->voyageInstance->id,$data,$isMine);
+            $tk = $ticketService->create($this->voyageInstance->id,$data,$isMine);
         if ($tk){
             return to_route('ticket.goto-payment',$tk);
         }

@@ -2,13 +2,14 @@
 
 namespace App\Services\Voyage;
 
-use App\Enums\StatutTicket;
 use App\Enums\TypeTicket;
+use App\Enums\StatutTicket;
 use App\Helper\TicketHelpers;
-use App\Models\Ticket\AutrePersonne;
 use App\Models\Ticket\Ticket;
-use App\Models\Voyage\VoyageInstance;
+use Illuminate\Support\Facades\DB;
+use App\Models\Ticket\AutrePersonne;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Voyage\VoyageInstance;
 
 class TicketService
 {
@@ -22,7 +23,7 @@ class TicketService
         $data['code_sms'] = TicketHelpers::generateTicketCodeSms();
         $data['code_qr'] = TicketHelpers::generateTicketCodeQr();
         $data['type']  = $data['type'] == 'aller_retour' ? TypeTicket::AllerRetour : TypeTicket::AllerSimple;
-        $data['user_id'] = \auth()->user()->id ;
+        $data['user_id'] = Auth::user()->id ;
         $data['is_my_ticket'] = $is_my_ticket;
         $data['a_bagage']  = array_key_exists('a_bagage',$data);
         $data['date'] = $voyage_instance->date;
@@ -37,14 +38,14 @@ class TicketService
             ->get();
 
         if($tickets->count()===0){
-            \DB::beginTransaction();
+            DB::beginTransaction();
                 if (array_key_exists('autre_personne_id', $data) && !$is_my_ticket){
                     $data['is_my_ticket']= false;
                     $autre = AutrePersonne::find($data['autre_personne_id']);
                     $data['autre_personne_id'] = $autre->id;
                 }
                 $ticket = Ticket::create($data);
-            \DB::commit();
+            DB::commit();
 
             return [
                 'ticket' => $ticket,

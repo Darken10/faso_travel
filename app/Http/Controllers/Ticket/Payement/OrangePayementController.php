@@ -2,29 +2,29 @@
 
 namespace App\Http\Controllers\Ticket\Payement;
 
-use App\Enums\TypeNotification;
-use App\Enums\TypeTicket;
-use App\Events\PayementEffectuerEvent;
-use App\Events\SendClientTicketByMailEvent;
-use App\Helper\TicketHelpers;
-use App\Notifications\Ticket\TicketNotification;
 use Exception;
+use App\Enums\TypeTicket;
 use App\Enums\MoyenPayment;
 use App\Enums\StatutTicket;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Enums\StatutPayement;
+use App\Helper\TicketHelpers;
 use App\Models\Ticket\Ticket;
+use App\Enums\TypeNotification;
+use App\Mail\Ticket\TicketMail;
 use App\Models\Ticket\Payement;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
+use App\Events\PayementEffectuerEvent;
+use App\Helper\Pdf\PdfGeneratorHelper;
+use Illuminate\Support\Facades\Storage;
+use App\Events\SendClientTicketByMailEvent;
 use App\Helper\QrCode\QrCodeGeneratorHelper;
 use App\Helper\Payement\OrangePayementHelper;
-use App\Helper\Pdf\PdfGeneratorHelper;
+use App\Notifications\Ticket\TicketNotification;
 use App\Http\Requests\Ticket\Payement\OrangePayementRequest;
-use App\Mail\Ticket\TicketMail;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
 
 class OrangePayementController extends Controller
 {
@@ -78,14 +78,14 @@ class OrangePayementController extends Controller
                     ->where('statut',StatutTicket::Payer)
                     ->get();
                 if ($TkAvecLeMemeNumeroChaise->count()>=1){
-                    $ticket->numero_chaise =TicketHelpers::getNumeroChaise($ticket->voyageInstance);
+                    $ticket->numero_chaise = TicketHelpers::getNumeroChaise($ticket->voyageInstance);
                 }
-
-
                 $ticket->save();
 
                 PayementEffectuerEvent::dispatch($ticket);
+                dd($ticket->numero_chaise);
                 SendClientTicketByMailEvent::dispatch($ticket,TypeNotification::TICKET_PAYER);
+                
                 DB::commit();
                 return redirect()->route('ticket.show-ticket',['ticket'=>$ticket])->with('success',"Le paiement de votre ticket a été effectué avec succès");
             }

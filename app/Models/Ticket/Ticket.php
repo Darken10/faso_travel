@@ -2,21 +2,23 @@
 
 namespace App\Models\Ticket;
 
+use Carbon\Carbon;
 use App\Models\User;
 use App\Enums\TypeTicket;
 use App\Enums\StatutTicket;
-use App\Models\Compagnie\Compagnie;
 use App\Models\Compagnie\Gare;
+use App\Models\Ticket\Payement;
+use App\Models\Compagnie\Compagnie;
+use App\Models\Ticket\AutrePersonne;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Voyage\VoyageInstance;
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Auth;
 
 class Ticket extends Model
 {

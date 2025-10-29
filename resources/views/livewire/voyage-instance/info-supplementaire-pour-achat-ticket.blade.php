@@ -25,19 +25,7 @@
         <x-input-error for="voyageType" />
     </div>
 
-    <!-- Sélection des bagages -->
-    {{--<div class="mb-4">
-        <x-label value="Bagages" class="block mb-2 text-sm font-medium text-gray-900" />
-        <div class="flex flex-wrap gap-2">
-            @foreach($bagageOptions as $bagage)
-                <label class="flex items-center">
-                    <input type="checkbox" wire:model="bagages" value="{{ $bagage }}" class="mr-2">
-                    {{ $bagage }}
-                </label>
-            @endforeach
-        </div>
-        <x-input-error for="bagages" />
-    </div>--}}
+
 
     <!-- Boutons radio pour la sélection -->
     <div class="mb-4">

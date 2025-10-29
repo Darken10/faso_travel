@@ -4,9 +4,9 @@ namespace App\Listeners;
 
 use App\Events\CreatedQrCodeEvent;
 use App\Events\PayementEffectuerEvent;
-use App\Helper\QrCode\QrCodeGeneratorHelper;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use App\Helper\QrCode\QrCodeGeneratorHelper;
 
 class PayementCreatQrCodeListener
 {

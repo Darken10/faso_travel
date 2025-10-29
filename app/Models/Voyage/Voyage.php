@@ -2,23 +2,26 @@
 
 namespace App\Models\Voyage;
 
-use App\Enums\TypeTicket;
-use App\Models\Compagnie\Care;
 use App\Models\User;
 use App\Models\Statut;
+use App\Enums\TypeTicket;
+use App\Enums\JoursSemain;
+use App\Models\Voyage\Days;
 use App\Models\Ticket\Ticket;
+use App\Models\Voyage\Classe;
 use App\Models\Voyage\Trajet;
+use App\Models\Compagnie\Care;
 use App\Models\Compagnie\Gare;
 use App\Models\Voyage\Confort;
 use App\Models\Compagnie\Compagnie;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Voyage\VoyageInstance;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use App\Enums\JoursSemain;
 
 
 class Voyage extends Model

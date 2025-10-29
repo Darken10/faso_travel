@@ -7,6 +7,7 @@ use App\Enums\TypeTicket;
 use App\Enums\StatutTicket;
 use App\Models\Ville\Ville;
 use App\Models\Ticket\Ticket;
+use App\Models\Voyage\Voyage;
 use App\Models\Compagnie\Care;
 use App\Models\Compagnie\Chauffer;
 use App\Enums\StatutVoyageInstance;

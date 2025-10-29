@@ -33,6 +33,7 @@ class TicketService
         $data['numero_ticket'] = TicketHelpers::generateTicketNumber();
         $data['code_sms'] = TicketHelpers::generateTicketCodeSms();
         $data['code_qr'] = TicketHelpers::generateTicketCodeQr();
+        $date['user_id'] = Auth::user()->id ;
         $data['type']  = $data['voyageType'] == 'aller_retour'? TypeTicket::AllerRetour : TypeTicket::AllerSimple;
         $data['is_my_ticket'] = $isMine;
         if (!$isMine){

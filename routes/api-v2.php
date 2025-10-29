@@ -84,4 +84,9 @@ Route::prefix('v2')->group(function () {
 
 
 
+/* Route::prefix('/admin')->controller(AdminVoyageTicketController::class)->middleware('auth:sanctum')->name('api.admin.voyage.ticket.')->group(function () {
+    Route::post('/ticket', 'payement')->name('payement');
+});
+ */
+
 

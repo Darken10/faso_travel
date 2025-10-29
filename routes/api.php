@@ -95,3 +95,4 @@ Route::get('/user', function (Request $request) {
 Route::post('/process-payment/{provider}', [PaymentController2::class, 'processPayment']);
 
 require __DIR__ . '/api-v2.php';
+require __DIR__ . '/admin.php';

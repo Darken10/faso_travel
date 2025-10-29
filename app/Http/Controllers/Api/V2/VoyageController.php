@@ -10,7 +10,7 @@ use App\Http\Resources\ApiV2\TripResource;
 
 class VoyageController extends Controller
 {
-    protected $voyageService;
+    protected VoyageService $voyageService;
 
     public function __construct(VoyageService $voyageService)
     {

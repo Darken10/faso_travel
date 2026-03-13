@@ -3,7 +3,6 @@
 namespace App\Filament\Compagnie\Resources\Compagnie;
 
 use Filament\Forms;
-use Filament\Forms\Components\Actions\Action;
 use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Infolist;
@@ -55,21 +54,26 @@ class GareResource extends Resource
                             ->searchable()->native(false)->preload()->live()->label('Ville')
                             ->columnSpanFull(),
 
-                        Forms\Components\TextInput::make('lng')
-                            ->id('lngField')
-                            ->required()
-                            ->numeric()
-                            ->label('Longitude'),
+                        Forms\Components\View::make('filament.forms.map-picker')
+                            ->columnSpanFull(),
 
                         Forms\Components\TextInput::make('lat')
-                            ->id('latField')
                             ->required()
                             ->numeric()
+                            ->readOnly()
                             ->label('Latitude')
-                        ->prefixAction(Action::make('getLocation')
-                            ->label('Détecter ma position')
-                            ->action(fn () => request()->session()->flash('get-location', true))
-                            ->icon('heroicon-o-rectangle-stack')),
+                            ->placeholder('Cliquez sur la carte pour définir la position')
+                            ->prefixIcon('heroicon-o-map-pin')
+                            ->helperText('Rempli automatiquement via la carte'),
+
+                        Forms\Components\TextInput::make('lng')
+                            ->required()
+                            ->numeric()
+                            ->readOnly()
+                            ->label('Longitude')
+                            ->placeholder('Cliquez sur la carte pour définir la position')
+                            ->prefixIcon('heroicon-o-globe-alt')
+                            ->helperText('Rempli automatiquement via la carte'),
 
 
                     ])->columns(2),

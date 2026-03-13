@@ -45,9 +45,9 @@ class ClasseResource extends Resource
      */
     public static function table(Table $table): Table
     {
-        $users = \auth()->user()->compagnie->users->pluck('id')->toArray();
+        $users = \auth()->user()?->compagnie?->users?->pluck('id')->toArray() ?? [];
         return $table
-            ->query(fn () =>  Classe::query()->whereIn('user_id',$users))
+            ->query(fn () =>  Classe::query()->whereIn('user_id', $users))
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),

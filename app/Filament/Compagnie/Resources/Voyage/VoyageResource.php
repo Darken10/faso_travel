@@ -88,7 +88,7 @@ class VoyageResource extends Resource
                             ->default(0),
                         Forms\Components\Select::make('classe_id')
                             ->label('Classe')
-                            ->options(fn(Get $get): Collection => \Auth::user()->compagnie->classes->pluck('name', 'id'))
+                            ->options(fn(Get $get): Collection => \Auth::user()?->compagnie?->classes?->pluck('name', 'id') ?? collect())
                             ->native(False)->searchable()->preload()
                             ->required(),
                     ])->columns(),

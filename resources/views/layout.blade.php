@@ -7,43 +7,31 @@
 
         <title>{{ config('app.name', 'Faso Travel') }} | @yield('title')</title>
 
-        <!-- Fonts
+        <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
--->
-
+        <link href="https://fonts.bunny.net/css?family=inter:300,400,500,600,700&display=swap" rel="stylesheet" />
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
-
     </head>
-    <body class="font-sans antialiased bg-gray-100 dark:bg-gray-700 dark:text-gray-300"  >
+    <body class="font-sans antialiased bg-surface-50 dark:bg-surface-900 text-surface-800 dark:text-surface-200">
         @include('shared._navbar')
 
-        <div class="  px-6 dark:bg-gray-700 dark:text-gray-300">
-            <!-- Page Content -->
-
-
-            <main class="pt-24 dark:bg-gray-700 dark:text-gray-300" >
-                <!-- flash info -->
+        <div class="dark:bg-surface-900">
+            <main class="pt-20 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto animate-fade-in">
+                <!-- Flash Messages -->
                 @if (session('success'))
                     <x-alert type="success"> {{ session('success') }}</x-alert>
-                @else
-                    @if (session('error'))
-                        <x-alert type="error"> {{ session('error') }}</x-alert>
-                    @endif
+                @elseif (session('error'))
+                    <x-alert type="error"> {{ session('error') }}</x-alert>
                 @endif
-                <!-- fin flash info -->
-{{-- <x-shared.chat-bulle/> --}}
+
                 @yield('content')
             </main>
-
-            {{-- <x-shared.chat-support/> --}}
         </div>
 
         @include('shared._footer')
 
-    @yield('script','')
-
+        @yield('script','')
     </body>
 </html>

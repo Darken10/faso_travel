@@ -1,9 +1,10 @@
-<a href="/" class="flex text-lg font-semibold capitalize no-underline cente justify-center items-center " style="vertical-align: center">
-    <img
-        src="{{ asset('images/logo.jpg') }}"
-        width="90"
-        height="90"
-        class="p-2"
-        alt=''/>
-    <div class="hidden md:block mt-3 text-blue-600 font-bold text-3xl " style="color: #0000cc">Travel</div>
+<a href="/" class="flex items-center gap-2 group no-underline">
+    <img src="{{ asset('images/logo.jpg') }}"
+         width="40"
+         height="40"
+         class="rounded-lg"
+         alt="Faso Travel" />
+    <span class="hidden sm:block text-lg font-bold text-primary-700 dark:text-primary-400 group-hover:text-primary-600 transition-colors">
+        Faso Travel
+    </span>
 </a>

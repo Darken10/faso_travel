@@ -2,56 +2,231 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ================================================================
+   FASO TRAVEL — Design System
+   ================================================================ */
 
 [x-cloak] {
     display: none;
 }
 
+/* ----------------------------------------------------------------
+   Base Layer — Global Defaults
+   ---------------------------------------------------------------- */
+@layer base {
+    body {
+        @apply text-surface-800 dark:text-surface-200 antialiased;
+    }
+
+    ::selection {
+        @apply bg-primary-500/20 text-primary-900;
+    }
+
+    /* Smooth scrollbar */
+    ::-webkit-scrollbar {
+        @apply w-1.5;
+    }
+    ::-webkit-scrollbar-track {
+        @apply bg-transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+        @apply bg-surface-300 rounded-full dark:bg-surface-600;
+    }
+}
+
+/* ----------------------------------------------------------------
+   Components Layer — Reusable UI Classes
+   ---------------------------------------------------------------- */
 @layer components {
 
+    /* === Cards ================================================== */
     .card {
-        @apply max-w-2xl p-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700
+        @apply bg-white border border-surface-200 rounded-2xl shadow-card p-5
+               dark:bg-surface-800 dark:border-surface-700
+               transition-shadow duration-200 hover:shadow-soft;
     }
 
     .card-header {
-        @apply text-2xl font-bold tracking-tight text-gray-900 dark:text-white
+        @apply text-xl font-semibold tracking-tight text-surface-900 dark:text-white;
+    }
+
+    /* === Buttons ================================================ */
+    .btn {
+        @apply inline-flex items-center justify-center gap-2 font-medium rounded-xl text-sm
+               px-5 py-2.5 transition-all duration-200 ease-out
+               focus:outline-none focus:ring-2 focus:ring-offset-2
+               disabled:opacity-50 disabled:cursor-not-allowed;
     }
 
     .btn-primary {
-        @apply text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800
+        @apply btn text-white
+               bg-primary-500 hover:bg-primary-600 active:bg-primary-700
+               focus:ring-primary-300
+               dark:bg-primary-600 dark:hover:bg-primary-500
+               dark:focus:ring-primary-700 dark:focus:ring-offset-surface-900
+               shadow-sm hover:shadow-md;
     }
 
-    .btn-secondary{
-        @apply py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700
+    .btn-secondary {
+        @apply btn text-surface-700
+               bg-white border border-surface-300
+               hover:bg-surface-50 hover:border-surface-400
+               focus:ring-surface-200
+               dark:bg-surface-800 dark:text-surface-300 dark:border-surface-600
+               dark:hover:bg-surface-700 dark:hover:text-white
+               dark:focus:ring-surface-700 dark:focus:ring-offset-surface-900;
     }
 
-    .btn-danger, .btn-error{
-        @apply focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900
-
+    .btn-accent {
+        @apply btn text-white
+               bg-accent-500 hover:bg-accent-600 active:bg-accent-700
+               focus:ring-accent-300
+               dark:focus:ring-offset-surface-900
+               shadow-sm hover:shadow-md;
     }
 
-    .btn-success{
-        @apply focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800
+    .btn-danger, .btn-error {
+        @apply btn text-white
+               bg-danger-500 hover:bg-danger-600 active:bg-danger-700
+               focus:ring-danger-100
+               dark:bg-danger-600 dark:hover:bg-danger-500
+               dark:focus:ring-danger-700 dark:focus:ring-offset-surface-900;
     }
 
-    .btn-warning{
-        @apply focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900
+    .btn-success {
+        @apply btn text-white
+               bg-success-500 hover:bg-success-600 active:bg-success-700
+               focus:ring-success-100
+               dark:bg-success-600 dark:hover:bg-success-500
+               dark:focus:ring-offset-surface-900;
     }
 
-    .btn-dark{
-        @apply text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700
-
+    .btn-warning {
+        @apply btn text-surface-900
+               bg-warning-500 hover:bg-warning-600 active:bg-warning-700
+               focus:ring-warning-100
+               dark:focus:ring-offset-surface-900;
     }
 
-    .btn-light{
-        @apply text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700
+    .btn-dark {
+        @apply btn text-white
+               bg-surface-800 hover:bg-surface-900
+               focus:ring-surface-300
+               dark:bg-surface-700 dark:hover:bg-surface-600
+               dark:focus:ring-surface-600 dark:focus:ring-offset-surface-900;
     }
 
-    .btn-purpose{
-        @apply focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900
+    .btn-light {
+        @apply btn text-surface-700
+               bg-surface-100 hover:bg-surface-200
+               focus:ring-surface-200
+               dark:bg-surface-700 dark:text-surface-300
+               dark:hover:bg-surface-600
+               dark:focus:ring-surface-600 dark:focus:ring-offset-surface-900;
     }
 
-    .choix-payement{
-        @apply text-gray-900 w-full bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center flex-col justify-center items-center dark:focus:ring-gray-600 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 me-2 mb-2
+    .btn-purpose {
+        @apply btn text-white
+               bg-purple-600 hover:bg-purple-700 active:bg-purple-800
+               focus:ring-purple-200
+               dark:bg-purple-500 dark:hover:bg-purple-600
+               dark:focus:ring-offset-surface-900;
+    }
+
+    .btn-ghost {
+        @apply btn text-surface-600
+               bg-transparent hover:bg-surface-100
+               focus:ring-surface-200
+               dark:text-surface-400 dark:hover:bg-surface-800
+               dark:focus:ring-surface-700 dark:focus:ring-offset-surface-900;
+    }
+
+    .btn-sm {
+        @apply text-xs px-3.5 py-2 rounded-lg;
+    }
+
+    .btn-lg {
+        @apply text-base px-6 py-3 rounded-xl;
+    }
+
+    .btn-icon {
+        @apply p-2.5 rounded-xl;
+    }
+
+    /* === Form Inputs ============================================ */
+    .input {
+        @apply w-full rounded-xl border border-surface-300 bg-white
+               px-4 py-2.5 text-sm text-surface-900
+               placeholder:text-surface-400
+               focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20
+               transition-colors duration-200
+               dark:bg-surface-800 dark:border-surface-600 dark:text-surface-200
+               dark:placeholder:text-surface-500
+               dark:focus:border-primary-400 dark:focus:ring-primary-400/20;
+    }
+
+    .input-label {
+        @apply block text-sm font-medium text-surface-700 mb-1.5
+               dark:text-surface-300;
+    }
+
+    /* === Badges ================================================= */
+    .badge {
+        @apply inline-flex items-center gap-1 px-2.5 py-0.5 text-xs font-medium rounded-full;
+    }
+
+    .badge-primary {
+        @apply badge bg-primary-100 text-primary-700 dark:bg-primary-900/30 dark:text-primary-300;
+    }
+
+    .badge-success {
+        @apply badge bg-success-100 text-success-700 dark:bg-success-500/20 dark:text-success-500;
+    }
+
+    .badge-warning {
+        @apply badge bg-warning-100 text-warning-700 dark:bg-warning-500/20 dark:text-warning-500;
+    }
+
+    .badge-danger {
+        @apply badge bg-danger-100 text-danger-700 dark:bg-danger-500/20 dark:text-danger-500;
+    }
+
+    .badge-neutral {
+        @apply badge bg-surface-100 text-surface-600 dark:bg-surface-700 dark:text-surface-300;
+    }
+
+    /* === Payment Choice ========================================== */
+    .choix-payement {
+        @apply w-full bg-white border border-surface-200 rounded-xl
+               px-5 py-4 text-sm font-medium text-surface-700
+               flex flex-col justify-center items-center text-center gap-2
+               hover:border-primary-300 hover:bg-primary-50 hover:shadow-soft
+               focus:outline-none focus:ring-2 focus:ring-primary-500/20
+               transition-all duration-200
+               dark:bg-surface-800 dark:border-surface-600 dark:text-surface-300
+               dark:hover:border-primary-500 dark:hover:bg-surface-700;
+    }
+
+    /* === Divider ================================================ */
+    .divider {
+        @apply border-t border-surface-200 dark:border-surface-700;
+    }
+
+    /* === Glass Effect =========================================== */
+    .glass {
+        @apply bg-white/80 backdrop-blur-xl border border-white/20
+               dark:bg-surface-900/80 dark:border-surface-700/50;
+    }
+}
+
+/* ----------------------------------------------------------------
+   Utilities Layer
+   ---------------------------------------------------------------- */
+@layer utilities {
+    .text-gradient {
+        @apply bg-clip-text text-transparent bg-gradient-to-r from-primary-500 to-primary-700;
+    }
+    .animate-in {
+        @apply animate-fade-in;
     }
 }

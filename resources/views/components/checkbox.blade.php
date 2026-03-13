@@ -1,1 +1,1 @@
-<input type="checkbox" {!! $attributes->merge(['class' => 'rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800']) !!}>
+<input type="checkbox" {!! $attributes->merge(['class' => 'rounded-md border-surface-300 text-primary-600 shadow-sm focus:ring-2 focus:ring-primary-500/20 focus:ring-offset-0 dark:bg-surface-800 dark:border-surface-600 dark:text-primary-500 dark:focus:ring-primary-400/20 transition-colors cursor-pointer']) !!}>

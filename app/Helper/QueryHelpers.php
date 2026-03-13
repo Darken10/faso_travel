@@ -17,6 +17,9 @@ class QueryHelpers
 {
     public static function AllUsersOfMyCompagnie()
     {
+        if (!auth()->check() || !auth()->user()->compagnie) {
+            return \App\Models\User::whereRaw('1 = 0');
+        }
         return auth()->user()->compagnie->users();
     }
 
@@ -32,16 +35,19 @@ class QueryHelpers
 
     public static function AllVoyagesOfMyCompagnie(): \Illuminate\Database\Eloquent\Builder|Voyage
     {
+        if (!auth()->check() || !auth()->user()->compagnie) {
+            return Voyage::whereRaw('1 = 0');
+        }
         return Voyage::whereBelongsTo(auth()->user()->compagnie);
-
     }
 
     public static function AllVoyagesInstanceOfMyCompagnie(): \Illuminate\Database\Eloquent\Builder|VoyageInstance
     {
-
+        if (!auth()->check() || !auth()->user()->compagnie) {
+            return VoyageInstance::whereRaw('1 = 0');
+        }
         $voyages = Voyage::whereBelongsTo(auth()->user()->compagnie)->get()->pluck(['id'])->toArray();
         return VoyageInstance::whereIn('voyage_id',$voyages);
-
     }
 
     public static function AllTicketOfMyCompagnie(?StatutTicket $statutTicket=null): \Illuminate\Database\Eloquent\Collection|Ticket|\Illuminate\Database\Eloquent\Builder|\LaravelIdea\Helper\App\Models\Ticket\_IH_Ticket_QB|Builder

@@ -4,64 +4,57 @@ namespace App\Services\V2;
 
 use Carbon\Carbon;
 use App\Models\User;
+use App\Enums\SexeUser;
+use App\Enums\UserRole;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\DB;
+use App\DTOs\Auth\LoginDTO;
+use App\DTOs\Auth\RegisterDTO;
+use App\DTOs\Auth\VerifyOtpDTO;
+use App\DTOs\Auth\ResetPasswordDTO;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Auth\Events\PasswordReset;
+use App\Exceptions\AuthenticationException;
 
 class AuthService
 {
-    /**
-     * Register a new user
-     *
-     * @param array $data
-     * @return array
-     */
-    public function register(array $data): array
+    public function register(RegisterDTO $dto): array
     {
         $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-            'first_name' => $data['first_name'] ?? $data['name'],
-            'last_name' => $data['last_name'] ?? '',
-            'sexe' => $data['sexe'] ?? \App\Enums\SexeUser::Homme,
-            'numero' => $data['numero'] ?? null,
-            'numero_identifiant' => $data['numero_identifiant'] ?? '+226',
-            'role' => $data['role'] ?? \App\Enums\UserRole::User,
-            'compagnie_id' => $data['compagnie_id'] ?? null
+            'name' => $dto->name,
+            'email' => $dto->email,
+            'password' => Hash::make($dto->password),
+            'first_name' => $dto->first_name ?? $dto->name,
+            'last_name' => $dto->last_name ?? '',
+            'sexe' => $dto->sexe ?? SexeUser::Homme,
+            'numero' => $dto->numero,
+            'numero_identifiant' => $dto->numero_identifiant ?? '+226',
+            'role' => $dto->role ?? UserRole::User,
+            'compagnie_id' => $dto->compagnie_id,
         ]);
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return [
             'user' => $user,
-            'token' => $token
+            'token' => $token,
         ];
     }
 
-    /**
-     * Login a user
-     *
-     * @param array $credentials
-     * @return array
-     */
-    public function login(array $credentials): array
+    public function login(LoginDTO $dto): array
     {
-        if (!Auth::attempt($credentials)) {
-            throw new \Exception('Email ou mot de passe incorrect');
+        if (!Auth::attempt(['email' => $dto->email, 'password' => $dto->password])) {
+            throw AuthenticationException::invalidCredentials();
         }
 
-        $user = User::where('email', $credentials['email'])->firstOrFail();
+        $user = User::where('email', $dto->email)->firstOrFail();
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return [
             'user' => $user,
-            'token' => $token
+            'token' => $token,
         ];
     }
 
@@ -109,24 +102,16 @@ class AuthService
         return true;
     }
 
-    /**
-     * Verify OTP
-     *
-     * @param string $phoneOrEmail
-     * @param string $otp
-     * @return bool
-     */
-    public function verifyOtp(string $phoneOrEmail, string $otp): bool
+    public function verifyOtp(VerifyOtpDTO $dto): bool
     {
-        $storedOtp = Cache::get("otp_{$phoneOrEmail}");
-        
-        if (!$storedOtp || $storedOtp !== $otp) {
+        $storedOtp = Cache::get("otp_{$dto->phone_or_email}");
+
+        if (!$storedOtp || $storedOtp !== $dto->otp) {
             return false;
         }
-        
-        // Supprimer l'OTP après vérification
-        Cache::forget("otp_{$phoneOrEmail}");
-        
+
+        Cache::forget("otp_{$dto->phone_or_email}");
+
         return true;
     }
 
@@ -143,22 +128,14 @@ class AuthService
         return $status === Password::RESET_LINK_SENT;
     }
 
-    /**
-     * Reset password
-     *
-     * @param string $token
-     * @param string $password
-     * @param string $email
-     * @return bool
-     */
-    public function resetPassword(string $token, string $password, string $email): bool
+    public function resetPassword(ResetPasswordDTO $dto): bool
     {
         $status = Password::reset(
             [
-                'email' => $email,
-                'password' => $password,
-                'password_confirmation' => $password,
-                'token' => $token,
+                'email' => $dto->email,
+                'password' => $dto->password,
+                'password_confirmation' => $dto->password,
+                'token' => $dto->token,
             ],
             function ($user, $password) {
                 $user->forceFill([

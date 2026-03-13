@@ -24,11 +24,11 @@ enum StatutCare: string
         ];
     }
 
-    public function getColor(): string | array | null
+    public function getColor(): string|array|null
     {
         return match ($this) {
             self::Occuper => 'info',
-            self::EnPanne,  => 'danger',
+            self::EnPanne => 'danger',
             self::Disponible => 'success',
         };
     }

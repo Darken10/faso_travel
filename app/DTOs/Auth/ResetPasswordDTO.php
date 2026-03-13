@@ -1,0 +1,21 @@
+<?php
+
+namespace App\DTOs\Auth;
+
+readonly class ResetPasswordDTO
+{
+    public function __construct(
+        public string $email,
+        public string $token,
+        public string $password,
+    ) {}
+
+    public static function fromRequest(array $validated): self
+    {
+        return new self(
+            email: $validated['email'],
+            token: $validated['token'],
+            password: $validated['password'],
+        );
+    }
+}

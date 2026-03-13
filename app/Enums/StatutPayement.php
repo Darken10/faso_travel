@@ -14,11 +14,11 @@ enum StatutPayement: string
         return array_column(self::cases(), 'value');
     }
 
-    public function getColor(): string | array | null
+    public function getColor(): string|array|null
     {
         return match ($this) {
             self::EnAttente => 'info',
-            self::Annuler,  => 'danger',
+            self::Annuler => 'danger',
             self::Complete => 'success',
         };
     }

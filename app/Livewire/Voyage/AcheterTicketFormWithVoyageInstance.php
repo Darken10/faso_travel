@@ -6,7 +6,9 @@ namespace App\Livewire\Voyage;
 use App\Helper\VoyageHelper;
 use App\Models\Ticket\AutrePersonne;
 use App\Models\Voyage\Voyage;
-use App\Services\Voyage\TicketService;
+use App\Services\Ticket\TicketCommandService;
+use App\Enums\TypeTicket;
+use App\Models\Voyage\VoyageInstance;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -52,12 +54,15 @@ class AcheterTicketFormWithVoyageInstance extends Component
             'type' => $this->type_ticket,
             'autre_personne_id'=>$this->autre_personne?->id
         ];
-         $res = TicketService::createTicket($this->voyage_instance_choise,$data,$this->is_my_ticket);
+         $voyageInstance = VoyageInstance::findOrFail($this->voyage_instance_choise);
+         $type = ($data['type'] ?? 'aller_simple') === 'aller_retour' ? TypeTicket::AllerRetour : TypeTicket::AllerSimple;
+         $ticketCommandService = resolve(TicketCommandService::class);
+         $res = $ticketCommandService->createFromVoyageInstance($voyageInstance, $type, $this->is_my_ticket, $this->autre_personne);
 
-         if ($res['create'] === false) {
+         if (!$res['created']) {
              return to_route('ticket.goto-payment',[
                  'ticket' => $res['ticket'],
-             ])->with("success","Un ticket non payer existe deja a votre nom pour le meme trajet a la meme date");
+             ])->with("success","Un ticket non payé existe déjà à votre nom pour le même trajet à la même date");
          }
          else{
              return to_route('ticket.goto-payment',[

@@ -9,7 +9,8 @@ use App\Http\Resources\TicketResource;
 use App\Http\Resources\PassengerResource;
 use App\Models\Voyage\VoyageInstance;
 use App\Services\Voyage\VoyageInstanceService;
-use App\Services\Voyage\TicketService;
+use App\Services\Ticket\TicketCommandService;
+use App\Enums\TypeTicket;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 
@@ -17,7 +18,7 @@ class VoyageApiContoller extends Controller
 {
     public function __construct(
         protected VoyageInstanceService $voyageInstanceService,
-        protected TicketService $ticketService
+        protected TicketCommandService $ticketCommandService,
     ) {}
 
     /**
@@ -76,12 +77,14 @@ class VoyageApiContoller extends Controller
             'bagages_data' => 'array'
         ]);
 
-        $result = $this->ticketService->create($voyageInstanceId, $validated, $validated['is_my_ticket']);
+        $voyageInstance = VoyageInstance::findOrFail($voyageInstanceId);
+        $type = $validated['type'] === 'aller_retour' ? TypeTicket::AllerRetour : TypeTicket::AllerSimple;
+        $result = $this->ticketCommandService->createFromVoyageInstance($voyageInstance, $type, $validated['is_my_ticket']);
 
         return response()->json([
             'status' => true,
-            'message' => 'Ticket réservé avec succès',
-            'data' => new TicketResource($result)
+            'message' => $result['message'],
+            'data' => new TicketResource($result['ticket'])
         ]);
     }
 

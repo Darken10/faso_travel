@@ -6,7 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\TicketDetailResource;
 use App\Http\Resources\TicketResource;
 use App\Http\Resources\VoyageInstanceResource;
-use App\Services\TicketService;
+use App\Services\Ticket\TicketQueryService;
+use App\Services\Ticket\TicketCommandService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
@@ -14,8 +15,10 @@ use Illuminate\Support\Facades\Auth;
 
 class TicketController extends Controller
 {
-    public function __construct(private TicketService $ticketService)
-    {
+    public function __construct(
+        private TicketQueryService $ticketQueryService,
+        private TicketCommandService $ticketCommandService,
+    ) {
     }
 
     /**
@@ -30,7 +33,7 @@ class TicketController extends Controller
 
     /**
      * Get all tickets for the authenticated user
-     * 
+     *
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
@@ -38,8 +41,9 @@ class TicketController extends Controller
     {
         try {
             $status = $request->input('status');
-            $tickets = $this->ticketService->getUserTickets($status);
-            
+            $statusEnum = $status ? \App\Enums\StatutTicket::tryFrom($status) : null;
+            $tickets = $this->ticketQueryService->getUserTickets($statusEnum);
+
             return response()->json([
                 'status' => 'success',
                 'data' => $tickets
@@ -54,15 +58,15 @@ class TicketController extends Controller
 
     /**
      * Get ticket details for the authenticated user
-     * 
+     *
      * @param string $id
      * @return \Illuminate\Http\JsonResponse
      */
     public function getUserTicketDetails(string $id)
     {
         try {
-            $ticket = $this->ticketService->getUserTicketDetails($id);
-            
+            $ticket = $this->ticketQueryService->getUserTicketById($id);
+
             return response()->json([
                 'status' => 'success',
                 'data' => $ticket
@@ -77,7 +81,7 @@ class TicketController extends Controller
 
     /**
      * Create a new ticket
-     * 
+     *
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
@@ -92,8 +96,10 @@ class TicketController extends Controller
         ]);
 
         try {
-            $ticket = $this->ticketService->createTicket($request->all());
-            
+            $voyageInstance = \App\Models\Voyage\VoyageInstance::findOrFail($request->input('voyage_instance_id'));
+            $result = $this->ticketCommandService->createFromVoyageInstance($voyageInstance, \App\Enums\TypeTicket::AllerSimple);
+            $ticket = $result['ticket'];
+
             return response()->json([
                 'status' => 'success',
                 'message' => 'Ticket created successfully',
@@ -109,15 +115,16 @@ class TicketController extends Controller
 
     /**
      * Cancel a ticket
-     * 
+     *
      * @param string $id
      * @return \Illuminate\Http\JsonResponse
      */
     public function cancelTicket(string $id)
     {
         try {
-            $result = $this->ticketService->cancelTicket($id);
-            
+            $ticket = $this->ticketQueryService->getUserTicketById($id);
+            $result = $this->ticketCommandService->cancel($ticket);
+
             return response()->json([
                 'status' => 'success',
                 'message' => 'Ticket cancelled successfully',
@@ -133,7 +140,7 @@ class TicketController extends Controller
 
     /**
      * Transfer a ticket to another user
-     * 
+     *
      * @param Request $request
      * @param string $id
      * @return \Illuminate\Http\JsonResponse
@@ -145,8 +152,10 @@ class TicketController extends Controller
         ]);
 
         try {
-            $result = $this->ticketService->transferTicket($id, $request->email);
-            
+            $ticket = $this->ticketQueryService->getUserTicketById($id);
+            $recipient = \App\Models\User::where('email', $request->email)->firstOrFail();
+            $result = $this->ticketCommandService->transfer($ticket, $recipient, $request->input('password', ''));
+
             return response()->json([
                 'status' => 'success',
                 'message' => 'Ticket transferred successfully',
@@ -162,15 +171,16 @@ class TicketController extends Controller
 
     /**
      * Get QR code for a ticket
-     * 
+     *
      * @param string $id
      * @return \Illuminate\Http\JsonResponse
      */
     public function getTicketQrCode(string $id)
     {
         try {
-            $qrCode = $this->ticketService->getTicketQrCode($id);
-            
+            $ticket = $this->ticketQueryService->getUserTicketById($id);
+            $qrCode = ['qrCode' => $ticket->code_qr, 'qrImageUrl' => url($ticket->code_qr_uri)];
+
             return response()->json([
                 'status' => 'success',
                 'data' => [
@@ -187,94 +197,94 @@ class TicketController extends Controller
 
     /**
      * Get today's paid passengers (compagnie access)
-     * 
+     *
      * @return AnonymousResourceCollection
      */
     public function todaysPaidPassengers(): AnonymousResourceCollection
     {
         $this->checkCompagnieAccess();
-        $tickets = $this->ticketService->getTodaysPaidPassengers();
+        $tickets = $this->ticketQueryService->getTodaysPaidPassengers();
         return TicketResource::collection($tickets);
     }
 
     /**
      * Get today's validated tickets (compagnie access)
-     * 
+     *
      * @return AnonymousResourceCollection
      */
     public function todaysValidatedTickets(): AnonymousResourceCollection
     {
         $this->checkCompagnieAccess();
-        $tickets = $this->ticketService->getTodaysValidatedTickets();
+        $tickets = $this->ticketQueryService->getTodaysValidatedTickets();
         return TicketResource::collection($tickets);
     }
 
     /**
      * Get today's voyage instances (compagnie access)
-     * 
+     *
      * @return AnonymousResourceCollection
      */
     public function todayVoyageInstances(): AnonymousResourceCollection
     {
         $this->checkCompagnieAccess();
-        $voyageInstances = $this->ticketService->getTodayVoyageInstances();
+        $voyageInstances = $this->ticketQueryService->getTodayVoyageInstances();
         return VoyageInstanceResource::collection($voyageInstances);
     }
 
     /**
      * Get tickets by voyage instance (compagnie access)
-     * 
+     *
      * @param string $voyageInstanceId
      * @return AnonymousResourceCollection
      */
     public function ticketsByVoyageInstance(string $voyageInstanceId): AnonymousResourceCollection
     {
         $this->checkCompagnieAccess();
-        $tickets = $this->ticketService->getTicketsByVoyageInstance($voyageInstanceId);
+        $tickets = $this->ticketQueryService->getTicketsByVoyageInstance($voyageInstanceId);
         return TicketResource::collection($tickets);
     }
 
     /**
      * Get all validated tickets (compagnie access)
-     * 
+     *
      * @return AnonymousResourceCollection
      */
     public function allValidatedTickets(): AnonymousResourceCollection
     {
         $this->checkCompagnieAccess();
-        $tickets = $this->ticketService->getAllValidatedTickets();
+        $tickets = $this->ticketQueryService->getAllValidatedTickets();
         return TicketResource::collection($tickets);
     }
 
     /**
      * Show ticket details (compagnie access)
-     * 
+     *
      * @param string $id
      * @return TicketDetailResource
      */
     public function show(string $id)
     {
         $this->checkCompagnieAccess();
-        $ticket = $this->ticketService->findTicketById($id);
+        $ticket = $this->ticketQueryService->getUserTicketById($id);
         return new TicketDetailResource($ticket);
     }
 
     /**
      * Find ticket by QR code (compagnie access)
-     * 
+     *
      * @param string $code
      * @return TicketDetailResource
      */
     public function findByQrCode(string $code)
     {
         $this->checkCompagnieAccess();
-        $ticket = $this->ticketService->findTicketByQrCode($code);
+        $ticket = $this->ticketQueryService->findByQrCode($code);
         return new TicketDetailResource($ticket);
     }
 
     /**
      * Find ticket by phone and code (compagnie access)
-     * 
+     *
      * @param Request $request
      * @return TicketDetailResource
      */
@@ -286,7 +296,7 @@ class TicketController extends Controller
             'code' => 'required|string'
         ]);
 
-        $ticket = $this->ticketService->findTicketByPhoneAndCode(
+        $ticket = $this->ticketQueryService->findByPhoneAndCode(
             $validated['phone'],
             $validated['code']
         );

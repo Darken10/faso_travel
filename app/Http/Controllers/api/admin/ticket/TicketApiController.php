@@ -5,12 +5,13 @@ namespace App\Http\Controllers\api\admin\ticket;
 use Throwable;
 use Illuminate\Http\Request;
 use App\Models\Ticket\Ticket;
-use App\Helper\TicketValidation;
 use App\Helper\Payement\Payement;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use App\Models\Voyage\VoyageInstance;
-use App\Services\ticket\TicketService;
+use App\Services\Ticket\TicketCommandService;
+use App\Services\Ticket\TicketQueryService;
+use App\Services\Ticket\TicketValidationService;
 use App\Events\Admin\TicketValiderEvent;
 
 use Illuminate\Support\Facades\Validator;
@@ -20,8 +21,11 @@ use App\Notifications\Ticket\ValiderTicketDeUserNotification;
 class TicketApiController extends Controller
 {
 
-    public function __construct(private TicketService $ticketService)
-    {
+    public function __construct(
+        private TicketCommandService $ticketCommandService,
+        private TicketQueryService $ticketQueryService,
+        private TicketValidationService $ticketValidationService,
+    ) {
     }
 
 
@@ -80,7 +84,7 @@ class TicketApiController extends Controller
         $ticket = Ticket::query()->find($data['ticket_id']);
 
         if ($data['numero_ticket'] === $ticket->numero_ticket and $data['ticket_code_qr'] === $ticket->code_qr) {
-            if (TicketValidation::valider($ticket)) {
+            if ($this->ticketValidationService->validate($ticket)) {
                 TicketValiderEvent::dispatch($ticket);
                 $ticket->user->notify(new ValiderTicketDeUserNotification($ticket));
                 return response()->json([
@@ -124,7 +128,7 @@ class TicketApiController extends Controller
             'code_sms' => ['required', 'numeric'],
         ]);
 
-        $ticket = TicketValidation::searchTicketByNumberAndCodeSMS($data['numero'], $data['code_sms']);
+        $ticket = $this->ticketValidationService->searchByNumberAndCodeSMS($data['numero'], $data['code_sms']);
 
         if ($ticket instanceof Ticket) {
            return self::verificationByQrCode($ticket->code_qr);
@@ -221,7 +225,9 @@ class TicketApiController extends Controller
 
         $data['voyage_instance_id'] = $voyage_instance->id;
 
-        $ticket = $this->ticketService->createTicket($data);
+        $type = $data['type'] === 'aller_retour' ? \App\Enums\TypeTicket::AllerRetour : \App\Enums\TypeTicket::AllerSimple;
+        $result = $this->ticketCommandService->createFromVoyageInstance($voyage_instance, $type);
+        $ticket = $result['ticket'] ?? null;
 
         if (!$ticket) {
             return response()->json([
@@ -249,7 +255,8 @@ class TicketApiController extends Controller
             'status' => ['required', 'string', 'in:validé,non_validé,annulé'],
         ]);
 
-        if (!$this->ticketService->changeStatus($ticket,$data['status'])) {
+        $newStatus = \App\Enums\StatutTicket::tryFrom($data['status']);
+        if (!$newStatus || !$this->ticketCommandService->changeStatus($ticket, $newStatus)) {
             return response()->json([
                 'success' => false,
                 'message' => [

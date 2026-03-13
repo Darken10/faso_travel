@@ -6,7 +6,8 @@ use Livewire\Component;
 use App\Helper\VoyageHelper;
 use Illuminate\Support\Collection;
 use App\Models\Voyage\VoyageInstance;
-use App\Services\ticket\TicketService;
+use App\Services\Ticket\TicketCommandService;
+use App\Enums\TypeTicket;
 
 class InfoSupplementairePourAchatTicket extends Component
 {
@@ -52,14 +53,15 @@ class InfoSupplementairePourAchatTicket extends Component
     public function submit()
     {
 
-        $ticketService = resolve(TicketService::class);
+        $ticketCommandService = resolve(TicketCommandService::class);
         $data = $this->validate();
         $isMine = $this->buyFor === 'self';
-            $tk = $ticketService->create($this->voyageInstance->id,$data,$isMine);
-        if ($tk){
-            return to_route('ticket.goto-payment',$tk);
+        $type = ($data['voyageType'] ?? 'aller_simple') === 'aller_retour' ? TypeTicket::AllerRetour : TypeTicket::AllerSimple;
+        $result = $ticketCommandService->createFromVoyageInstance($this->voyageInstance, $type, $isMine);
+        if ($result['ticket']) {
+            return to_route('ticket.goto-payment', $result['ticket']);
         }
-        session()->flash('error', 'Une erreur au survenu lors de la reservation');
+        session()->flash('error', 'Une erreur est survenue lors de la réservation');
     }
 
 

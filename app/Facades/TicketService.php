@@ -5,7 +5,7 @@ namespace App\Facades;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @see \App\Services\Voyage\TicketService
+ * @see \App\Services\Ticket\TicketCommandService
  */
 class TicketService extends Facade
 {
@@ -16,6 +16,6 @@ class TicketService extends Facade
      */
     protected static function getFacadeAccessor(): string
     {
-        return \App\Services\Voyage\TicketService::class;
+        return \App\Services\Ticket\TicketCommandService::class;
     }
 }

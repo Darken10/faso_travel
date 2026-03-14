@@ -22,19 +22,16 @@ class VoyageInstanceService
         for ($i=0; $i < $joursAvenir; $i++) {
             $dateVoyage = $aujourdHui->copy()->addDays($i);
             Voyage::all()->each(function (Voyage $voyage) use ($dateVoyage) {
-                dump('debut');
-                dump(VoyagesInstanceHelpers::isVoyageExisteInThisDate($dateVoyage,$voyage->days) ,$dateVoyage->format('l'));
-                if (in_array(JoursSemain::ToutLesJours,$voyage->days) || VoyagesInstanceHelpers::isVoyageExisteInThisDate($dateVoyage,$voyage->days)){
+                if (in_array(JoursSemain::ToutLesJours->value, $voyage->days) || VoyagesInstanceHelpers::isVoyageExisteInThisDate($dateVoyage,$voyage->days)){
 
-                    $voyageInstance = VoyageInstance::firstOrCreate([
+                    VoyageInstance::firstOrCreate([
                         'voyage_id' => $voyage->id,
                         'date' => $dateVoyage,
                         'heure'=> $voyage->heure,
                         'nb_place'=>$voyage->nb_pace,
                         'care_id'=> $voyage->cares->last()->id ?? null,
-                        'chauffer_id'=> null // TODO: id du chauffer qui doit conduire
+                        'chauffer_id'=> null
                     ]);
-                    echo "Voyage instance ".$voyageInstance->id." created";
                 }
             });
         }

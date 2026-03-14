@@ -56,7 +56,7 @@ class OrangePayementController extends Controller
                 "token" => $orangePayement->token,
                 'code_otp' => $data['otp'],
                 'statut' => $orangePayement->payementStatut(),
-                'moyen_payment' => MoyenPayment::ORRANGE_MONEY,
+                'moyen_payment' => MoyenPayment::ORANGE_MONEY,
                 'code_ticket' => Str::random(12),
             ];
 
@@ -83,9 +83,8 @@ class OrangePayementController extends Controller
                 $ticket->save();
 
                 PayementEffectuerEvent::dispatch($ticket);
-                dd($ticket->numero_chaise);
                 SendClientTicketByMailEvent::dispatch($ticket,TypeNotification::TICKET_PAYER);
-                
+
                 DB::commit();
                 return redirect()->route('ticket.show-ticket',['ticket'=>$ticket])->with('success',"Le paiement de votre ticket a été effectué avec succès");
             }

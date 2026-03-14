@@ -31,16 +31,12 @@
             <div>
                 <x-label value="Genre" />
                 <div class="flex flex-wrap gap-4 mt-1.5">
-                    @foreach([
-                        \App\Enums\SexeUser::Homme => 'Homme',
-                        \App\Enums\SexeUser::Femme => 'Femme',
-                        \App\Enums\SexeUser::Autre => 'Autre',
-                    ] as $value => $label)
+                    @foreach(\App\Enums\SexeUser::cases() as $sexe)
                         <label class="flex items-center gap-2 cursor-pointer">
-                            <input type="radio" name="sexe" value="{{ $value }}"
-                                @checked(old('sexe') == $value)
+                            <input type="radio" name="sexe" value="{{ $sexe->value }}"
+                                @checked(old('sexe') == $sexe->value)
                                 class="w-4 h-4 text-primary-600 border-surface-300 focus:ring-primary-500 dark:border-surface-600 dark:bg-surface-800 dark:focus:ring-primary-400" />
-                            <span class="text-sm text-surface-700 dark:text-surface-300">{{ $label }}</span>
+                            <span class="text-sm text-surface-700 dark:text-surface-300">{{ $sexe->value }}</span>
                         </label>
                     @endforeach
                 </div>

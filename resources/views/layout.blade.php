@@ -13,6 +13,8 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+        @stack('styles')
     </head>
     <body class="font-sans antialiased bg-surface-50 dark:bg-surface-900 text-surface-800 dark:text-surface-200">
         @include('shared._navbar')

@@ -1,148 +1,145 @@
 <div>
-    <!-- Section Hero -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <!-- Titre et description -->
-        <div class="text-center mb-12">
-            <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Payez vos tickets de voyage en toute confiance</h1>
-            <p class="text-lg text-gray-600 max-w-2xl mx-auto">Trouvez les meilleures offres sur les voyages, Votre voyage confortable commence ici.</p>
+    {{-- Hero Section --}}
+    <div class="text-center mb-10">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-primary-50 dark:bg-primary-900/20 rounded-full mb-4">
+            <svg class="w-4 h-4 text-primary-600 dark:text-primary-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" /></svg>
+            <span class="text-sm font-medium text-primary-700 dark:text-primary-300">Recherche de voyages</span>
+        </div>
+        <h1 class="text-3xl md:text-4xl font-bold text-surface-900 dark:text-white mb-3">Payez vos tickets de voyage en toute confiance</h1>
+        <p class="text-surface-500 dark:text-surface-400 max-w-2xl mx-auto">Trouvez les meilleures offres sur les voyages. Votre voyage confortable commence ici.</p>
+    </div>
+
+    {{-- Search Form --}}
+    <div class="card max-w-4xl mx-auto mb-10">
+        {{-- Transport type tabs --}}
+        <div class="flex gap-2 mb-6 overflow-x-auto pb-1">
+            <button class="btn-sm btn-primary">
+                <span>🚌</span> Car
+            </button>
+            <button class="btn-sm btn-ghost">
+                <span>🚆</span> Train
+            </button>
+            <button class="btn-sm btn-ghost">
+                <span>✈️</span> Vol
+            </button>
         </div>
 
-        <!-- Formulaire de recherche -->
-        <div class="bg-white rounded-xl shadow-lg p-6 max-w-4xl mx-auto">
-            <!-- Boutons de sélection du transport -->
-            <div class="flex space-x-4 mb-6 overflow-x-auto pb-2">
-                <button class="flex items-center space-x-2 px-4 py-2 rounded-lg transition bg-indigo-100 text-indigo-700 hover:bg-gray-100">
-                    <span>🚌</span>
-                    <span>Car</span>
-                </button>
-                <button class="flex items-center space-x-2 px-4 py-2 rounded-lg transition hover:bg-gray-100">
-                    <span>🚆</span>
-                    <span>Train</span>
-                </button>
-                <button class="flex items-center space-x-2 px-4 py-2 rounded-lg transition hover:bg-gray-100">
-                    <span>🚌</span>
-                    <span>Vol</span>
-                </button>
+        {{-- Search fields --}}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+            <div>
+                <label class="input-label">Départ</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <svg class="w-5 h-5 text-surface-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                        </svg>
+                    </div>
+                    <input wire:model="villeDepart" type="text" placeholder="Ville de départ" class="input pl-10" />
+                </div>
             </div>
+            <div>
+                <label class="input-label">Destination</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <svg class="w-5 h-5 text-surface-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                        </svg>
+                    </div>
+                    <input wire:model="villeArrivee" type="text" placeholder="Ville d'arrivée" class="input pl-10" />
+                </div>
+            </div>
+            <div>
+                <label class="input-label">Date de départ</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <svg class="w-5 h-5 text-surface-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
+                        </svg>
+                    </div>
+                    <input wire:model="date" type="date" class="input pl-10" />
+                </div>
+            </div>
+            <div>
+                <label class="input-label">Compagnie</label>
+                <select wire:model="compagnie" class="input">
+                    <option value="">Toutes</option>
+                    @foreach($allCompagnies as $compagnie)
+                        <option value="{{$compagnie->id}}">{{$compagnie->name}}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
 
-            <!-- Champs de saisie -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <!-- Champ "From" -->
-                <div class="relative">
-                    <div class="flex items-center border rounded-lg p-3 hover:border-indigo-500 bg-white">
-                        <span>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                              <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
-                            </svg>
-                        </span>
-                        <input wire:model="villeDepart" type="text" placeholder="Depart" class="w-full focus:outline-none ml-2 border-none focus:border-none" />
-                    </div>
-                </div>
-                <!-- Champ "To" -->
-                <div class="relative">
-                    <div class="flex items-center border rounded-lg p-3 hover:border-indigo-500 bg-white">
-                        <span>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                              <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
-                            </svg>
-                        </span>
-                        <input wire:model="villeArrivee" type="text" placeholder="Destination" class="w-full focus:outline-none ml-2 border-none focus:border-none" />
-                    </div>
-                </div>
-                <!-- Champ "Date de départ" -->
-                <div class="relative">
-                    <div class="flex items-center border rounded-lg p-3 hover:border-indigo-500 bg-white">
-                        <span>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                              <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
-                            </svg>
-                        </span>
-                        <input wire:model="date" type="date" class="w-full focus:outline-none ml-2 border-none focus:border-none" />
-                    </div>
-                </div>
-                <!-- Sélection du nombre de passagers -->
-                <div class="relative">
-                    <div class="flex items-center border rounded-lg p-3 hover:border-indigo-500 bg-white">
-                        <span>👥</span>
-                        <select wire:model="compagnie" class="w-full focus:outline-none ml-2 bg-transparent border-none focus:border-none">
-                            <option value="">Selection</option>
-                            @foreach($allCompagnies as  $compagnie)
-                                <option value="{{$compagnie->id}}">{{$compagnie->name}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Options supplémentaires -->
-            <div class="mt-4 flex items-center justify-between">
-                <!-- Checkbox aller-retour -->
-                <div class="flex items-center space-x-2">
-                </div>
-                <!-- Bouton de recherche -->
-                <button wire:click="updateVoyageInstanceListe" class="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-                    </svg>
-                    <span class="ml-2">Rechercher</span>
-                </button>
-            </div>
+        <div class="flex justify-end">
+            <button wire:click="updateVoyageInstanceListe" class="btn-primary">
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" /></svg>
+                Rechercher
+            </button>
         </div>
     </div>
 
+    {{-- Results --}}
     @if($voyageInstances->count() > 0)
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 max-w-6xl mx-auto p-4">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 max-w-6xl mx-auto">
             @foreach ($voyageInstances as $voyageInstance)
-                <div  class="max-w-xl w-full mx-auto my-4 shadow-lg rounded-2xl border border-gray-200">
-                    <div class="p-4 flex flex-col gap-4 bg-white rounded-2xl">
-                        <div class="flex justify-between items-center">
-                            <h3 class="text-xl font-semibold text-gray-800">{{ $voyageInstance->voyage->compagnie->name }}</h3>
-                            <div class="flex items-center gap-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                                <span class="text-sm text-gray-500">{{ $voyageInstance->date->format('d M Y') }}</span>
-                            </div>
-                        </div>
-
-                        <div class="flex justify-between items-center">
-                            <div class="flex flex-col items-start">
-                                <span class="text-lg font-bold text-gray-800">{{ $voyageInstance->villeDepart()->name }}</span>
-                                <span class="text-sm text-gray-500">Gare : {{ $voyageInstance->gareDepart()->name }}</span>
-                                <span class="text-sm text-gray-500">Départ : {{ $voyageInstance->heure->format('H:i') }}</span>
-                            </div>
-                            <svg class="w-6 h-6 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" >
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
-                            </svg>
-
-                            <div class="flex flex-col items-end">
-                                <span class="text-lg font-bold text-gray-800">{{ $voyageInstance->villeArrive()->name }}</span>
-                                <span class="text-sm text-gray-500">Gare : {{ $voyageInstance->gareArrive()->gare }}</span>
-                                <span class="text-sm text-gray-500">Arrivée estimée : {{ $voyageInstance->heure->addHours(2)->format('H:i') }}</span>
-                            </div>
-                        </div>
-
-                        <div class="flex justify-between items-center">
-                            <div class="flex items-center gap-2">
-                                <span class="text-lg font-semibold text-gray-800">{{ $voyageInstance->getPrix(App\Enums\TypeTicket::AllerSimple) }} XOF</span>
-                            </div>
-                            <a href="{{ route('voyage.instance.show', $voyageInstance->id) }}" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Sélectionner</a>
+                <div class="card group hover:shadow-elevated hover:-translate-y-0.5 transition-all duration-300">
+                    {{-- Header --}}
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="font-semibold text-surface-900 dark:text-white">{{ $voyageInstance->voyage->compagnie->name }}</h3>
+                        <div class="flex items-center gap-1.5 text-sm text-surface-500 dark:text-surface-400">
+                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" /></svg>
+                            {{ $voyageInstance->date->format('d M Y') }}
                         </div>
                     </div>
-                </div>
 
+                    {{-- Route --}}
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="flex-1 min-w-0">
+                            <p class="font-bold text-surface-900 dark:text-white">{{ $voyageInstance->villeDepart()->name }}</p>
+                            <p class="text-xs text-surface-500 dark:text-surface-400">{{ $voyageInstance->gareDepart()->name }}</p>
+                            <p class="text-xs text-surface-400 dark:text-surface-500">{{ $voyageInstance->heure->format('H:i') }}</p>
+                        </div>
+                        <div class="flex flex-col items-center flex-shrink-0 px-2">
+                            <div class="flex items-center gap-1">
+                                <div class="w-2 h-2 rounded-full bg-primary-500"></div>
+                                <div class="w-10 h-px bg-surface-300 dark:bg-surface-600"></div>
+                                <svg class="w-4 h-4 text-primary-500" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" /></svg>
+                                <div class="w-10 h-px bg-surface-300 dark:bg-surface-600"></div>
+                                <div class="w-2 h-2 rounded-full bg-accent-500"></div>
+                            </div>
+                        </div>
+                        <div class="flex-1 min-w-0 text-right">
+                            <p class="font-bold text-surface-900 dark:text-white">{{ $voyageInstance->villeArrive()->name }}</p>
+                            <p class="text-xs text-surface-500 dark:text-surface-400">{{ $voyageInstance->gareArrive()->gare }}</p>
+                            <p class="text-xs text-surface-400 dark:text-surface-500">{{ $voyageInstance->heure->addHours(2)->format('H:i') }}</p>
+                        </div>
+                    </div>
+
+                    {{-- Footer --}}
+                    <div class="flex items-center justify-between pt-4 border-t border-surface-100 dark:border-surface-700">
+                        <div>
+                            <p class="text-xl font-bold text-primary-600 dark:text-primary-400">{{ number_format($voyageInstance->getPrix(App\Enums\TypeTicket::AllerSimple), 0, ',', ' ') }} <span class="text-sm font-normal text-surface-500">XOF</span></p>
+                        </div>
+                        <a href="{{ route('voyage.instance.show', $voyageInstance->id) }}" class="btn-primary btn-sm">
+                            Sélectionner
+                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
+                        </a>
+                    </div>
+                </div>
             @endforeach
         </div>
-
     @else
-        <div class="flex flex-col  justify-center p-8 text-gray-500 items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" class="size-32 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
-            </svg>
-            <p class="text-3xl font-semibold">Aucun voyage n'est disponible</p>
-            <p class="mt-2 text-gray-400">Veuillez modifier vos critères de recherche</p>
+        {{-- Empty state --}}
+        <div class="card text-center py-16 max-w-lg mx-auto">
+            <div class="w-20 h-20 mx-auto mb-6 rounded-2xl bg-surface-100 dark:bg-surface-800 flex items-center justify-center">
+                <svg class="w-10 h-10 text-surface-400 dark:text-surface-500" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                </svg>
+            </div>
+            <h3 class="text-xl font-semibold text-surface-900 dark:text-white mb-2">Aucun voyage disponible</h3>
+            <p class="text-surface-500 dark:text-surface-400">Veuillez modifier vos critères de recherche</p>
         </div>
     @endif
-
-
 </div>

@@ -4,18 +4,41 @@
 
 @section('content')
 
-    @forelse ($tickets as $ticket)
-
-        <x-ticket.my-ticket-item :$ticket />
-
-    @empty
-        <div class="align-middle flex flex-col items-center font-bold uppercase text-3xl text-gray-500 my-4 py-4 bg-gray-100 rounded-lg ">
-            <svg class="w-44 text-gray-600 mb-4 font-bold" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.005 512.005" xml:space="preserve">
-                <path d="M511.513 223.904 452.508 42.326c-1.708-5.251-7.348-8.125-12.602-6.42L6.912 176.612c-5.252 1.707-8.126 7.349-6.42 12.602l27.93 85.949c-.008.168-.025.333-.025.503v190.925c0 5.522 4.478 10 10 10H493.68c5.522 0 10-4.478 10-10V275.666c0-5.522-4.478-10-10-10h-78.32l89.734-29.16c5.251-1.707 8.125-7.349 6.419-12.602zm-27.834 61.762v170.925H48.396V285.666h55.392v111.408c0 5.522 4.478 10 10 10s10-4.478 10-10V285.666H483.679zm-133.034-20H46.365l-23.762-73.123 52.711-17.129 20.162 61.276c1.385 4.208 5.296 6.877 9.497 6.877 1.036 0 2.09-.162 3.128-.504 5.246-1.727 8.1-7.378 6.373-12.625l-20.139-61.206L436.577 58.017l52.825 162.558-138.757 45.091z"/>
-                <path d="M421.405 101.849c-1.708-5.251-7.349-8.124-12.602-6.42l-260.728 84.727c-5.252 1.707-8.126 7.349-6.42 12.602a10.005 10.005 0 0 0 9.509 6.912c1.024 0 2.066-.159 3.093-.492l260.728-84.727c5.252-1.707 8.127-7.349 6.42-12.602zM377.434 166.804l49.352-16.037c5.252-1.707 8.126-7.349 6.42-12.602-1.708-5.252-7.349-8.125-12.602-6.42l-49.352 16.037c-5.252 1.707-8.126 7.349-6.42 12.602a10.005 10.005 0 0 0 9.509 6.912c1.024 0 2.067-.159 3.093-.492zM419.143 212.741a10.005 10.005 0 0 0 9.509 6.912 10.02 10.02 0 0 0 3.093-.492l15.617-5.075c5.252-1.707 8.127-7.349 6.42-12.602-1.708-5.252-7.348-8.126-12.602-6.42l-15.617 5.075c-5.252 1.707-8.127 7.349-6.42 12.602zM390.685 211.473l-15.618 5.075c-5.252 1.707-8.127 7.349-6.42 12.602 1.373 4.226 5.293 6.912 9.509 6.912 1.023 0 2.065-.159 3.093-.492l15.618-5.075c5.252-1.707 8.126-7.349 6.42-12.602-1.706-5.252-7.343-8.125-12.602-6.42zM251.132 186.817l-91.255 29.654c-5.252 1.707-8.127 7.349-6.42 12.602a10.005 10.005 0 0 0 9.509 6.912 10.02 10.02 0 0 0 3.093-.492l91.255-29.654c5.252-1.707 8.126-7.349 6.42-12.602-1.709-5.252-7.35-8.125-12.602-6.42zM113.788 420.364c-5.522 0-10 4.478-10 10v3.916c0 5.522 4.478 10 10 10s10-4.478 10-10v-3.916c0-5.522-4.478-10-10-10zM161.554 322.663c0 5.522 4.478 10 10 10h274.148c5.522 0 10-4.478 10-10s-4.478-10-10-10H171.554c-5.522 0-10 4.477-10 10zM445.703 350.847H393.81c-5.522 0-10 4.478-10 10s4.478 10 10 10h51.893c5.522 0 10-4.478 10-10s-4.478-10-10-10zM445.703 417.427h-16.422c-5.522 0-10 4.478-10 10s4.478 10 10 10h16.422c5.522 0 10-4.478 10-10s-4.478-10-10-10zM392.608 417.427h-16.421c-5.522 0-10 4.478-10 10s4.478 10 10 10h16.421c5.522 0 10-4.478 10-10s-4.477-10-10-10zM267.507 350.847h-95.952c-5.522 0-10 4.478-10 10s4.478 10 10 10h95.952c5.522 0 10-4.478 10-10s-4.478-10-10-10z"/>
-            </svg>
-            <p class="text-3xl text-gray-600">Aucun ticket n'est disponible.</p>
+    {{-- Page Header --}}
+    <div class="mb-8">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
+                <h1 class="text-2xl sm:text-3xl font-bold text-surface-900 dark:text-white">Mes Tickets</h1>
+                <p class="text-surface-500 dark:text-surface-400 mt-1">Retrouvez tous vos tickets de voyage</p>
+            </div>
+            <a href="{{ route('voyage.index') }}" class="btn-primary">
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
+                Nouveau voyage
+            </a>
         </div>
-    @endforelse
+    </div>
+
+    @if(count($tickets) > 0)
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            @foreach ($tickets as $ticket)
+                <x-ticket.my-ticket-item :$ticket />
+            @endforeach
+        </div>
+    @else
+        {{-- Empty State --}}
+        <div class="card text-center py-16">
+            <div class="w-20 h-20 mx-auto mb-6 rounded-2xl bg-surface-100 dark:bg-surface-800 flex items-center justify-center">
+                <svg class="w-10 h-10 text-surface-400 dark:text-surface-500" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 010 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 010-5.198V6.375c0-.621-.504-1.125-1.125-1.125H3.375z" />
+                </svg>
+            </div>
+            <h3 class="text-xl font-semibold text-surface-900 dark:text-white mb-2">Aucun ticket</h3>
+            <p class="text-surface-500 dark:text-surface-400 mb-6 max-w-sm mx-auto">Vous n'avez pas encore de ticket. Explorez les voyages disponibles pour réserver.</p>
+            <a href="{{ route('voyage.index') }}" class="btn-primary">
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" /></svg>
+                Rechercher un voyage
+            </a>
+        </div>
+    @endif
 
 @endsection

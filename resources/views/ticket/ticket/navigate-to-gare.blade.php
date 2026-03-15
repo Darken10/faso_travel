@@ -129,12 +129,10 @@
 @endsection
 
 @section('script')
-{{-- Leaflet CSS & JS --}}
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+{{-- Leaflet JS --}}
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
 {{-- Leaflet Routing Machine --}}
-<link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css" />
 <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.min.js"></script>
 
 <script>
@@ -144,6 +142,7 @@ function navigationMap() {
         userMarker: null,
         gareMarker: null,
         routingControl: null,
+        fallbackLine: null,
         watchId: null,
         userLat: null,
         userLng: null,
@@ -265,7 +264,37 @@ function navigationMap() {
             }
         },
 
+        haversineDistance(lat1, lon1, lat2, lon2) {
+            const R = 6371;
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+            const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                      Math.sin(dLon / 2) * Math.sin(dLon / 2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            return R * c;
+        },
+
+        drawFallbackLine() {
+            if (this.fallbackLine) {
+                this.map.removeLayer(this.fallbackLine);
+            }
+            this.fallbackLine = L.polyline(
+                [[this.userLat, this.userLng], [this.gareLat, this.gareLng]],
+                { color: '#3b82f6', weight: 4, opacity: 0.7, dashArray: '10, 10' }
+            ).addTo(this.map);
+
+            const distKm = this.haversineDistance(this.userLat, this.userLng, this.gareLat, this.gareLng);
+            this.distance = distKm >= 1 ? `~${distKm.toFixed(1)} km` : `~${Math.round(distKm * 1000)} m`;
+            const avgSpeedKmh = 40;
+            const durMin = Math.round((distKm / avgSpeedKmh) * 60);
+            this.duration = durMin >= 60
+                ? `~${Math.floor(durMin / 60)}h ${durMin % 60}min`
+                : `~${durMin} min`;
+        },
+
         updateRoute() {
+            // If routing already active, just update waypoints
             if (this.routingControl) {
                 this.routingControl.setWaypoints([
                     L.latLng(this.userLat, this.userLng),
@@ -274,34 +303,63 @@ function navigationMap() {
                 return;
             }
 
-            this.routingControl = L.Routing.control({
-                waypoints: [
-                    L.latLng(this.userLat, this.userLng),
-                    L.latLng(this.gareLat, this.gareLng)
-                ],
-                routeWhileDragging: false,
-                addWaypoints: false,
-                draggableWaypoints: false,
-                show: false,
-                createMarker: () => null,
-                lineOptions: {
-                    styles: [
-                        { color: '#3b82f6', opacity: 0.8, weight: 6 },
-                        { color: '#60a5fa', opacity: 0.5, weight: 10 }
-                    ]
-                },
-            }).addTo(this.map);
+            // If we already fell back to straight line, update it
+            if (this.fallbackLine) {
+                this.drawFallbackLine();
+                return;
+            }
 
-            this.routingControl.on('routesfound', (e) => {
-                const route = e.routes[0];
-                const distKm = (route.summary.totalDistance / 1000).toFixed(1);
-                const durMin = Math.round(route.summary.totalTime / 60);
+            try {
+                this.routingControl = L.Routing.control({
+                    waypoints: [
+                        L.latLng(this.userLat, this.userLng),
+                        L.latLng(this.gareLat, this.gareLng)
+                    ],
+                    router: L.Routing.osrmv1({
+                        serviceUrl: 'https://routing.openstreetmap.de/routed-car/route/v1'
+                    }),
+                    routeWhileDragging: false,
+                    addWaypoints: false,
+                    draggableWaypoints: false,
+                    show: false,
+                    createMarker: () => null,
+                    lineOptions: {
+                        styles: [
+                            { color: '#3b82f6', opacity: 0.8, weight: 6 },
+                            { color: '#60a5fa', opacity: 0.5, weight: 10 }
+                        ]
+                    },
+                }).addTo(this.map);
 
-                this.distance = distKm >= 1 ? `${distKm} km` : `${Math.round(route.summary.totalDistance)} m`;
-                this.duration = durMin >= 60
-                    ? `${Math.floor(durMin / 60)}h ${durMin % 60}min`
-                    : `${durMin} min`;
-            });
+                this.routingControl.on('routesfound', (e) => {
+                    // Remove fallback line if route found
+                    if (this.fallbackLine) {
+                        this.map.removeLayer(this.fallbackLine);
+                        this.fallbackLine = null;
+                    }
+                    const route = e.routes[0];
+                    const distKm = (route.summary.totalDistance / 1000).toFixed(1);
+                    const durMin = Math.round(route.summary.totalTime / 60);
+
+                    this.distance = distKm >= 1 ? `${distKm} km` : `${Math.round(route.summary.totalDistance)} m`;
+                    this.duration = durMin >= 60
+                        ? `${Math.floor(durMin / 60)}h ${durMin % 60}min`
+                        : `${durMin} min`;
+                });
+
+                this.routingControl.on('routingerror', () => {
+                    // OSRM failed — fall back to straight line
+                    if (this.routingControl) {
+                        this.map.removeControl(this.routingControl);
+                        this.routingControl = null;
+                    }
+                    this.drawFallbackLine();
+                });
+            } catch (err) {
+                // Routing library error — fall back to straight line
+                this.routingControl = null;
+                this.drawFallbackLine();
+            }
         },
 
         recenter() {
@@ -334,3 +392,9 @@ function navigationMap() {
     .leaflet-routing-container { display: none !important; }
 </style>
 @endsection
+
+@push('styles')
+{{-- Leaflet CSS --}}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css" />
+@endpush

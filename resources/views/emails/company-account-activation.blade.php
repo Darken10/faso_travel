@@ -16,6 +16,78 @@
             line-height: 1.6;
             color: #2c3e50;
         }
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                width: 100%;
+                margin: 0;
+                border-radius: 8px;
+            }
+            .header {
+                padding: 20px 10px;
+            }
+            .header h1 {
+                font-size: 24px;
+            }
+            .header p {
+                font-size: 14px;
+            }
+            .content {
+                padding: 20px;
+            }
+            .welcome-box {
+                padding: 15px;
+                margin-bottom: 20px;
+            }
+            .user-card {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            .user-avatar {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+            .user-info h3 {
+                font-size: 14px;
+            }
+            .user-info p {
+                font-size: 12px;
+            }
+            .roles {
+                justify-content: center;
+            }
+            .role-badge {
+                font-size: 10px;
+                padding: 3px 8px;
+            }
+            .cta-section {
+                margin: 20px 0;
+                padding: 20px;
+            }
+            .cta-button {
+                padding: 12px 30px;
+                font-size: 14px;
+            }
+            .info-item {
+                padding: 10px;
+            }
+            .info-item strong {
+                font-size: 13px;
+            }
+            .info-item span {
+                font-size: 12px;
+            }
+            .footer {
+                padding: 16px;
+            }
+            .footer p {
+                font-size: 12px;
+            }
+        }
         .container {
             max-width: 600px;
             margin: 0 auto;
@@ -59,18 +131,20 @@
             font-size: 15px;
         }
         .user-card {
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 10px;
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            border: 1px solid #d1d5db;
+            border-radius: 12px;
             padding: 20px;
             margin-bottom: 30px;
             display: flex;
-            gap: 15px;
-            align-items: flex-start;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 10px;
         }
         .user-avatar {
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
             border-radius: 50%;
             display: flex;
@@ -78,33 +152,33 @@
             justify-content: center;
             color: white;
             font-weight: bold;
-            font-size: 20px;
-            flex-shrink: 0;
+            font-size: 24px;
         }
         .user-info h3 {
-            color: #1e293b;
-            font-size: 16px;
-            margin-bottom: 4px;
+            color: #1f2937;
+            font-size: 18px;
+            font-weight: 700;
         }
         .user-info p {
-            color: #64748b;
+            color: #6b7280;
             font-size: 14px;
-            margin-bottom: 8px;
         }
         .roles {
             display: flex;
             flex-wrap: wrap;
-            gap: 6px;
-            margin-top: 8px;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 10px;
         }
         .role-badge {
             display: inline-block;
-            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
-            color: #0369a1;
-            padding: 4px 12px;
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            color: #065f46;
+            padding: 6px 14px;
             border-radius: 20px;
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 600;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
         .section-title {
             color: #1e293b;
@@ -209,23 +283,7 @@
                 <p>Un compte a été créé pour vous au sein de <strong>{{ $companyName }}</strong> sur la plateforme <strong>{{ config('app.name') }}</strong>.</p>
             </div>
 
-            <div class="user-card">
-                <div class="user-avatar">{{ strtoupper(substr(explode(' ', trim($userName))[0], 0, 1)) }}</div>
-                <div class="user-info">
-                    <h3>{{ $userName }}</h3>
-                    <p>{{ request()->root() }}</p>
-                    @if($roles)
-                        <div class="roles">
-                            @php
-                                $roleArray = is_array($roles) ? $roles : explode(', ', $roles);
-                            @endphp
-                            @foreach($roleArray as $role)
-                                <span class="role-badge">{{ trim($role) }}</span>
-                            @endforeach
-                        </div>
-                    @endif
-                </div>
-            </div>
+
 
             <div class="cta-section">
                 <p><strong>Étape suivante :</strong></p>

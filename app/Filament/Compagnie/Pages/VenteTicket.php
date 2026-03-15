@@ -9,6 +9,7 @@ use App\Enums\StatutTicket;
 use App\Enums\TypeTicket;
 use App\Events\PayementEffectuerEvent;
 use App\Helper\TicketHelpers;
+use App\Models\Finance\Caisse;
 use App\Models\Ticket\AutrePersonne;
 use App\Models\Ticket\Payement;
 use App\Models\Ticket\Ticket;
@@ -41,6 +42,11 @@ class VenteTicket extends Page implements HasForms
     public ?int $ticketVenduId = null;
     public float $prix = 0;
     public float $monnaie = 0;
+
+    public function getCaisseOuverte(): ?Caisse
+    {
+        return Caisse::sessionOuverte();
+    }
 
     public function mount(): void
     {
@@ -236,6 +242,8 @@ class VenteTicket extends Page implements HasForms
             $typeTicket = TypeTicket::from($data['type_ticket']);
             $prix = $voyageInstance->getPrix($typeTicket);
 
+            $caisse = Caisse::sessionOuverte();
+
             $ticket = Ticket::create([
                 'user_id' => Auth::id(),
                 'voyage_id' => $voyageInstance->voyage_id,
@@ -250,6 +258,7 @@ class VenteTicket extends Page implements HasForms
                 'is_my_ticket' => false,
                 'autre_personne_id' => $autrePersonne->id,
                 'a_bagage' => false,
+                'caisse_id' => $caisse?->id,
             ]);
 
             Payement::create([

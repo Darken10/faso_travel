@@ -44,7 +44,8 @@ class Ticket extends Model
         'retour_validate_by',
         "transferer_at", "valider_by_id", "valider_at", "transferer_a_user_id",
         "retour_validate_at",
-        "voyage_instance_id"
+        "voyage_instance_id",
+        "caisse_id"
     ];
 
     protected $with = [
@@ -166,4 +167,8 @@ class Ticket extends Model
         return $this->belongsTo(VoyageInstance::class);
     }
 
+    public function caisse(): BelongsTo
+    {
+        return $this->belongsTo(\App\Models\Finance\Caisse::class);
+    }
 }

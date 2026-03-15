@@ -1,7 +1,29 @@
 <x-filament-panels::page>
-    @php $ticketVendu = $this->getTicketVendu(); @endphp
+    @php
+        $ticketVendu = $this->getTicketVendu();
+        $caisseOuverte = $this->getCaisseOuverte();
+    @endphp
 
-    @if($ticketVendu)
+    @if(!$caisseOuverte && !$ticketVendu)
+        {{-- No open cash register --}}
+        <div class="max-w-lg mx-auto text-center space-y-4 py-8">
+            <div class="w-16 h-16 mx-auto bg-amber-100 dark:bg-amber-900/30 rounded-full flex items-center justify-center">
+                <x-heroicon-o-exclamation-triangle class="w-8 h-8 text-amber-500" />
+            </div>
+            <h2 class="text-xl font-bold text-gray-900 dark:text-white">Caisse non ouverte</h2>
+            <p class="text-gray-500 dark:text-gray-400">
+                Vous devez ouvrir votre caisse avant de pouvoir effectuer des ventes.
+            </p>
+            <x-filament::button
+                tag="a"
+                href="{{ \App\Filament\Compagnie\Pages\GestionCaisse::getUrl() }}"
+                icon="heroicon-o-lock-open"
+                color="primary"
+            >
+                Ouvrir ma caisse
+            </x-filament::button>
+        </div>
+    @elseif($ticketVendu)
         <div class="max-w-2xl mx-auto space-y-6">
             {{-- Success header --}}
             <div class="bg-green-50 dark:bg-green-900/20 rounded-xl p-6 border border-green-200 dark:border-green-800">

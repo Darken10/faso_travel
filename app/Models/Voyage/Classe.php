@@ -24,7 +24,12 @@ class Classe extends Model
     {
         parent::boot();
         static::creating(function (Classe $classe) {
-            $classe->user_id = $classe->user_id ??  Auth::id();
+            // Use the first admin/root user if no user_id is provided (for seeding)
+            if (!$classe->user_id) {
+                $adminUser = \App\Models\User::whereIn('role', ['admin', 'root'])->first()
+                    ?? \App\Models\User::first();
+                $classe->user_id = $adminUser->id ?? Auth::id();
+            }
         });
     }
 

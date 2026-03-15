@@ -17,11 +17,14 @@ class ConfortFactory extends Factory
      */
     public function definition(): array
     {
-        $users = User::all();
+        // Use first admin user, falling back to any user, then null (model will handle it)
+        $user = User::whereIn('role', ['admin', 'root'])->first()
+            ?? User::first();
+
         return [
             'title'=>fake()->sentence(rand(3,6)),
             'description'=>fake()->paragraphs(asText: true),
-            'user_id'=>$users->random()->id,
+            'user_id'=>$user->id ?? null,
         ];
     }
 }

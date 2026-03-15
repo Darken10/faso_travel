@@ -20,7 +20,12 @@ class Confort extends Model
     {
         parent::boot();
         static::creating(function (Confort $confort) {
-            $confort->user_id = $confort->user_id ?? Auth::id();
+            // Use the first admin/root user if no user_id is provided (for seeding)
+            if (!$confort->user_id) {
+                $adminUser = \App\Models\User::whereIn('role', ['admin', 'root'])->first()
+                    ?? \App\Models\User::first();
+                $confort->user_id = $adminUser->id ?? Auth::id();
+            }
         });
     }
 

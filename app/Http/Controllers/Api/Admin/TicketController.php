@@ -49,13 +49,25 @@ class TicketController extends Controller
      */
     public function getTicketById(string $ticketId): JsonResponse
     {
-        $ticket = Ticket::findOrFail($ticketId);
-        $ticket->load(['user', 'voyageInstance.voyage.trajet.depart', 'voyageInstance.voyage.trajet.arriver', 'autrePersonne']);
+        \Log::info("Fetching ticket by ID: {$ticketId}");
+        
+        try {
+            $ticket = Ticket::findOrFail($ticketId);
+            \Log::info("Ticket found: {$ticket->numero_ticket}");
+            
+            $ticket->load(['user', 'voyageInstance.voyage.trajet.depart', 'voyageInstance.voyage.trajet.arriver', 'autrePersonne']);
 
-        return response()->json([
-            'success' => true,
-            'data' => $this->formatTicket($ticket),
-        ]);
+            return response()->json([
+                'success' => true,
+                'data' => $this->formatTicket($ticket),
+            ]);
+        } catch (\Exception $e) {
+            \Log::error("Ticket not found or error: {$e->getMessage()}");
+            return response()->json([
+                'success' => false,
+                'message' => 'Ticket introuvable',
+            ], 404);
+        }
     }
 
     /**

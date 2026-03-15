@@ -16,11 +16,11 @@ Route::prefix('/admin')->name('admin.')->middleware('auth:sanctum')->group(funct
 
     // Routes pour la gestion des tickets (mobile admin)
     Route::prefix('/tickets')->name('tickets.')->group(function () {
-        Route::get('/{ticketId}', [TicketController::class, 'getTicketById'])->name('get-by-id');
         Route::get('/verify/{ticketCode}', [TicketController::class, 'verifyByQrCode'])->name('verify-qr');
         Route::post('/verify-phone', [TicketController::class, 'verifyByPhoneAndCode'])->name('verify-phone');
         Route::post('/validate', [TicketController::class, 'validate'])->name('validate');
-        Route::post('/{ticket}/change-status', [TicketController::class, 'changeStatus'])->name('change-status');
         Route::post('/batch-sync', [TicketController::class, 'batchSync'])->name('batch-sync');
+        Route::get('/{ticketId}', [TicketController::class, 'getTicketById'])->name('get-by-id');
+        Route::post('/{ticket}/change-status', [TicketController::class, 'changeStatus'])->name('change-status');
     });
 });

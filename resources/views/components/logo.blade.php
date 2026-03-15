@@ -3,8 +3,8 @@
          width="40"
          height="40"
          class="rounded-lg"
-         alt="Faso Travel" />
+         alt=" Liptra" />
     <span class="hidden sm:block text-lg font-bold text-primary-700 dark:text-primary-400 group-hover:text-primary-600 transition-colors">
-        Faso Travel
+        Liptra
     </span>
 </a>

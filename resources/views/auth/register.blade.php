@@ -7,7 +7,7 @@
         {{-- Form header --}}
         <div class="mb-6">
             <h2 class="text-2xl font-bold text-surface-900 dark:text-white">Créer un compte</h2>
-            <p class="mt-1 text-sm text-surface-500 dark:text-surface-400">Rejoignez Faso Travel en quelques minutes</p>
+            <p class="mt-1 text-sm text-surface-500 dark:text-surface-400">Rejoignez Liptra en quelques minutes</p>
         </div>
 
         <x-validation-errors class="mb-4" />

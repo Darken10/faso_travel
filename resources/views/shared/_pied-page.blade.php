@@ -44,7 +44,7 @@
 
     <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
         <p class="text-sm text-surface-400 dark:text-surface-500">
-            &copy; {{ date('Y') }} Faso Travel. Tous droits réservés.
+            &copy; {{ date('Y') }} Liptra. Tous droits réservés.
         </p>
         <div class="flex items-center gap-4">
             <a href="#" class="text-surface-400 hover:text-primary-500 transition-colors dark:text-surface-500 dark:hover:text-primary-400">

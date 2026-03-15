@@ -16,7 +16,7 @@
                 <div class="mb-8">
                     {{ $logo }}
                 </div>
-                <h1 class="text-3xl font-bold text-white mb-4">Bienvenue sur Faso Travel</h1>
+                <h1 class="text-3xl font-bold text-white mb-4">Bienvenue sur Liptra</h1>
                 <p class="text-primary-200 text-lg leading-relaxed">
                     Réservez vos billets de transport en toute simplicité. Voyagez à travers le Burkina Faso en toute confiance.
                 </p>

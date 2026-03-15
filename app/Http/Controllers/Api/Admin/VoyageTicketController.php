@@ -67,13 +67,11 @@ class VoyageTicketController extends Controller
                             'id' => $instance->voyage->trajet->id,
                             'depart' => $instance->voyage->trajet->depart ? [
                                 'id' => $instance->voyage->trajet->depart->id,
-                                'name' => $instance->voyage->trajet->depart->nom,
-                                'nom' => $instance->voyage->trajet->depart->nom,
+                                'name' => $instance->voyage->trajet->depart->name,
                             ] : null,
                             'arriver' => $instance->voyage->trajet->arriver ? [
                                 'id' => $instance->voyage->trajet->arriver->id,
-                                'name' => $instance->voyage->trajet->arriver->nom,
-                                'nom' => $instance->voyage->trajet->arriver->nom,
+                                'name' => $instance->voyage->trajet->arriver->name,
                             ] : null,
                         ] : null,
                     ] : null,

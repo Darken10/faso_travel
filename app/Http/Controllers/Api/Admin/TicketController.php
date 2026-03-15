@@ -271,6 +271,7 @@ class TicketController extends Controller
 
         return response()->json([
             'success' => true,
+            'message' => 'Passagers récupérés avec succès',
             'data' => $passengers,
         ]);
     }

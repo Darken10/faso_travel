@@ -10,6 +10,7 @@ enum MoyenPayment: string
     case CARTE_VISA = 'Carte Visa';
     case CORIS_MONEY = 'Coris Money';
     case WAVE = 'Wave';
+    case ESPECE = 'Espèce';
 
     public static function values(): array
     {
@@ -25,6 +26,7 @@ enum MoyenPayment: string
             self::CARTE_VISA => 'visa',
             self::CORIS_MONEY => 'coris-money',
             self::WAVE => 'wave',
+            self::ESPECE => null,
         };
     }
 }

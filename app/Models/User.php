@@ -12,6 +12,8 @@ use App\Models\Post\Like;
 use App\Models\Post\Post;
 use App\Models\Post\Comment;
 use App\Models\Ticket\Ticket;
+use App\Models\Role;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -113,9 +115,36 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Ticket::class);
     }
 
-    function compagnie(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    function compagnie(): BelongsTo
     {
         return $this->belongsTo(Compagnie::class);
+    }
+
+    function roles(): BelongsToMany
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
+    function hasRole(string $roleName): bool
+    {
+        return $this->roles()->where('name', $roleName)->exists();
+    }
+
+    function hasAnyRole(array $roleNames): bool
+    {
+        return $this->roles()->whereIn('name', $roleNames)->exists();
+    }
+
+    function assignRole(string ...$roleNames): void
+    {
+        $roles = Role::whereIn('name', $roleNames)->get();
+        $this->roles()->syncWithoutDetaching($roles);
+    }
+
+    function removeRole(string ...$roleNames): void
+    {
+        $roles = Role::whereIn('name', $roleNames)->get();
+        $this->roles()->detach($roles);
     }
 
     function autrePersonnes():HasMany

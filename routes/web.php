@@ -2,6 +2,7 @@
 
 use App\Enums\JoursSemain;
 use App\Http\Controllers\Auth\MyRegisterController;
+use App\Http\Controllers\Auth\AccountActivationController;
 use App\Http\Controllers\Compagnie\CompagnieController;
 use App\Http\Controllers\Divers\ConditionConfidentialiteController;
 use App\Http\Controllers\Divers\NotificationsController;
@@ -127,6 +128,10 @@ Route::prefix('/auth')->name('auth.')->group(function () {
         Route::post('/step3', 'post_step3')->name('post_step3');
     });
 });
+
+// Account activation (company users)
+Route::get('/account/activate/{token}', [AccountActivationController::class, 'show'])->name('account.activate');
+Route::post('/account/activate/{token}', [AccountActivationController::class, 'activate'])->name('account.activate.post');
 //auth.register.step2
 
 Route::get('/notifications',[NotificationsController::class,'allNotifications'])->name('user.notifications');

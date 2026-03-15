@@ -26,7 +26,7 @@ class Gare extends Model
         'statut_id',
         'compagnie_id',
         'ville_id',
-
+        'is_default',
     ];
 
     protected static function boot(): void
@@ -34,8 +34,14 @@ class Gare extends Model
         parent::boot();
 
         static::creating(callback: function (Gare $gare) {
-            $gare->user()->associate(Auth::user());
-            $gare->compagnie_id = $gare->user->compagnie_id;
+            if (Auth::check()) {
+                if (!$gare->user_id) {
+                    $gare->user()->associate(Auth::user());
+                }
+                if (!$gare->compagnie_id && !$gare->is_default) {
+                    $gare->compagnie_id = Auth::user()->compagnie_id;
+                }
+            }
         });
     }
 
@@ -45,7 +51,12 @@ class Gare extends Model
             if (Auth::check() && request()->is('compagnie*')) {
                 if (Auth::user()->compagnie_id) {
                     $companyId = Auth::user()->compagnie_id;
-                    $builder->where('compagnie_id', $companyId);
+                    $builder->where(function (Builder $q) use ($companyId) {
+                        $q->where('compagnie_id', $companyId)
+                          ->orWhere('is_default', true);
+                    });
+                } else {
+                    $builder->where('is_default', true);
                 }
             }
         });

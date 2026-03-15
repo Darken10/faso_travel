@@ -45,9 +45,7 @@ class ClasseResource extends Resource
      */
     public static function table(Table $table): Table
     {
-        $currentUserId = auth()->user()?->id;
         return $table
-            ->query(fn () => Classe::query()->where('user_id', $currentUserId))
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
@@ -55,6 +53,12 @@ class ClasseResource extends Resource
                     ->limit(50)
                     ->placeholder('Pas de description.')
                     ->searchable(),
+                Tables\Columns\IconColumn::make('is_default')
+                    ->label('Défaut')
+                    ->boolean()
+                    ->trueIcon('heroicon-o-star')
+                    ->falseIcon('heroicon-o-minus')
+                    ->trueColor('warning'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -70,8 +74,10 @@ class ClasseResource extends Resource
             ->actions([
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\ViewAction::make(),
-                    Tables\Actions\EditAction::make(),
-                    Tables\Actions\DeleteAction::make(),
+                    Tables\Actions\EditAction::make()
+                        ->hidden(fn (Classe $record) => $record->is_default),
+                    Tables\Actions\DeleteAction::make()
+                        ->hidden(fn (Classe $record) => $record->is_default),
                 ])
             ])
             ->bulkActions([

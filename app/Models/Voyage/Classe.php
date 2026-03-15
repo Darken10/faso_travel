@@ -17,18 +17,21 @@ class Classe extends Model
     protected $fillable = [
         'name',
         'description',
-        'user_id'
+        'user_id',
+        'compagnie_id',
+        'is_default',
     ];
 
     protected static function boot()
     {
         parent::boot();
         static::creating(function (Classe $classe) {
-            // Use the first admin/root user if no user_id is provided (for seeding)
             if (!$classe->user_id) {
-                $adminUser = \App\Models\User::whereIn('role', ['admin', 'root'])->first()
-                    ?? \App\Models\User::first();
-                $classe->user_id = $adminUser->id ?? Auth::id();
+                $classe->user_id = Auth::id() ?? \App\Models\User::first()?->id;
+            }
+            // Set compagnie_id from the creating user if not already set
+            if (!$classe->compagnie_id && !$classe->is_default && Auth::check()) {
+                $classe->compagnie_id = Auth::user()->compagnie_id;
             }
         });
     }
@@ -39,9 +42,12 @@ class Classe extends Model
             if (Auth::check() && request()->is('compagnie*')) {
                 if (Auth::user()->compagnie_id) {
                     $companyId = Auth::user()->compagnie_id;
-                    $users = User::where('compagnie_id', $companyId)->get()->pluck('id')->toArray();
-
-                    $builder->whereIn('user_id', $users);
+                    $builder->where(function (Builder $q) use ($companyId) {
+                        $q->where('compagnie_id', $companyId)
+                          ->orWhere('is_default', true);
+                    });
+                } else {
+                    $builder->where('is_default', true);
                 }
             }
         });

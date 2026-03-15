@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V2;
 
 use App\Http\Controllers\Controller;
 use App\Services\V2\AuthService;
+use App\DTOs\Auth\LoginDTO;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 
@@ -49,7 +50,7 @@ class AuthController extends Controller
             'password' => 'required|string',
         ]);
 
-        $result = $this->authService->login($validated);
+        $result = $this->authService->login(LoginDTO::fromRequest($validated));
 
         return response()->json($result);
     }

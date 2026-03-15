@@ -52,7 +52,11 @@ class AuthController extends Controller
 
         $result = $this->authService->login(LoginDTO::fromRequest($validated));
 
-        return response()->json($result);
+        return response()->json([
+            'success' => true,
+            'message' => 'Connexion réussie',
+            'data' => $result,
+        ]);
     }
 
     /**

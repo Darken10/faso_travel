@@ -21,7 +21,7 @@
 
             <div class="hidden sm:flex sm:items-center sm:gap-3">
                 <!-- Teams Dropdown -->
-                @if (Laravel\Jetstream\Jetstream::hasTeamFeatures())
+                @if (Laravel\Jetstream\Jetstream::hasTeamFeatures() && Auth::user()->currentTeam)
                     <div class="relative">
                         <x-dropdown align="right" width="60">
                             <x-slot name="trigger">
@@ -182,7 +182,7 @@
                 </form>
 
                 <!-- Team Management -->
-                @if (Laravel\Jetstream\Jetstream::hasTeamFeatures())
+                @if (Laravel\Jetstream\Jetstream::hasTeamFeatures() && Auth::user()->currentTeam)
                     <div class="border-t border-surface-200 dark:border-surface-700 my-1"></div>
 
                     <div class="block px-4 py-2 text-xs font-semibold text-surface-400 uppercase tracking-wider">

@@ -114,6 +114,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             StatutSeeder::class,
+            RoleSeeder::class,
             PaysSeeder::class,
             RegionSeeder::class,
             VilleSeeder::class,

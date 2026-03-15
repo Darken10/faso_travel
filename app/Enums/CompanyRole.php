@@ -4,7 +4,7 @@ namespace App\Enums;
 
 enum CompanyRole: string
 {
-    case Admin = 'admin';
+    case Admin = 'company_admin';
     case Agent = 'agent';
     case Bagagiste = 'bagagiste';
     case Comptabilite = 'comptabilite';
@@ -14,7 +14,7 @@ enum CompanyRole: string
     public function label(): string
     {
         return match ($this) {
-            self::Admin => 'Administrateur',
+            self::Admin => 'Administrateur Compagnie',
             self::Agent => 'Agent',
             self::Bagagiste => 'Bagagiste',
             self::Comptabilite => 'Comptabilité',

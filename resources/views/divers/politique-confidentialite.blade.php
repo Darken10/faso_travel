@@ -3,8 +3,24 @@
 @section('title','Politique de confidentialité')
 
 @section('content')
-<section class="max-w-4xl mx-auto px-4 py-10 text-gray-800">
-    <h1 class="text-3xl font-bold mb-6">Politique de confidentialité</h1>
+<div class="max-w-4xl mx-auto">
+    {{-- Header --}}
+    <div class="mb-8">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-primary-50 dark:bg-primary-900/20 rounded-full mb-3">
+            <svg class="w-4 h-4 text-primary-600 dark:text-primary-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" /></svg>
+            <span class="text-sm font-medium text-primary-700 dark:text-primary-300">Confidentialité</span>
+        </div>
+        <h1 class="text-3xl font-bold text-surface-900 dark:text-white mb-2">Politique de confidentialité</h1>
+        <p class="text-surface-500 dark:text-surface-400">Comment nous collectons, utilisons et protégeons vos données personnelles.</p>
+    </div>
+
+    <div class="card prose prose-surface dark:prose-invert max-w-none
+        prose-headings:text-surface-900 dark:prose-headings:text-white
+        prose-h2:text-lg prose-h2:font-semibold prose-h2:mt-8 prose-h2:mb-3
+        prose-p:text-surface-600 dark:prose-p:text-surface-300 prose-p:leading-relaxed
+        prose-li:text-surface-600 dark:prose-li:text-surface-300
+        prose-ul:space-y-1
+        prose-a:text-primary-600 dark:prose-a:text-primary-400 prose-a:no-underline hover:prose-a:underline">
 
     <p class="mb-6">Cette politique de confidentialité explique comment nous collectons, utilisons, stockons et protégeons vos données personnelles lorsque vous utilisez notre plateforme de vente de tickets de transport.</p>
 

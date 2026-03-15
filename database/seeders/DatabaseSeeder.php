@@ -15,6 +15,7 @@ use Database\Seeders\Ville\VilleSeeder;
 use Database\Seeders\Ville\RegionSeeder;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Database\Seeders\Compagnie\CompagnieSeeder;
+use Database\Seeders\Finance\CategorieDepenseSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -119,6 +120,7 @@ class DatabaseSeeder extends Seeder
             RegionSeeder::class,
             VilleSeeder::class,
             CompagnieSeeder::class,
+            CategorieDepenseSeeder::class,
             ConfortSeeder::class,
             ClasseSeeder::class
         ]);

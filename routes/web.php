@@ -68,6 +68,7 @@ Route::prefix('/ticket')->name('ticket.')->middleware('auth')->controller(Ticket
     Route::get('/mes-tickets', 'myTickets')->name('myTickets');
     Route::get('/mes-tickets/{ticket}/edite', 'editTicket')->name('editTicket');
     Route::get('/mes-tickets/{ticket}', 'showMyTicket')->name('show-ticket')->where(['ticket' => '[0-9]+',]);
+    Route::get('/mes-tickets/{ticket}/navigation', 'navigateToGare')->name('navigate-to-gare')->where(['ticket' => '[0-9]+']);
     Route::get('/re-envoyer/{ticket}', 'reenvoyer')->name('reenvoyer')->where(['ticket' => '[0-9]+']);
     Route::get('/regenerer/{ticket}', 'regenerer')->name('regenerer')->where(['ticket' => '[0-9]+']);
     Route::post('/mes-tickets/{ticket}/pause', 'mettreEnPause')->name('mettre-en-pause');

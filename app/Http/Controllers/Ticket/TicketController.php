@@ -102,6 +102,18 @@ class TicketController extends Controller
         ]);
     }
 
+    function navigateToGare(Ticket $ticket){
+        $gareDepart = $ticket->gareDepart();
+
+        return view('ticket.ticket.navigate-to-gare',[
+            'ticket' => $ticket,
+            'gare' => $gareDepart,
+            'gareLat' => $gareDepart?->lat,
+            'gareLng' => $gareDepart?->lng,
+            'gareName' => $gareDepart?->name,
+        ]);
+    }
+
 
     function editTicket(Ticket $ticket)
     {

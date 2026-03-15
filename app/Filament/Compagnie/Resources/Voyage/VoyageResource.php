@@ -88,8 +88,8 @@ class VoyageResource extends Resource
                             ->default(0),
                         Forms\Components\Select::make('classe_id')
                             ->label('Classe')
-                            ->options(fn(Get $get): Collection => Classe::where('user_id', auth()->user()?->id)->pluck('name', 'id'))
-                            ->native(False)->searchable()->preload()
+                            ->options(fn(): Collection => Classe::pluck('name', 'id'))
+                            ->native(false)->searchable()->preload()
                             ->required(),
                     ])->columns(),
 

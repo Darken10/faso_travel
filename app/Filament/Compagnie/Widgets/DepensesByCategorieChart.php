@@ -19,7 +19,8 @@ class DepensesByCategorieChart extends ChartWidget
     {
         $compagnieId = Auth::user()?->compagnie_id;
 
-        $data = Depense::where('depenses.compagnie_id', $compagnieId)
+        $data = Depense::withoutGlobalScopes()
+            ->where('depenses.compagnie_id', $compagnieId)
             ->join('categorie_depenses', 'depenses.categorie_depense_id', '=', 'categorie_depenses.id')
             ->select('categorie_depenses.nom', DB::raw('SUM(depenses.montant) as total'))
             ->groupBy('categorie_depenses.id', 'categorie_depenses.nom')

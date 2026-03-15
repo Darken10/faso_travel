@@ -1,0 +1,318 @@
+<?php
+
+namespace App\Http\Controllers\Api\Admin;
+
+use App\Enums\StatutTicket;
+use App\Http\Controllers\Controller;
+use App\Models\Ticket\Ticket;
+use App\Services\Ticket\TicketCommandService;
+use App\Services\Ticket\TicketQueryService;
+use App\Services\Ticket\TicketValidationService;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
+
+class TicketController extends Controller
+{
+    public function __construct(
+        protected TicketValidationService $validationService,
+        protected TicketCommandService $commandService,
+        protected TicketQueryService $queryService,
+    ) {}
+
+    /**
+     * Vérifier un ticket par QR code
+     */
+    public function verifyByQrCode(string $ticketCode): JsonResponse
+    {
+        $ticket = Ticket::where('code_qr', $ticketCode)
+            ->with(['user', 'voyageInstance.voyage.trajet.depart', 'voyageInstance.voyage.trajet.arriver', 'autrePersonne'])
+            ->first();
+
+        if (!$ticket) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Ticket introuvable',
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => $this->formatTicket($ticket),
+        ]);
+    }
+
+    /**
+     * Vérifier un ticket par numéro de téléphone + code SMS
+     */
+    public function verifyByPhoneAndCode(Request $request): JsonResponse
+    {
+        $validator = Validator::make($request->all(), [
+            'phone' => 'required|string',
+            'code' => 'required|string|size:6',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Données invalides',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        $ticket = $this->validationService->searchByNumberAndCodeSMS(
+            $request->input('phone'),
+            $request->input('code')
+        );
+
+        if (!$ticket) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Aucun ticket trouvé avec ces informations',
+            ], 404);
+        }
+
+        $ticket->load(['user', 'voyageInstance.voyage.trajet.depart', 'voyageInstance.voyage.trajet.arriver', 'autrePersonne']);
+
+        return response()->json([
+            'success' => true,
+            'data' => $this->formatTicket($ticket),
+        ]);
+    }
+
+    /**
+     * Valider un ticket
+     */
+    public function validate(Request $request): JsonResponse
+    {
+        $validator = Validator::make($request->all(), [
+            'ticket_id' => 'required|integer|exists:tickets,id',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Données invalides',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        $ticket = Ticket::findOrFail($request->input('ticket_id'));
+
+        if (!in_array($ticket->statut, [StatutTicket::Payer, StatutTicket::Pause])) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Ce ticket ne peut pas être validé (statut: ' . $ticket->statut->value . ')',
+            ], 422);
+        }
+
+        $this->validationService->validate($ticket);
+        $ticket->refresh()->load(['user', 'voyageInstance.voyage.trajet.depart', 'voyageInstance.voyage.trajet.arriver']);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Ticket validé avec succès',
+            'data' => $this->formatTicket($ticket),
+        ]);
+    }
+
+    /**
+     * Changer le statut d'un ticket (pause, block) avec motif obligatoire
+     */
+    public function changeStatus(Request $request, Ticket $ticket): JsonResponse
+    {
+        $validator = Validator::make($request->all(), [
+            'statut' => 'required|string|in:Pause,Bloquer',
+            'motif' => 'required|string|min:3',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Données invalides',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        $newStatut = StatutTicket::from($request->input('statut'));
+
+        if ($newStatut === StatutTicket::Pause) {
+            $this->validationService->pause($ticket);
+        } elseif ($newStatut === StatutTicket::Bloquer) {
+            $this->validationService->block($ticket);
+        }
+
+        $ticket->refresh()->load(['user', 'voyageInstance.voyage.trajet.depart', 'voyageInstance.voyage.trajet.arriver']);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Statut mis à jour',
+            'data' => $this->formatTicket($ticket),
+        ]);
+    }
+
+    /**
+     * Batch sync — traite un tableau d'actions offline
+     */
+    public function batchSync(Request $request): JsonResponse
+    {
+        $validator = Validator::make($request->all(), [
+            'actions' => 'required|array|min:1',
+            'actions.*.id' => 'required|string',
+            'actions.*.type' => 'required|string|in:VALIDATE_TICKET,PAUSE_TICKET,BLOCK_TICKET',
+            'actions.*.ticket_id' => 'required|integer|exists:tickets,id',
+            'actions.*.payload' => 'nullable|array',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Données invalides',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        $results = [];
+
+        foreach ($request->input('actions') as $action) {
+            try {
+                $ticket = Ticket::findOrFail($action['ticket_id']);
+                $success = false;
+
+                DB::beginTransaction();
+
+                switch ($action['type']) {
+                    case 'VALIDATE_TICKET':
+                        if (in_array($ticket->statut, [StatutTicket::Payer, StatutTicket::Pause])) {
+                            $success = $this->validationService->validate($ticket);
+                        }
+                        break;
+
+                    case 'PAUSE_TICKET':
+                        $success = $this->validationService->pause($ticket);
+                        break;
+
+                    case 'BLOCK_TICKET':
+                        $success = $this->validationService->block($ticket);
+                        break;
+                }
+
+                DB::commit();
+
+                $results[] = [
+                    'id' => $action['id'],
+                    'success' => $success,
+                    'ticket_id' => $action['ticket_id'],
+                ];
+            } catch (\Exception $e) {
+                DB::rollBack();
+                Log::error("Batch sync action failed", [
+                    'action_id' => $action['id'],
+                    'error' => $e->getMessage(),
+                ]);
+
+                $results[] = [
+                    'id' => $action['id'],
+                    'success' => false,
+                    'ticket_id' => $action['ticket_id'],
+                    'error' => $e->getMessage(),
+                ];
+            }
+        }
+
+        $successCount = collect($results)->where('success', true)->count();
+        $failedCount = collect($results)->where('success', false)->count();
+
+        return response()->json([
+            'success' => true,
+            'message' => "$successCount action(s) synchronisée(s), $failedCount échec(s)",
+            'data' => [
+                'results' => $results,
+                'synced' => $successCount,
+                'failed' => $failedCount,
+            ],
+        ]);
+    }
+
+    /**
+     * Récupérer les passagers d'un voyage instance
+     */
+    public function getPassengers(string $voyageInstanceId): JsonResponse
+    {
+        $tickets = Ticket::where('voyage_instance_id', $voyageInstanceId)
+            ->with(['user', 'autrePersonne'])
+            ->whereIn('statut', [
+                StatutTicket::Payer,
+                StatutTicket::Valider,
+                StatutTicket::Pause,
+                StatutTicket::Bloquer,
+            ])
+            ->get();
+
+        $passengers = $tickets->map(function ($ticket) {
+            $isAutre = $ticket->autre_personne_id !== null;
+            return [
+                'ticket_id' => $ticket->id,
+                'passenger_name' => $isAutre
+                    ? ($ticket->autrePersonne->nom ?? 'N/A')
+                    : ($ticket->user->name ?? 'N/A'),
+                'phone' => $isAutre
+                    ? ($ticket->autrePersonne->numero ?? '')
+                    : ($ticket->user->numero ?? ''),
+                'seat_number' => $ticket->numero_chaise,
+                'ticket_statut' => $ticket->statut->value,
+                'ticket_type' => $ticket->type->value,
+                'ticket_numero' => $ticket->numero_ticket,
+                'is_autre_personne' => $isAutre,
+            ];
+        });
+
+        return response()->json([
+            'success' => true,
+            'data' => $passengers,
+        ]);
+    }
+
+    /**
+     * Format a ticket for API response
+     */
+    private function formatTicket(Ticket $ticket): array
+    {
+        $isAutre = $ticket->autre_personne_id !== null;
+        $instance = $ticket->voyageInstance;
+        $voyage = $instance?->voyage;
+        $trajet = $voyage?->trajet;
+
+        return [
+            'id' => $ticket->id,
+            'numero_ticket' => $ticket->numero_ticket,
+            'numero_chaise' => $ticket->numero_chaise,
+            'date' => $ticket->date,
+            'type' => $ticket->type->value,
+            'statut' => $ticket->statut->value,
+            'code_qr' => $ticket->code_qr,
+            'code_sms' => $ticket->code_sms,
+            'valider_at' => $ticket->valider_at,
+            'passenger_name' => $isAutre
+                ? ($ticket->autrePersonne?->nom ?? 'N/A')
+                : ($ticket->user?->name ?? 'N/A'),
+            'passenger_phone' => $isAutre
+                ? ($ticket->autrePersonne?->numero ?? '')
+                : ($ticket->user?->numero ?? ''),
+            'voyage_instance' => $instance ? [
+                'id' => $instance->id,
+                'date' => $instance->date,
+                'heure' => $instance->heure,
+                'nb_place' => $instance->nb_place,
+                'voyage' => $voyage ? [
+                    'trajet' => [
+                        'depart' => ['name' => $trajet?->depart?->nom],
+                        'arriver' => ['name' => $trajet?->arriver?->nom],
+                    ],
+                ] : null,
+            ] : null,
+        ];
+    }
+}

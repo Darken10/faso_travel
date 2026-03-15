@@ -241,6 +241,8 @@ class TicketController extends Controller
      */
     public function getPassengers(string $voyageInstanceId): JsonResponse
     {
+        \Log::info("Fetching passengers for voyage instance: {$voyageInstanceId}");
+        
         $tickets = Ticket::where('voyage_instance_id', $voyageInstanceId)
             ->with(['user', 'autrePersonne'])
             ->whereIn('statut', [
@@ -251,16 +253,23 @@ class TicketController extends Controller
             ])
             ->get();
 
+        \Log::info("Found " . count($tickets) . " tickets");
+
         $passengers = $tickets->map(function ($ticket) {
             $isAutre = $ticket->autre_personne_id !== null;
+            $passengerName = $isAutre
+                ? ($ticket->autrePersonne?->nom ?? 'N/A')
+                : ($ticket->user?->name ?? 'N/A');
+            $phone = $isAutre
+                ? ($ticket->autrePersonne?->numero ?? '')
+                : ($ticket->user?->numero ?? '');
+            
+            \Log::debug("Ticket: {$ticket->numero_ticket}, Name: {$passengerName}, Phone: {$phone}, IsAutre: {$isAutre}");
+            
             return [
                 'ticket_id' => $ticket->id,
-                'passenger_name' => $isAutre
-                    ? ($ticket->autrePersonne->nom ?? 'N/A')
-                    : ($ticket->user->name ?? 'N/A'),
-                'phone' => $isAutre
-                    ? ($ticket->autrePersonne->numero ?? '')
-                    : ($ticket->user->numero ?? ''),
+                'passenger_name' => $passengerName,
+                'phone' => $phone,
                 'seat_number' => $ticket->numero_chaise,
                 'ticket_statut' => $ticket->statut->value,
                 'ticket_type' => $ticket->type->value,

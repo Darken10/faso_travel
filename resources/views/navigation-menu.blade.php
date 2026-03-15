@@ -69,6 +69,7 @@
                 @endif
 
                 <!-- Settings Dropdown -->
+                @if (Auth::check())
                 <div class="relative">
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
@@ -118,6 +119,7 @@
                         </x-slot>
                     </x-dropdown>
                 </div>
+                @endif
             </div>
 
             <!-- Hamburger -->

@@ -34,6 +34,7 @@
 
         @include('shared._footer')
 
+        @livewireScripts
         @yield('script','')
     </body>
 </html>

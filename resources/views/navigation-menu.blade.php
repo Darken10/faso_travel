@@ -1,4 +1,5 @@
 <nav x-data="{ open: false }" class="bg-white/80 backdrop-blur-xl dark:bg-surface-900/80 border-b border-surface-200/60 dark:border-surface-700/60 sticky top-0 z-40">
+    @if (Auth::check())
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -214,4 +215,5 @@
         </div>
         @endif
     </div>
+    @endif
 </nav>

@@ -45,6 +45,20 @@ class TicketController extends Controller
     }
 
     /**
+     * Get ticket by ID
+     */
+    public function getTicketById(string $ticketId): JsonResponse
+    {
+        $ticket = Ticket::findOrFail($ticketId);
+        $ticket->load(['user', 'voyageInstance.voyage.trajet.depart', 'voyageInstance.voyage.trajet.arriver', 'autrePersonne']);
+
+        return response()->json([
+            'success' => true,
+            'data' => $this->formatTicket($ticket),
+        ]);
+    }
+
+    /**
      * Vérifier un ticket par numéro de téléphone + code SMS
      */
     public function verifyByPhoneAndCode(Request $request): JsonResponse
@@ -258,13 +272,13 @@ class TicketController extends Controller
         $passengers = $tickets->map(function ($ticket) {
             $isAutre = $ticket->autre_personne_id !== null;
             $passengerName = $isAutre
-                ? ($ticket->autrePersonne?->nom ?? 'N/A')
+                ? ($ticket->autre_personne?->name ?? 'N/A')
                 : ($ticket->user?->name ?? 'N/A');
             $phone = $isAutre
-                ? ($ticket->autrePersonne?->numero ?? '')
+                ? ($ticket->autre_personne?->numero ?? '')
                 : ($ticket->user?->numero ?? '');
             
-            \Log::debug("Ticket: {$ticket->numero_ticket}, Name: {$passengerName}, Phone: {$phone}, IsAutre: {$isAutre}");
+            \Log::debug("Ticket: {$ticket->numero_ticket}, PassengerName: {$passengerName}, Phone: {$phone}, IsAutre: {$isAutre}");
             
             return [
                 'ticket_id' => $ticket->id,

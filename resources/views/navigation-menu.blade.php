@@ -143,6 +143,7 @@
         </div>
 
         <!-- Responsive Settings Options -->
+        @if (Auth::check())
         <div class="pt-4 pb-3 border-t border-surface-200 dark:border-surface-700">
             <div class="flex items-center px-4">
                 @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
@@ -211,5 +212,6 @@
                 @endif
             </div>
         </div>
+        @endif
     </div>
 </nav>
